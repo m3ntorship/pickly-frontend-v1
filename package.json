@@ -1,0 +1,7 @@
+{
+  "name": "pickly.io",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Ahmed Ayoub <great.nile@gmail.com>",
+  "license": "MIT"
+}
