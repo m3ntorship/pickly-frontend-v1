@@ -1,7 +1,12 @@
 import React from "react";
+import {TestComponent} from './components/testComponent';
 
 function App() {
-  return "nile";
+  return (
+    <div>
+      <TestComponent />
+    </div>
+  );
 }
 
 export default App;
