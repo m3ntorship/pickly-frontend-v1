@@ -36,7 +36,7 @@ export const HEADING_OPTIONS = {
   LINE_HEIGHT: {
     TIGHT: 'tight',
     NORMAL: 'normal',
-    LOOSE: "loose"
+    LOOSE: 'loose'
   }
 };
 
@@ -48,7 +48,7 @@ export const Heading = ({
   fontWeight,
   opacity,
   textAlign,
-  lineHeight
+  lineHeight,
   as = 'p'
 }) => {
   const classes = cn(
@@ -83,9 +83,10 @@ export const Heading = ({
       'text-right': textAlign === HEADING_OPTIONS.TEXT_ALIGN.RIGHT,
 
       // LINE HEIGHT
-      'leading-4': !lineHeight || lineHeight === HEADING_OPTIONS.LINE_HEIGHT.NORMAL,
+      'leading-4':
+        !lineHeight || lineHeight === HEADING_OPTIONS.LINE_HEIGHT.NORMAL,
       'leading-3': lineHeight === HEADING_OPTIONS.LINE_HEIGHT.TIGHT,
-      'leading-5': lineHeight === HEADING_OPTIONS.LINE_HEIGHT.LOOSE,
+      'leading-5': lineHeight === HEADING_OPTIONS.LINE_HEIGHT.LOOSE
     },
     className
   );
