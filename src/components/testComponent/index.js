@@ -2,13 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export const TestComponent = ({title, backgroundColor, fontSize}) => {
-    return <div>
+    return <div className="bg-c400">
+        <div className='container'>
         <h1 
           style={{ backgroundColor, fontSize } }
-          className="bg-black"
+          className="text-c1000"
         >
           {title}
         </h1>
+        </div>
     </div>
 }
 
