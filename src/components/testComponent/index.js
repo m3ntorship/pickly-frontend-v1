@@ -5,7 +5,7 @@ export const TestComponent = ({ title, backgroundColor, fontSize }) => {
   return (
     <div className="bg-c400">
       <div className="container">
-        <h1 style={{ backgroundColor, fontSize }} className="text-c1000">
+        <h1 style={{ backgroundColor }} className="text-c1000">
           {title}
         </h1>
       </div>
