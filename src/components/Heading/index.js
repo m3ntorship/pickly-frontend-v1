@@ -1,5 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
 
 export const HEADING_OPTIONS = {
   FONT_SIZE: {
@@ -21,12 +22,18 @@ export const HEADING_OPTIONS = {
     BOLD: 'bold'
   },
   FONT_COLOR: {
-    SOLID: 'solid',
-    LIGHT: 'light'
-  },
-  OPACITY: {
-    SOLID: 'solid',
-    LIGHT: 'light'
+    BLUE: 'blue',
+    RED: 'red',
+    LIGHTBLACK: 'lightblack',
+    DAWNBLACK: 'dawnblack',
+    CLOUDGREY: 'cloudgrey',
+    SUBMARINEGREY: 'submarinegrey',
+    WHITEGREY: 'whitegray',
+    SILVERGREY: 'silvergrey',
+    OFFWHITE: 'offwhite',
+    GREEN: 'green',
+    WHITE: 'white',
+    BLACK: 'black'
   },
   TEXT_ALIGN: {
     LEFT: 'left',
@@ -46,7 +53,7 @@ export const Heading = ({
   fontSize,
   textColor,
   fontWeight,
-  opacity,
+  lessOpacity,
   textAlign,
   lineHeight,
   as = 'p'
@@ -69,12 +76,21 @@ export const Heading = ({
       'font-bold': fontWeight === HEADING_OPTIONS.FONT_WEIGHT.BOLD,
 
       // FONT COLOR
-      'text-c300': !textColor || textColor === HEADING_OPTIONS.FONT_COLOR.SOLID,
-      'text-c400': textColor === HEADING_OPTIONS.FONT_COLOR.LIGHT,
+      'text-c100': textColor === HEADING_OPTIONS.FONT_COLOR.BLUE,
+      'text-c200': textColor === HEADING_OPTIONS.FONT_COLOR.RED,
+      'text-c300': textColor === HEADING_OPTIONS.FONT_COLOR.LIGHTBLACK,
+      'text-c400': textColor === HEADING_OPTIONS.FONT_COLOR.DAWNBLACK,
+      'text-c500': textColor === HEADING_OPTIONS.FONT_COLOR.CLOUDGREY,
+      'text-c600': textColor === HEADING_OPTIONS.FONT_COLOR.SUBMARINEGREY,
+      'text-c700': textColor === HEADING_OPTIONS.FONT_COLOR.WHITEGREY,
+      'text-c800': textColor === HEADING_OPTIONS.FONT_COLOR.SILVERGREY,
+      'text-c900': textColor === HEADING_OPTIONS.FONT_COLOR.OFFWHITE,
+      'text-c1000': textColor === HEADING_OPTIONS.FONT_COLOR.GREEN,
+      'text-white': textColor === HEADING_OPTIONS.FONT_COLOR.WHITE,
+      'text-BLACK': textColor === HEADING_OPTIONS.FONT_COLOR.BLACK,
 
       // FONT OPACITY
-      'text-opacity-100': !opacity || opacity === HEADING_OPTIONS.OPACITY.SOLID,
-      'text-opacity-50': opacity === HEADING_OPTIONS.OPACITY.LIGHT,
+      'text-opacity-50': lessOpacity,
 
       // TEXT ALIGN
       'text-center':
@@ -92,4 +108,8 @@ export const Heading = ({
   );
 
   return <>{React.createElement(as, { className: classes }, children)}</>;
+};
+
+Heading.propTypes = {
+  lessOpacity: PropTypes.bool
 };
