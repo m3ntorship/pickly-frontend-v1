@@ -46,6 +46,10 @@ module.exports = {
       white: '#FFF',
       black: '#f00'
     },
+    boxShadow: {
+      outline: '0px 4px 25px 0px rgba(196, 203, 216, 0.25)'
+    },
+
     corePlugins: {
       container: false
     },
