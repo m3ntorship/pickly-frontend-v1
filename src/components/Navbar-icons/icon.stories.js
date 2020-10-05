@@ -21,18 +21,6 @@ FriendsIcon.args = {
     'https://res.cloudinary.com/dqmuowojl/image/upload/v1601833247/icons/dqx6nlqzgq2htwakja7b.svg'
 };
 
-export const NotifcationsIcon = Template.bind({});
-NotifcationsIcon.args = {
-  iconURL:
-    'https://res.cloudinary.com/dqmuowojl/image/upload/v1601833247/icons/uxm0ry0c9xwkz3zmooxv.svg'
-};
-
-export const ProfileIcon = Template.bind({});
-ProfileIcon.args = {
-  iconURL:
-    'https://res.cloudinary.com/dqmuowojl/image/upload/v1601833247/icons/cgafox7opgi6le1eomg4.svg'
-};
-
 
 /**
  *  * dashbord icon link:
