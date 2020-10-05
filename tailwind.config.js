@@ -44,7 +44,7 @@ module.exports = {
       c900: '#FAFAFB', // Off Wgight
       c1000: '#78F1CD', // Green
       white: '#FFF',
-      black: '#f00'
+      black: '#000'
     },
     corePlugins: {
       container: false
