@@ -11,5 +11,5 @@ const Template = args => <UploadingProgress {...args} />;
 
 export const uploadigProgress = Template.bind({});
 uploadigProgress.args = {
-  progress: 3
+  progress: 40
 };

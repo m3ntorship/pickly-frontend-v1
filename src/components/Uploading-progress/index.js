@@ -41,7 +41,7 @@ export const UploadingProgress = props => {
         />
         <text
           x={
-            progress === 100
+            progress >= 100
               ? center - 9
               : progress < 10
               ? center - 3
@@ -52,7 +52,7 @@ export const UploadingProgress = props => {
           y={center + 4}
           className="svg-circle-text font-primary font-regular leading-4 text-xs transform   absolute  w-4 H-4  text-c400 "
         >
-          {progress < 101 ? progress : ''}
+          {progress < 100 ? progress : (progress = 100)}
         </text>
       </svg>
     </div>
