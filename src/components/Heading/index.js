@@ -87,7 +87,7 @@ export const Heading = ({
       'text-c900': textColor === HEADING_OPTIONS.FONT_COLOR.OFFWHITE,
       'text-c1000': textColor === HEADING_OPTIONS.FONT_COLOR.GREEN,
       'text-white': textColor === HEADING_OPTIONS.FONT_COLOR.WHITE,
-      'text-BLACK': textColor === HEADING_OPTIONS.FONT_COLOR.BLACK,
+      'text-black': textColor === HEADING_OPTIONS.FONT_COLOR.BLACK,
 
       // FONT OPACITY
       'text-opacity-50': lessOpacity,
