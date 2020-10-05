@@ -1,6 +1,6 @@
 import React from 'react';
 
-import PopUp from './';
+import PopUp from '.';
 
 const APPEAR_ON_OPTIONS = ['click', 'hover', 'right-click'];
 
