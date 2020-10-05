@@ -11,5 +11,5 @@ const Template = args => <OptionsBtn {...args} />;
 
 export const unselected = Template.bind({});
 unselected.args = {
-  clicked: false
+  options: ['option1', 'option2', 'option3']
 };

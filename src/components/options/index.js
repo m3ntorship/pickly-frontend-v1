@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import cn from 'classnames';
 
-export const OptionsBtn = ({ clicked }) => {
+export const OptionsBtn = ({ options }) => {
+  const [clicked, setClicked] = useState(false);
   return (
-    <div class="my-10 mx-20 ">
+    <div>
       <div
-        style={{ width: '50px', height: '50px' }}
-        class="three-dont-div rounded-full shadow-2xl flex justify-center items-center"
+        onClick={() => {
+          setClicked(!clicked);
+        }}
+        style={{ width: '24px', height: '24px' }}
+        class="cursor-pointer rounded-full shadow-2xl flex justify-center items-center"
       >
         <svg
           width="18"
@@ -24,13 +28,18 @@ export const OptionsBtn = ({ clicked }) => {
         </svg>
       </div>
       <ul
-        class={cn('list-item shadow-xl absolute w-auto ounded-sm bg-white', {
-          hidden: !clicked
-        })}
+        class={cn(
+          'transition-all duration-100 list-item text-left shadow-xl absolute mb-5 w-auto rounded-sm bg-white',
+          { hidden: !clicked }
+        )}
       >
-        <li className="py-2 px-5 border-b-4 :hover:bg-c200"> Test 1 </li>
-        <li> Test 2 </li>
-        <li> Test 3 </li>
+        {options.map(option => {
+          return (
+            <li className="py-2 px-10 text-md hover:bg-c500 hover:text-white transition-all duration-100 cursor-pointer">
+              {option}
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
