@@ -1,14 +1,13 @@
 import React from 'react';
 
-const ImageWithSideTitle = () => {
+const ImageWithSideText = ({ imgUrl, title }) => {
   return (
-    <div>
-      <div>
-        <img src="https://svgur.com/i/QGG.svg" alt="" />
-      </div>
-      Schedule
+    <div className="flex justify-around bg-c700 rounded py-2 hover:bg-c100 hover:opacity-75">
+      <img src={imgUrl} alt="" />
+
+      <span className="text-sm text-c500 font-semibold">{title}</span>
     </div>
   );
-}
+};
 
-export default ImageWithSideTitle;
+export default ImageWithSideText;
