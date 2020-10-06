@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+
 
 export const UploadingProgress = ({ progress }) => {
   const [offset, setOffset] = useState(0);
@@ -55,4 +57,13 @@ export const UploadingProgress = ({ progress }) => {
       </svg>
     </div>
   );
+};
+
+
+
+UploadingProgress.propTypes = {
+  /**
+   * this is number of uploadng progress
+   */
+  progress: PropTypes.number.isRequired
 };
