@@ -1,9 +1,7 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 
-export const UploadingProgress = props => {
+export const UploadingProgress = ({ progress }) => {
   const [offset, setOffset] = useState(0);
-  let { progress } = props;
-
   let center = 20;
   const radius = 17;
   const circumference = 2 * Math.PI * radius;
@@ -14,7 +12,7 @@ export const UploadingProgress = props => {
     }
     const progressOffset = ((100 - progress) / 100) * circumference;
     setOffset(progressOffset);
-  }, [setOffset, progress, circumference, offset]);
+  }, [progress]);
 
   return (
     <div>
