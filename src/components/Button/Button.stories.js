@@ -13,7 +13,7 @@ export default {
           BUTTON_OPTIONS.backgroundColor.Blue,
           BUTTON_OPTIONS.backgroundColor.Red,
           BUTTON_OPTIONS.backgroundColor.PrimaryBlack,
-          BUTTON_OPTIONS.backgroundColor.SecodaryBlack,
+          BUTTON_OPTIONS.backgroundColor.SecondaryBlack,
           BUTTON_OPTIONS.backgroundColor.PrimaryGrey,
           BUTTON_OPTIONS.backgroundColor.SecondaryGrey,
           BUTTON_OPTIONS.backgroundColor.TertiaryGrey,
@@ -28,17 +28,17 @@ export default {
       control: {
         type: 'select',
         options: [
-          BUTTON_OPTIONS.COLOR.C100,
-          BUTTON_OPTIONS.COLOR.C200,
-          BUTTON_OPTIONS.COLOR.C300,
-          BUTTON_OPTIONS.COLOR.C400,
-          BUTTON_OPTIONS.COLOR.C500,
-          BUTTON_OPTIONS.COLOR.C600,
-          BUTTON_OPTIONS.COLOR.C700,
-          BUTTON_OPTIONS.COLOR.C800,
-          BUTTON_OPTIONS.COLOR.C900,
-          BUTTON_OPTIONS.COLOR.C1000,
-          BUTTON_OPTIONS.COLOR.WHITE
+          BUTTON_OPTIONS.COLOR.Blue,
+          BUTTON_OPTIONS.COLOR.Red,
+          BUTTON_OPTIONS.COLOR.PrimaryBlack,
+          BUTTON_OPTIONS.COLOR.SecondaryBlack,
+          BUTTON_OPTIONS.COLOR.PrimaryGrey,
+          BUTTON_OPTIONS.COLOR.SecondaryGrey,
+          BUTTON_OPTIONS.COLOR.TertiaryGrey,
+          BUTTON_OPTIONS.COLOR.QuaternaryGrey,
+          BUTTON_OPTIONS.COLOR.OffWhite,
+          BUTTON_OPTIONS.COLOR.Green,
+          BUTTON_OPTIONS.COLOR.White
         ]
       }
     },
@@ -55,7 +55,7 @@ const Template = args => <Button {...args} />;
 export const Primary = Template.bind({});
 Primary.args = {
   children: 'Button',
-  rounded: true,
+  isRounded: true,
   shadow: true,
-  opacity: true
+  isOpacity: true
 };
