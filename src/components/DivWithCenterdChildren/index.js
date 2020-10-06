@@ -17,7 +17,12 @@ export const ReusableDiv = ({
         ['bg-' + bgColor]: bgColor,
         'rounded-md': rounded
       })}
-      style={{ backgroundImage: bgImage, width: divWidth, height: divHeight }}
+      style={{
+        backgroundImage: `url(${bgImage})`,
+        backgroundSize: 'cover',
+        width: divWidth,
+        height: divHeight
+      }}
     >
       {children}
     </div>
