@@ -3,7 +3,7 @@ import React from 'react';
 import { UploadingProgress } from './';
 
 export default {
-  title: 'component/UploadigProgress',
+  title: 'components/UploadigProgress',
   component: UploadingProgress
 };
 
