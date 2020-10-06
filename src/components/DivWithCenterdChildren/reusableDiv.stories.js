@@ -49,7 +49,8 @@ PostDiv.args = {
   bgImage:
     'https://i.pinimg.com/originals/ca/76/0b/ca760b70976b52578da88e06973af542.jpg',
   divWidth: '300px',
-  divHeight: '400px'
+  divHeight: '400px',
+  smallRound: true
 };
 
 export const UploadDiv = Template.bind({});
@@ -63,14 +64,19 @@ UploadDiv.args = {
 
 export const IconDivTest = Template.bind({});
 IconDivTest.args = {
-  bgColor: 'c300',
+  bgColor: 'white',
   divWidth: '24px',
   divHeight: '24px',
+  fullRound: true,
+  withShadow: true,
+  className:
+    'cursor-pointer transform hover:scale-150 transition-all duration-300 ease-in-out',
   children: (
     <div>
       <img
         src="https://cdn1.iconfinder.com/data/icons/feather-2/24/zoom-in-512.png"
         alt=""
+        style={{ width: '13px' }}
       />
     </div>
   )
