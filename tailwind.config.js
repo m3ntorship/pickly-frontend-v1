@@ -49,10 +49,6 @@ module.exports = {
         10: 'rgba(112, 72, 232, 0.1)'
       }
     },
-    boxShadow: {
-      background: '0px 4px 25px 0px rgba(196, 203, 216, 0.25)'
-    },
-
     corePlugins: {
       container: false
     },
