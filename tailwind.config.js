@@ -36,6 +36,7 @@ module.exports = {
       xlg: '1.875rem' // 30px
     },
     colors: {
+      c100: '#7048E8',  // Blue
       c200: '#FE2C55', // Red
       c300: '#44444F', // Black 1
       c400: '#171725', // Black 2
@@ -50,8 +51,7 @@ module.exports = {
       c100_op: {
         10: 'rgba(112, 72, 232, 0.1)',
         15: 'rgba(112, 72, 232, 0.15)'
-      },
-      c100: '#7048E8' // Blue
+      }
     },
     corePlugins: {
       container: false

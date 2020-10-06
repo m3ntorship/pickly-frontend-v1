@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import cn from 'classnames';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 export const ToggleButton = ({ title, selected, onToggle }) => {
   const [toggled, setToggled] = useState(selected);
@@ -25,7 +25,7 @@ export const ToggleButton = ({ title, selected, onToggle }) => {
           <div
             className={cn(
               {
-                'bg-c100 right-0 ': toggled
+                'bg-c100 right-0': toggled
               },
               ' bg-white  w-6 h-6  shadow rounded-full absolute z-10'
             )}
@@ -47,13 +47,17 @@ export const ToggleButton = ({ title, selected, onToggle }) => {
   );
 };
 
-// Icon.propTypes = {
-//   /**
-//    * this is the URL of the icon image!
-//    */
-//   iconURL: PropTypes.string.isRequired,
-//   /**
-//    * this to check this icon selected or not!
-//    */
-//   selected: PropTypes.bool
-// };
+ToggleButton.propTypes = {
+  /**
+   * this is the title of the button!
+   */
+  title: PropTypes.string.isRequired,
+  /**
+   * this to check the button selected or not!
+   */
+  selected: PropTypes.bool,
+  /**
+   * this function return the current state
+   */
+  onToggle: PropTypes.string
+};
