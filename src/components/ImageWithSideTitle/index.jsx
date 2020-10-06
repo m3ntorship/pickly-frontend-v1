@@ -23,7 +23,7 @@ const ImageWithSideTitle = ({
           fontSize="sm"
           children={title}
           textAlign="left"
-          textColor={titleColor}
+          textColor={titleColor} // Options are down in a comment
           fontWeight="semibold"
         />
         {subTitle && (
@@ -37,3 +37,20 @@ const ImageWithSideTitle = ({
 };
 
 export default ImageWithSideTitle;
+
+/*
+Title Color Options: [
+    'blue',
+    'red',
+    'lightblack',
+    'dawnblack',
+    'cloudgrey',
+    'submarinegrey',
+    'whitegray',
+    'silvergrey',
+    'offwhite',
+    'green',
+    'white',
+    'black'
+]
+*/

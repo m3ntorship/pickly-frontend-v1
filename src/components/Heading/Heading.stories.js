@@ -2,7 +2,7 @@ import React from 'react';
 import { Heading, HEADING_OPTIONS } from './index';
 
 export default {
-  title: 'Reusable Heading',
+  title: 'components/Reusable Heading',
   component: Heading,
   argTypes: {
     fontSize: {

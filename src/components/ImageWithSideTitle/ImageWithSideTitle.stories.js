@@ -2,7 +2,7 @@ import React from 'react';
 import ImageWithSideTitle from './index';
 
 export default {
-  title: 'Components/ImageWithSideTitle',
+  title: 'components/ImageWithSideTitle',
   component: ImageWithSideTitle
 };
 
