@@ -9,17 +9,18 @@ export default {
       control: {
         type: 'select',
         options: [
-          BUTTON_OPTIONS.backgroundColor.C100,
-          BUTTON_OPTIONS.backgroundColor.C200,
-          BUTTON_OPTIONS.backgroundColor.C300,
-          BUTTON_OPTIONS.backgroundColor.C400,
-          BUTTON_OPTIONS.backgroundColor.C500,
-          BUTTON_OPTIONS.backgroundColor.C600,
-          BUTTON_OPTIONS.backgroundColor.C700,
-          BUTTON_OPTIONS.backgroundColor.C800,
-          BUTTON_OPTIONS.backgroundColor.C900,
-          BUTTON_OPTIONS.backgroundColor.C1000,
-          BUTTON_OPTIONS.backgroundColor.WHITE
+          BUTTON_OPTIONS.backgroundColor.Transparent,
+          BUTTON_OPTIONS.backgroundColor.Blue,
+          BUTTON_OPTIONS.backgroundColor.Red,
+          BUTTON_OPTIONS.backgroundColor.PrimaryBlack,
+          BUTTON_OPTIONS.backgroundColor.SecodaryBlack,
+          BUTTON_OPTIONS.backgroundColor.PrimaryGrey,
+          BUTTON_OPTIONS.backgroundColor.SecondaryGrey,
+          BUTTON_OPTIONS.backgroundColor.TertiaryGrey,
+          BUTTON_OPTIONS.backgroundColor.QuaternaryGrey,
+          BUTTON_OPTIONS.backgroundColor.OffWhite,
+          BUTTON_OPTIONS.backgroundColor.Green,
+          BUTTON_OPTIONS.backgroundColor.White
         ]
       }
     },

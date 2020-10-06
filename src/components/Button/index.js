@@ -7,78 +7,103 @@ export const BUTTON_OPTIONS = {
     BIG: 'big' // big padding == 8rem,
   },
   backgroundColor: {
-    C100: 'blue',
-    C200: 'red',
-    C300: 'black1',
-    C400: 'black2',
-    C500: 'grey1',
-    C600: 'grey2',
-    C700: 'grey3',
-    C800: 'grey4',
-    C900: 'off white',
-    C1000: 'green',
-    WHITE: 'white'
+    Transparent: 'transparent',
+    Blue: 'blue',
+    Red: 'red',
+    PrimaryBlack: 'PrimaryBlack',
+    SecondaryBlack: 'SecondaryBlack',
+    PrimaryGrey: 'PrimaryGrey',
+    SecondaryGrey: 'SecondaryGrey',
+    TertiaryGrey: 'TertiaryGrey',
+    QuaternaryGrey: 'QuaternaryGrey',
+    OffWhite: 'off white',
+    Green: 'Green',
+    White: 'White'
   },
   COLOR: {
-    C100: 'blue',
-    C200: 'red',
-    C300: 'black1',
-    C400: 'black2',
-    C500: 'grey1',
-    C600: 'grey2',
-    C700: 'grey3',
-    C800: 'grey4',
-    C900: 'off white',
-    C1000: 'green',
-    WHITE: 'white'
+    Blue: 'blue',
+    Red: 'red',
+    PrimaryBlack: 'PrimaryBlack',
+    SecondaryBlack: 'SecondaryBlack',
+    PrimaryGrey: 'PrimaryGrey',
+    SecondaryGrey: 'SecondaryGrey',
+    TertiaryGrey: 'TertiaryGrey',
+    QuaternaryGrey: 'QuaternaryGrey',
+    OffWhite: 'off white',
+    Green: 'Green',
+    White: 'White'
   }
 };
 
 export const Button = ({
   children,
-  rounded,
+  isRounded,
   backgroundColor,
   color,
   shadow,
   padding,
-  opacity,
+  isOpacity,
   className
 }) => {
   return (
     <button
       className={cn(
         'flex items-center justify-center outline-none focus:outline-none',
-        { 'shadow-outline': shadow },
-        { 'bg-opacity-50': opacity },
-        { 'rounded-lg': rounded },
+        { 'shadow-background': shadow },
+        { 'bg-opacity-50': isOpacity },
+        { 'rounded-lg': isRounded },
         { 'py-3 px-12': padding === BUTTON_OPTIONS.PADDING.BIG },
         { 'py-3 px-10': padding === BUTTON_OPTIONS.PADDING.SMALL },
-        { 'bg-c100': backgroundColor === BUTTON_OPTIONS.backgroundColor.C100 },
-        { 'bg-c200': backgroundColor === BUTTON_OPTIONS.backgroundColor.C200 },
-        { 'bg-c300': backgroundColor === BUTTON_OPTIONS.backgroundColor.C300 },
-        { 'bg-c400': backgroundColor === BUTTON_OPTIONS.backgroundColor.C400 },
-        { 'bg-c500': backgroundColor === BUTTON_OPTIONS.backgroundColor.C500 },
-        { 'bg-c600': backgroundColor === BUTTON_OPTIONS.backgroundColor.C600 },
-        { 'bg-c700': backgroundColor === BUTTON_OPTIONS.backgroundColor.C700 },
-        { 'bg-c800': backgroundColor === BUTTON_OPTIONS.backgroundColor.C800 },
-        { 'bg-c900': backgroundColor === BUTTON_OPTIONS.backgroundColor.C900 },
         {
-          'bg-c1000': backgroundColor === BUTTON_OPTIONS.backgroundColor.C1000
+          'bg-transparent':
+            backgroundColor === BUTTON_OPTIONS.backgroundColor.Transparent
+        },
+        { 'bg-c100': backgroundColor === BUTTON_OPTIONS.backgroundColor.Blue },
+        { 'bg-c200': backgroundColor === BUTTON_OPTIONS.backgroundColor.Red },
+        {
+          'bg-c300':
+            backgroundColor === BUTTON_OPTIONS.backgroundColor.PrimaryBlack
         },
         {
-          'bg-white': backgroundColor === BUTTON_OPTIONS.backgroundColor.WHITE
+          'bg-c400':
+            backgroundColor === BUTTON_OPTIONS.backgroundColor.SecondaryBlack
         },
-        { 'text-c100': color === BUTTON_OPTIONS.COLOR.C100 },
-        { 'text-c200': color === BUTTON_OPTIONS.COLOR.C200 },
-        { 'text-c300': color === BUTTON_OPTIONS.COLOR.C300 },
-        { 'text-c400': color === BUTTON_OPTIONS.COLOR.C400 },
-        { 'text-c500': color === BUTTON_OPTIONS.COLOR.C500 },
-        { 'text-c600': color === BUTTON_OPTIONS.COLOR.C600 },
-        { 'text-c700': color === BUTTON_OPTIONS.COLOR.C700 },
-        { 'text-c800': color === BUTTON_OPTIONS.COLOR.C800 },
-        { 'text-c900': color === BUTTON_OPTIONS.COLOR.C900 },
-        { 'text-c1000': color === BUTTON_OPTIONS.COLOR.C1000 },
-        { 'text-white': color === BUTTON_OPTIONS.COLOR.WHITE },
+        {
+          'bg-c500':
+            backgroundColor === BUTTON_OPTIONS.backgroundColor.PrimaryGrey
+        },
+        {
+          'bg-c600':
+            backgroundColor === BUTTON_OPTIONS.backgroundColor.SecondaryGrey
+        },
+        {
+          'bg-c700':
+            backgroundColor === BUTTON_OPTIONS.backgroundColor.TertiaryGrey
+        },
+        {
+          'bg-c800':
+            backgroundColor === BUTTON_OPTIONS.backgroundColor.QuaternaryGrey
+        },
+        {
+          'bg-c900': backgroundColor === BUTTON_OPTIONS.backgroundColor.OffWhite
+        },
+        {
+          'bg-c1000': backgroundColor === BUTTON_OPTIONS.backgroundColor.Green
+        },
+        {
+          'bg-white': backgroundColor === BUTTON_OPTIONS.backgroundColor.White
+        },
+        { 'text-c100': color === BUTTON_OPTIONS.COLOR.Blue },
+        { 'text-c200': color === BUTTON_OPTIONS.COLOR.Red },
+        { 'text-c300': color === BUTTON_OPTIONS.COLOR.PrimaryBlack },
+        { 'text-c400': color === BUTTON_OPTIONS.COLOR.SecondaryBlack },
+        { 'text-c500': color === BUTTON_OPTIONS.COLOR.PrimaryGrey },
+        { 'text-c600': color === BUTTON_OPTIONS.COLOR.SecondaryGrey },
+        { 'text-c700': color === BUTTON_OPTIONS.COLOR.TertiaryGrey },
+        { 'text-c800': color === BUTTON_OPTIONS.COLOR.QuaternaryGrey },
+        { 'text-c900': color === BUTTON_OPTIONS.COLOR.OffWhite },
+        { 'text-c1000': color === BUTTON_OPTIONS.COLOR.Green },
+        { 'text-white': color === BUTTON_OPTIONS.COLOR.White },
         className
       )}
     >
