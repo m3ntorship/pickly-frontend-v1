@@ -79,5 +79,8 @@ IconDivTest.args = {
         style={{ width: '13px' }}
       />
     </div>
-  )
+  ),
+  clickFunction: () => {
+    console.log('Clicked');
+  }
 };

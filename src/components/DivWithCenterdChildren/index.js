@@ -17,7 +17,7 @@ export const ReusableDiv = ({
 }) => {
   return (
     <div
-      onClick={() => clickFunction}
+      onClick={clickFunction}
       className={cn(
         'flex items-center justify-center',
         {
