@@ -16,7 +16,7 @@ export const ToggleButton = ({ title, selected, onToggle }) => {
     <div>
       <button
         className={cn(
-          ' w-56 h-10 rounded-lg flex flex-row items-center py-2 px-4 bg-c700 ',
+          ' w-56 h-10 rounded-lg flex flex-row items-center absolute py-2 px-4 bg-c700 ',
           { 'bg-c100_op-15': toggled }
         )}
         onClick={toggle}
@@ -25,17 +25,17 @@ export const ToggleButton = ({ title, selected, onToggle }) => {
           <div
             className={cn(
               {
-                'bg-c100 right-0': toggled
+                'bg-white right-auto': !toggled
               },
-              ' bg-white  w-6 h-6  shadow rounded-full absolute z-10'
+              ' bg-c100 right-0  w-6 h-6  shadow rounded-full absolute z-10'
             )}
           ></div>
           <div
             className={cn(
               {
-                'bg-c100 opacity-50': toggled
+                ' bg-c400 opacity-25': !toggled
               },
-              'w-10 h-4 rounded-lg bg-black opacity-25 z-0'
+              'w-10 h-4 bg-c100 opacity-50 rounded-lg  z-0'
             )}
           ></div>
         </div>
