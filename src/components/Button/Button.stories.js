@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, BUTTON_OPTIONS } from './';
 
 export default {
-  title: 'Button',
+  title: 'components/Button',
   component: Button,
   argTypes: {
     backgroundColor: {
@@ -54,8 +54,11 @@ export default {
 const Template = args => <Button {...args} />;
 export const Primary = Template.bind({});
 Primary.args = {
-  children: 'Button',
+  children: 'Test Button',
   isRounded: true,
   shadow: true,
-  isOpacity: true
+  isOpacity: false,
+  backgroundColor: BUTTON_OPTIONS.backgroundColor.Blue,
+  color: BUTTON_OPTIONS.COLOR.White,
+  padding: BUTTON_OPTIONS.PADDING.BIG
 };
