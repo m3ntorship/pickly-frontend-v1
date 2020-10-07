@@ -12,6 +12,5 @@ export const inputField = Template.bind({});
 inputField.args = {
   imageURL:
     'https://res.cloudinary.com/dqmuowojl/image/upload/v1602084848/icons/pjuqygilrebcxnpgsp12.png',
-  placeHold: 'What’s on your mind?',
   progress: 20
 };
