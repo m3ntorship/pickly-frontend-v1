@@ -9,18 +9,18 @@ export default {
       control: {
         type: 'select',
         options: [
-          BUTTON_OPTIONS.backgroundColor.Transparent,
-          BUTTON_OPTIONS.backgroundColor.Blue,
-          BUTTON_OPTIONS.backgroundColor.Red,
-          BUTTON_OPTIONS.backgroundColor.PrimaryBlack,
-          BUTTON_OPTIONS.backgroundColor.SecondaryBlack,
-          BUTTON_OPTIONS.backgroundColor.PrimaryGrey,
-          BUTTON_OPTIONS.backgroundColor.SecondaryGrey,
-          BUTTON_OPTIONS.backgroundColor.TertiaryGrey,
-          BUTTON_OPTIONS.backgroundColor.QuaternaryGrey,
-          BUTTON_OPTIONS.backgroundColor.OffWhite,
-          BUTTON_OPTIONS.backgroundColor.Green,
-          BUTTON_OPTIONS.backgroundColor.White
+          BUTTON_OPTIONS.BACKGROUND_COLOR.Transparent,
+          BUTTON_OPTIONS.BACKGROUND_COLOR.Blue,
+          BUTTON_OPTIONS.BACKGROUND_COLOR.Red,
+          BUTTON_OPTIONS.BACKGROUND_COLOR.PrimaryBlack,
+          BUTTON_OPTIONS.BACKGROUND_COLOR.SecondaryBlack,
+          BUTTON_OPTIONS.BACKGROUND_COLOR.PrimaryGrey,
+          BUTTON_OPTIONS.BACKGROUND_COLOR.SecondaryGrey,
+          BUTTON_OPTIONS.BACKGROUND_COLOR.TertiaryGrey,
+          BUTTON_OPTIONS.BACKGROUND_COLOR.QuaternaryGrey,
+          BUTTON_OPTIONS.BACKGROUND_COLOR.OffWhite,
+          BUTTON_OPTIONS.BACKGROUND_COLOR.Green,
+          BUTTON_OPTIONS.BACKGROUND_COLOR.White
         ]
       }
     },
@@ -58,7 +58,7 @@ Primary.args = {
   isRounded: true,
   shadow: true,
   isOpacity: false,
-  backgroundColor: BUTTON_OPTIONS.backgroundColor.Blue,
+  backgroundColor: BUTTON_OPTIONS.BACKGROUND_COLOR.Blue,
   color: BUTTON_OPTIONS.COLOR.White,
   padding: BUTTON_OPTIONS.PADDING.BIG
 };

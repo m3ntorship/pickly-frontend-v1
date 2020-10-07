@@ -6,7 +6,7 @@ export const BUTTON_OPTIONS = {
     SMALL: 'small', // for footer section
     BIG: 'big' // big padding == 8rem,
   },
-  backgroundColor: {
+  BACKGROUND_COLOR: {
     Transparent: 'transparent',
     Blue: 'blue',
     Red: 'red',
@@ -56,42 +56,43 @@ export const Button = ({
         { 'py-3 px-10': padding === BUTTON_OPTIONS.PADDING.SMALL },
         {
           'bg-transparent':
-            backgroundColor === BUTTON_OPTIONS.backgroundColor.Transparent
+            backgroundColor === BUTTON_OPTIONS.BACKGROUND_COLOR.Transparent
         },
-        { 'bg-c100': backgroundColor === BUTTON_OPTIONS.backgroundColor.Blue },
-        { 'bg-c200': backgroundColor === BUTTON_OPTIONS.backgroundColor.Red },
+        { 'bg-c100': backgroundColor === BUTTON_OPTIONS.BACKGROUND_COLOR.Blue },
+        { 'bg-c200': backgroundColor === BUTTON_OPTIONS.BACKGROUND_COLOR.Red },
         {
           'bg-c300':
-            backgroundColor === BUTTON_OPTIONS.backgroundColor.PrimaryBlack
+            backgroundColor === BUTTON_OPTIONS.BACKGROUND_COLOR.PrimaryBlack
         },
         {
           'bg-c400':
-            backgroundColor === BUTTON_OPTIONS.backgroundColor.SecondaryBlack
+            backgroundColor === BUTTON_OPTIONS.BACKGROUND_COLOR.SecondaryBlack
         },
         {
           'bg-c500':
-            backgroundColor === BUTTON_OPTIONS.backgroundColor.PrimaryGrey
+            backgroundColor === BUTTON_OPTIONS.BACKGROUND_COLOR.PrimaryGrey
         },
         {
           'bg-c600':
-            backgroundColor === BUTTON_OPTIONS.backgroundColor.SecondaryGrey
+            backgroundColor === BUTTON_OPTIONS.BACKGROUND_COLOR.SecondaryGrey
         },
         {
           'bg-c700':
-            backgroundColor === BUTTON_OPTIONS.backgroundColor.TertiaryGrey
+            backgroundColor === BUTTON_OPTIONS.BACKGROUND_COLOR.TertiaryGrey
         },
         {
           'bg-c800':
-            backgroundColor === BUTTON_OPTIONS.backgroundColor.QuaternaryGrey
+            backgroundColor === BUTTON_OPTIONS.BACKGROUND_COLOR.QuaternaryGrey
         },
         {
-          'bg-c900': backgroundColor === BUTTON_OPTIONS.backgroundColor.OffWhite
+          'bg-c900':
+            backgroundColor === BUTTON_OPTIONS.BACKGROUND_COLOR.OffWhite
         },
         {
-          'bg-c1000': backgroundColor === BUTTON_OPTIONS.backgroundColor.Green
+          'bg-c1000': backgroundColor === BUTTON_OPTIONS.BACKGROUND_COLOR.Green
         },
         {
-          'bg-white': backgroundColor === BUTTON_OPTIONS.backgroundColor.White
+          'bg-white': backgroundColor === BUTTON_OPTIONS.BACKGROUND_COLOR.White
         },
         { 'text-c100': color === BUTTON_OPTIONS.COLOR.Blue },
         { 'text-c200': color === BUTTON_OPTIONS.COLOR.Red },
