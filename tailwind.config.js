@@ -46,7 +46,8 @@ module.exports = {
       white: '#FFF',
       black: '#000',
       c100_op: {
-        10: 'rgba(112, 72, 232, 0.1)'
+        10: 'rgba(112, 72, 232, 0.1)',
+        15: 'rgba(112, 72, 232, 0.15)'
       }
     },
     corePlugins: {
