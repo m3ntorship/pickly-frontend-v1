@@ -7,5 +7,9 @@ export default {
 };
 
 export const NavbarShowcase = () => {
-  return <Navbar />;
+  return (
+    <div className="h-screen bg-c900">
+      <Navbar />
+    </div>
+  );
 };

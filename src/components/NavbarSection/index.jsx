@@ -12,9 +12,9 @@ const iconsLinks = [
 
 export const Navbar = () => {
   return (
-    <header className=" shadow-lg">
+    <header className="bg-white">
       <div className="nav__container">
-        <div className="py-2 grid grid-cols-1 md:grid-cols-2 items-center gap-y-10 md:gap-y-0">
+        <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-y-5 md:gap-y-0">
           <div>
             <Heading
               as="h1"
