@@ -23,9 +23,11 @@ export const LoginForm = () => {
           backgroundImage: `url(${background2})`
         }}
       ></div>
-      <div className=" w-10/12 h-64 lg:w-lg lg:h-lg bg-white absolute z-30 rounded-xlg flex">
-        <h1 className="font-xbold text-xxlg ">Cherrime</h1>
-        <button></button>
+      <div className=" w-10/12 h-64 lg:w-lg lg:h-lg bg-white absolute z-30 rounded-xlg flex pt-24 ">
+        <div className="h-full mx-auto ">
+          <h1 className="font-xbold text-xxlg ">Cherrime</h1>
+          <button className="font-secondary font-bold text-base text-center bg-c200  text-white py-4 px-40 mt-32 rounded-lg" >Login with email</button>
+        </div>
       </div>
     </div>
   );
