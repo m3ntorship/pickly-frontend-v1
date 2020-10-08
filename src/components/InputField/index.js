@@ -7,8 +7,6 @@ export const InputField = ({ imageURL }) => {
     const value = e.target.value;
     setPostText(value);
     setLettersCounter(value.length);
-    console.log(postText);
-    console.log(lettersCounter);
   };
   return (
     <div className=" w-full h-20 rounded-lg border border-solid border-c700 flex items-center p-4 z-10 ">
