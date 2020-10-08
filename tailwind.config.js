@@ -22,7 +22,8 @@ module.exports = {
       regular: 400,
       medium: 500,
       semibold: 600,
-      bold: 700
+      bold: 700,
+      xbold: 900
     },
     fontSize: {
       xs: '0.75rem', // 12px
@@ -30,7 +31,8 @@ module.exports = {
       base: '1rem', // 16px
       md: '1.125rem', // 20px
       lg: '1.5rem', // 24px
-      xlg: '1.875rem' // 30px
+      xlg: '1.875rem', // 30px
+      xxlg: '2.5rem' //40px
     },
     colors: {
       c100: '#7048E8', // Blue
@@ -57,7 +59,17 @@ module.exports = {
     corePlugins: {
       container: false
     },
-    extend: {}
+    extend: {
+      width: {
+        lg: '42.75rem'
+      },
+      height: {
+        lg: '42.75rem'
+      },
+      borderRadius: {
+        xlg: '3.75rem'
+      }
+    }
   },
   variants: {
     opacity: ['responsive', 'hover', 'focus', 'group-hover'], // adding opacity to group-hover
