@@ -1,7 +1,10 @@
 import React from 'react';
-
 import background1 from './backgrounds/background1.png';
 import background2 from './backgrounds/background2.png';
+
+import fire from './fire';
+import firebase from 'firebase';
+
 export const LoginForm = () => {
   return (
     <div className="w-full flex h-screen relative items-center justify-center ">
