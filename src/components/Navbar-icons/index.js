@@ -2,11 +2,14 @@ import React from 'react';
 import cn from 'classnames';
 import PropTypes from 'prop-types';
 
-
-export const Icon = ({ iconURL, selected }) => {
+export const Icon = ({ iconURL, selected, className }) => {
   return (
     <div
-      className={cn({ 'bg-c100_op-10': selected }, 'p-4 w-16 h-16 rounded-lg ')}
+      className={cn(
+        { 'bg-c100_op-10': selected },
+        'p-4 w-16 h-16 rounded-lg cursor-pointer',
+        className
+      )}
     >
       {selected ? (
         <img
@@ -25,7 +28,6 @@ export const Icon = ({ iconURL, selected }) => {
   );
 };
 
-
 Icon.propTypes = {
   /**
    * this is the URL of the icon image!
@@ -36,4 +38,3 @@ Icon.propTypes = {
    */
   selected: PropTypes.bool
 };
-
