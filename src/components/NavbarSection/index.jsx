@@ -1,14 +1,34 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Heading, HEADING_OPTIONS } from '../Heading';
 import { Icon } from '../Navbar-icons';
 
 // Icons Links
-const iconsLinks = [
+const navLinks = [
   'https://res.cloudinary.com/dqmuowojl/image/upload/v1601849139/icons/vzrzfrgclizafzzzjwml.svg',
   'https://res.cloudinary.com/dqmuowojl/image/upload/v1601833247/icons/dqx6nlqzgq2htwakja7b.svg',
   'https://res.cloudinary.com/dqmuowojl/image/upload/v1601833247/icons/uxm0ry0c9xwkz3zmooxv.svg',
   'https://res.cloudinary.com/dqmuowojl/image/upload/v1601833247/icons/cgafox7opgi6le1eomg4.svg'
 ];
+
+const Navigation = () => {
+  return (
+    <div className="text-center md:text-right">
+      <Link to="/">
+        <Icon iconURL={navLinks[0]} className="inline-block md:mx-2" />
+      </Link>
+      <Link to="/friends">
+        <Icon iconURL={navLinks[1]} className="inline-block md:mx-2" />
+      </Link>
+      <Link to="/notifications">
+        <Icon iconURL={navLinks[2]} className="inline-block md:mx-2" />
+      </Link>
+      <Link to="/profile">
+        <Icon iconURL={navLinks[3]} className="inline-block md:mx-2" />
+      </Link>
+    </div>
+  );
+};
 
 export const Navbar = () => {
   return (
@@ -27,11 +47,7 @@ export const Navbar = () => {
               className="max-sm:text-xlg max-sm:text-center max-sm:mt-10"
             />
           </div>
-          <div className="text-center md:text-right">
-            {iconsLinks.map((url, i) => (
-              <Icon key={i} iconURL={url} className="inline-block md:mx-2" />
-            ))}
-          </div>
+          <Navigation />
         </div>
       </div>
     </header>
