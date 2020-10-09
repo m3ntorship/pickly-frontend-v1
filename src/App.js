@@ -1,9 +1,15 @@
-import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import React, { useState } from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useHistory
+} from 'react-router-dom';
 import { Navbar } from './components/NavbarSection';
 import { Home } from './pages/home.jsx';
 
 function App() {
+  const [user, setUser] = useState(null);
   return (
     <Router>
       <div className="App">
@@ -13,6 +19,7 @@ function App() {
           <Route path="/friends" component={Friends} />
           <Route path="/notifications" component={Notifications} />
           <Route path="/profile" component={profile} />
+          <Route path="/login" component={LogIn} />
         </Switch>
       </div>
     </Router>
@@ -24,7 +31,7 @@ export default App;
 const Friends = () => {
   return (
     <div className="h-screen bg-c800">
-      <h1>Hello, Friends</h1>
+      <h1 className="text-c100">Hello, Friends</h1>
     </div>
   );
 };
@@ -32,7 +39,7 @@ const Friends = () => {
 const Notifications = () => {
   return (
     <div className="h-screen bg-c800">
-      <h1>Hello, Alerts</h1>
+      <h1 className="text-c200">Hello, Alerts</h1>
     </div>
   );
 };
@@ -40,7 +47,24 @@ const Notifications = () => {
 const profile = () => {
   return (
     <div className="h-screen bg-c800">
-      <h1>Hello, Profile</h1>
+      <h1 className="text-c300">Hello, Profile</h1>
+    </div>
+  );
+};
+
+const LogIn = () => {
+  const history = useHistory();
+  return (
+    <div className="h-screen bg-c800 w-full my-10 mx-auto text-center">
+      <h1 className="text-c300">Please Login</h1>
+      <button
+        className="p-5 border-none m-5 bg-c100 text-white text-lg"
+        onClick={() => {
+          history.push('/profile');
+        }}
+      >
+        LogIn
+      </button>
     </div>
   );
 };
