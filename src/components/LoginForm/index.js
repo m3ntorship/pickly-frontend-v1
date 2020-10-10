@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import background1 from './backgrounds/background1.png';
 import background2 from './backgrounds/background2.png';
-
 import fire from './fire';
 import firebase from 'firebase';
+
+export const UserContext = React.createContext();
 
 export const LoginForm = () => {
   const [user, setUser] = useState(null);
@@ -49,6 +50,7 @@ export const LoginForm = () => {
 
   return (
     <div className="w-full flex h-screen relative items-center justify-center ">
+      <UserContext.Provider value={{ user }}>
       <div
         className="z-10 w-full absolute min-h-full"
         style={{
@@ -78,6 +80,7 @@ export const LoginForm = () => {
           </button>
         </div>
       </div>
+      </UserContext.Provider> 
     </div>
   );
 };
