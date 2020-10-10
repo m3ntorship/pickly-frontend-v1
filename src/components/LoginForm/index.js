@@ -8,7 +8,8 @@ import { UserContext } from './userContext';
 export const LoginForm = () => {
     const user = useContext(UserContext);
 
-    const login = () => {
+  const login = (e) => {
+       e.preventDefault();
       var provider = new firebase.auth.GoogleAuthProvider();
       fire
         .auth()
@@ -30,7 +31,7 @@ export const LoginForm = () => {
     };
 
     return (
-      <div className="w-full flex h-screen relative items-center justify-center ">
+      <form onSubmit={login} className="w-full flex h-screen relative items-center justify-center ">
         <div
           className="z-10 w-full absolute min-h-full"
           style={{
@@ -56,12 +57,12 @@ export const LoginForm = () => {
             </h1>
             <button
               className="font-secondary font-bold text-base text-center bg-c200  text-white rounded-md md:rounded-lg py-4 my-16 px-12 md:w-full md:mx-auto"
-              onClick={login}
+              // onClick={login}
             >
               Login with Google
             </button>
           </div>
         </div>
-      </div>
+      </form>
     );
   };
