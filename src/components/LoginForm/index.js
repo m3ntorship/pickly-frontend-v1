@@ -41,7 +41,6 @@ export const LoginForm = () => {
       if (user) {
         setUser(user);
         console.log(user.displayName);
-        console.log(user);
       } else {
         setUser(null);
       }
@@ -68,14 +67,14 @@ export const LoginForm = () => {
           backgroundImage: `url(${background2})`
         }}
       ></div>
-      <div className=" w-10/12 h-64 lg:w-lg lg:h-lg bg-white absolute z-30 rounded-xlg flex pt-24 ">
-        <div className="h-full mx-auto ">
-          <h1 className="font-xbold text-xxlg ">Cherrime</h1>
+      <div className="bg-white absolute z-30 rounded-lg flex w-11/12 pt-8 pb-32 flex-col pl-6 md:pb-40 lg:w-lg lg:rounded-xlg lg:pl-24 lg:pb-40 ">
+        <div className="">
+          <h1 className="font-xbold text-xxlg ">Pickly</h1>
           <button
-            className="font-secondary font-bold text-base text-center bg-c200  text-white py-4 px-40 mt-32 rounded-lg"
+            className="font-secondary font-bold text-base text-center bg-c200  text-white rounded-md mt-20 py-4 px-10 lg:w-3/4 lg:mx-auto lg:rounded-lg"
             onClick={login}
           >
-            Login with email
+            Login with Google
           </button>
         </div>
       </div>
