@@ -1,11 +1,15 @@
 import React from 'react';
-import { TestComponent } from './components/testComponent';
+// import { TestComponent } from './components/testComponent';
+import { UserContextProvider } from './components/LoginForm/userContext';
+import { LoginForm } from './components/LoginForm/index';
 
 function App() {
   return (
-    <div>
-      <TestComponent />
-    </div>
+    <UserContextProvider>
+      <div>
+        <LoginForm />
+      </div>
+    </UserContextProvider>
   );
 }
 

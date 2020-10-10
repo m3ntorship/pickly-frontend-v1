@@ -1,56 +1,36 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import background1 from './backgrounds/background1.png';
 import background2 from './backgrounds/background2.png';
 import fire from './fire';
 import firebase from 'firebase';
-
-export const UserContext = React.createContext();
+import { UserContext } from './userContext';
 
 export const LoginForm = () => {
-  const [user, setUser] = useState(null);
+    const user = useContext(UserContext);
 
-  const login = () => {
-    var provider = new firebase.auth.GoogleAuthProvider();
-    fire
-      .auth()
-      .signInWithPopup(provider)
-      .then(function (result) {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        // var token = result.credential.accessToken;
-        // The signed-in user info.
-        // var user = result.user;
-        // console.log(user);
-        // ...
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    const login = () => {
+      var provider = new firebase.auth.GoogleAuthProvider();
+      fire
+        .auth()
+        .signInWithPopup(provider)
+        .then(function (result) {
+          // This gives you a Google Access Token. You can use it to access the Google API.
+          var token =
+            result.credential.accessToken;
+          console.log(token);
+          // The signed-in user info.
+          var user = result.user;
+          console.log(
+            user.displayName + 'from index'
+          );
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    };
 
-    fire.auth().onAuthStateChanged(user => {
-      if (user) {
-        setUser(user);
-        console.log(user.displayName);
-        console.log(user);
-      } else {
-        setUser(null);
-      }
-    });
-  };
-
-  useEffect(() => {
-    fire.auth().onAuthStateChanged(user => {
-      if (user) {
-        setUser(user);
-        console.log(user.displayName);
-      } else {
-        setUser(null);
-      }
-    });
-  });
-
-  return (
-    <div className="w-full flex h-screen relative items-center justify-center ">
-      <UserContext.Provider value={{ user }}>
+    return (
+      <div className="w-full flex h-screen relative items-center justify-center ">
         <div
           className="z-10 w-full absolute min-h-full"
           style={{
@@ -69,18 +49,19 @@ export const LoginForm = () => {
             backgroundImage: `url(${background2})`
           }}
         ></div>
-        <div className="bg-white absolute z-30 rounded-lg flex w-11/12 pt-8 pb-32 flex-col pl-6 md:pb-40 lg:w-lg lg:rounded-xlg lg:pl-24 lg:pb-40 ">
-          <div className="">
-            <h1 className="font-xbold text-xxlg ">Pickly</h1>
+        <div className="bg-white absolute z-30 rounded-lg flex flex-col md:rounded-xlg items-center justify-center px-4 py-20 w-5/6 lg:px-4 md:w-3/4 lg:w-2/4 md:pb-40 md:pt-20 ">
+          <div className="md:w-5/6">
+            <h1 className="font-xbold text-xxlg w-full ">
+              Pickly
+            </h1>
             <button
-              className="font-secondary font-bold text-base text-center bg-c200  text-white rounded-md mt-20 py-4 px-10 lg:w-3/4 lg:mx-auto lg:rounded-lg"
+              className="font-secondary font-bold text-base text-center bg-c200  text-white rounded-md md:rounded-lg py-4 my-16 px-12 md:w-full md:mx-auto"
               onClick={login}
             >
               Login with Google
             </button>
           </div>
         </div>
-      </UserContext.Provider>
-    </div>
-  );
-};
+      </div>
+    );
+  };
