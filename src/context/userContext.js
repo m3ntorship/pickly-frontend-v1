@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import fire from './fire';
+import fire from '../components/LoginForm/fire';
 
 export const UserContext = createContext(null);
 

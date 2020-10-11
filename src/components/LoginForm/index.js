@@ -3,7 +3,7 @@ import background1 from './backgrounds/background1.png';
 import background2 from './backgrounds/background2.png';
 import fire from './fire';
 import firebase from 'firebase';
-import { UserContext } from './userContext';
+import { UserContext } from '../../context/userContext';
 
 export const LoginForm = () => {
     const user = useContext(UserContext);
