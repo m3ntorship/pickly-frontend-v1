@@ -7,20 +7,25 @@ import {
 } from 'react-router-dom';
 import { Navbar } from './components/NavbarSection';
 import { Home } from './pages/home.jsx';
+import React from 'react';
+import { UserContextProvider } from './context/userContext';
+import { LoginForm } from './components/LoginForm/index';
 
 function App() {
   const [user, setUser] = useState(null);
   return (
     <Router>
       <div className="App">
-        <Navbar />
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/friends" component={Friends} />
-          <Route path="/notifications" component={Notifications} />
-          <Route path="/profile" component={profile} />
-          <Route path="/login" component={LogIn} />
-        </Switch>
+        <UserContextProvider>
+          <Navbar />
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route path="/friends" component={Friends} />
+            <Route path="/notifications" component={Notifications} />
+            <Route path="/profile" component={profile} />
+            <Route path="/login" component={LogIn} />
+          </Switch>
+        </UserContextProvider>
       </div>
     </Router>
   );
