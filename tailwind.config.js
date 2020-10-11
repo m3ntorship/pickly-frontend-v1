@@ -52,14 +52,16 @@ module.exports = {
         15: 'rgba(112, 72, 232, 0.15)'
       }
     },
-    boxShadow: {
-      background: '0px 4px 25px 0px rgba(196, 203, 216, 0.25)'
-    },
-
     corePlugins: {
       container: false
     },
     extend: {
+      screens: {
+        'max-sm': { max: '767px' }
+      },
+      boxShadow: {
+        background: '0px 4px 25px 0px rgba(196, 203, 216, 0.25)'
+      },
       width: {
         lg: '42.75rem'
       },
