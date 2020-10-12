@@ -1,31 +1,20 @@
 import React from 'react';
-import { Heading } from '../Heading/index';
 
-const ImageWithSideTitle = ({
-  imgURL,
-  iconURL,
-  title,
-  subTitle,
-  titleColor
-}) => {
+const ImageWithSideTitle = ({ imgURL, iconURL, title, subTitle }) => {
   return (
-    <div className="flex justify-around items-center rounded py-3">
-      <div className="rounded-full h-10 w-10 flex items-center justify-center">
-        <img
-          className={` ${imgURL ? 'rounded-full h-full w-full' : 'h-4 w-4'}`}
-          src={imgURL || iconURL}
-          alt=""
-        />
+    <div className="flex w-64">
+      <div className="rounded-full h-10 w-10">
+        <div className="w-10 h-10 flex items-center justify-center">
+          <img
+            className={` ${imgURL ? 'rounded-full h-full w-full' : 'h-4 w-4'}`}
+            src={imgURL || iconURL}
+            alt=""
+          />
+        </div>
       </div>
 
-      <div className="ml-5">
-        <Heading
-          fontSize="sm"
-          children={title}
-          textAlign="left"
-          textColor={titleColor} // Options are down in a comment
-          fontWeight="semibold"
-        />
+      <div className="ml-3 inline-block my-auto">
+        <h6 className="text-sm font-semibold text-c400">{title}</h6>
         {subTitle && (
           <span className="block mt-1 text-c500 text-xs text-left">
             {subTitle}
@@ -37,20 +26,3 @@ const ImageWithSideTitle = ({
 };
 
 export default ImageWithSideTitle;
-
-/*
-Title Color Options: [
-    'blue',
-    'red',
-    'lightblack',
-    'dawnblack',
-    'cloudgrey',
-    'submarinegrey',
-    'whitegray',
-    'silvergrey',
-    'offwhite',
-    'green',
-    'white',
-    'black'
-]
-*/
