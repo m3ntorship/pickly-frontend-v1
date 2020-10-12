@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Heading, HEADING_OPTIONS } from '../Heading';
 import { Icon } from '../Navbar-icons';
 
@@ -14,18 +14,47 @@ const navLinks = [
 const Navigation = () => {
   return (
     <div className="text-center md:text-right">
-      <Link to="/">
-        <Icon iconURL={navLinks[0]} className="inline-block md:mx-2" />
-      </Link>
-      <Link to="/friends">
+      <NavLink
+        exact
+        to="/"
+        activeClassName="bg-c100_op-10 inline-block rounded-lg"
+        activeStyle={{
+          filter:
+            'invert(64%) sepia(95%) saturate(7477%) hue-rotate(247deg) brightness(98%) contrast(90%)'
+        }}
+      >
+        <Icon iconURL={navLinks[0]} className="inline-block md:mx-2 " />
+      </NavLink>
+      <NavLink
+        to="/friends"
+        activeClassName="bg-c100_op-10 inline-block rounded-lg"
+        activeStyle={{
+          filter:
+            'invert(64%) sepia(95%) saturate(7477%) hue-rotate(247deg) brightness(98%) contrast(90%)'
+        }}
+      >
         <Icon iconURL={navLinks[1]} className="inline-block md:mx-2" />
-      </Link>
-      <Link to="/notifications">
+      </NavLink>
+      <NavLink
+        to="/notifications"
+        activeClassName="bg-c100_op-10 inline-block rounded-lg"
+        activeStyle={{
+          filter:
+            'invert(64%) sepia(95%) saturate(7477%) hue-rotate(247deg) brightness(98%) contrast(90%)'
+        }}
+      >
         <Icon iconURL={navLinks[2]} className="inline-block md:mx-2" />
-      </Link>
-      <Link to="/profile">
+      </NavLink>
+      <NavLink
+        to="/profile"
+        activeClassName="bg-c100_op-10 inline-block rounded-lg"
+        activeStyle={{
+          filter:
+            'invert(64%) sepia(95%) saturate(7477%) hue-rotate(247deg) brightness(98%) contrast(90%)'
+        }}
+      >
         <Icon iconURL={navLinks[3]} className="inline-block md:mx-2" />
-      </Link>
+      </NavLink>
     </div>
   );
 };
