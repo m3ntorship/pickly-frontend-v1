@@ -23,7 +23,7 @@ const Navigation = () => {
             'invert(64%) sepia(95%) saturate(7477%) hue-rotate(247deg) brightness(98%) contrast(90%)'
         }}
       >
-        <Icon iconURL={navLinks[0]} className="inline-block md:mx-2 " />
+        <Icon iconURL={navLinks[0]} className="inline-block md:mx-2  " />
       </NavLink>
       <NavLink
         to="/friends"
@@ -61,9 +61,9 @@ const Navigation = () => {
 
 export const Navbar = () => {
   return (
-    <header className="bg-white">
+    <header className="bg-white pt-8 pb-2">
       <div className="nav__container">
-        <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-y-5 md:gap-y-0">
+        <div className="grid grid-cols-1 md:grid-cols-2 items-center  gap-y-5 md:gap-y-0">
           <div>
             <Heading
               as="h1"
