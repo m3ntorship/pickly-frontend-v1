@@ -3,11 +3,13 @@ import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import Popup from 'reactjs-popup';
 import { ReusableDiv } from '../DivWithCenterdChildren';
+import { InputField } from '../InputField';
 
 // Setting a high pixel ratio avoids blurriness in the canvas crop preview.
 const pixelRatio = 4;
 
 export const UploadSection = () => {
+  // crop image states =============
   const [crop, setCrop] = useState({
     unit: '%',
     width: 30,
@@ -25,6 +27,8 @@ export const UploadSection = () => {
   const imgTwoPopupRef = useRef();
   const imgOneRef = useRef();
   const imgTwoRef = useRef();
+
+  //===================== IT'S HERE ALL FOR THE CROP IMAGE SECTIONS =========================================
 
   const onSelectFileOne = e => {
     if (e.target.files && e.target.files.length > 0) {
@@ -149,8 +153,13 @@ export const UploadSection = () => {
   };
 
   return (
-    <div className="mx-auto my-auto" style={{ width: 'fit-content' }}>
+    <div
+      className="mx-auto my-auto rounded-lg"
+      style={{ width: 'fit-content' }}
+    >
       <div className="relative">
+        <InputField />
+        {/* Here is the OR centerd component */}
         <div
           className="absolute"
           style={{ left: '332px', top: '220px', width: 'fitContent' }}
@@ -245,12 +254,11 @@ export const UploadSection = () => {
               </div>
             </Popup>
           </div>
-
           {/*
  =================================================================
+ Crop Image Tow
  =================================================================
 */}
-
           {/* Upload Image Two */}
           <div className="inline-block">
             <div>
