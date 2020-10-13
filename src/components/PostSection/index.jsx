@@ -86,26 +86,3 @@ const PostSection = ({
 };
 
 export default PostSection;
-
-{
-  /* <div
-            className={`flex flex-col justify-center items-center ${iconDisplay} `}
-            onMouseOver={() => {
-              setIconDisplay('opacity-100');
-            }}
-            onMouseOut={() => setIconDisplay('opacity-0')}
-          >
-            <div className="h-10 w-10 rounded-full flex items-center justify-center bg-white">
-              <img src={pickIcon} alt="" style={{ width: '13px' }} />
-            </div>
-            <div className="flex mt-2">
-              <div className="h-10 w-10 rounded-full flex items-center justify-center bg-white">
-                <img src={searchIcon} alt="" style={{ width: '13px' }} />
-              </div>
-              <span className="mx-1"></span>
-              <div className="h-10 w-10 rounded-full flex items-center justify-center bg-white">
-                <PopUp appearOn="click" options={options} />
-              </div>
-            </div>
-          </div> */
-}
