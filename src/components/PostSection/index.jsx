@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ImageWithSideTitle from '../ImageWithSideTitle/index';
 import { ReusableDiv } from '../DivWithCenterdChildren/index';
 import PopUp from '../OptionsBtn/index';
+import { ShareBtn } from '../ShareBtn';
 
 const PostSection = ({
   title,
@@ -15,7 +16,9 @@ const PostSection = ({
   bgColor,
   pickIcon,
   searchIcon,
-  options
+  saveIcon,
+  options,
+  url
 }) => {
   const [iconDisplay, setIconDisplay] = useState('');
   const viewWidth = document.body.clientWidth;
@@ -81,6 +84,34 @@ const PostSection = ({
           </div>
         </ReusableDiv>
       </div>
+      <ReusableDiv>
+        <div className="flex w-full items-center justify-between mt-6 px-4">
+          <div className="flex">
+            <ReusableDiv fullRound={true} divWidth="107px" divHeight="25px">
+              <div className="flex w-full text-sm justify-around text-c300">
+                <img src={pickIcon} alt="" className="w-5" />
+                120k Votes
+              </div>
+            </ReusableDiv>
+            <ReusableDiv
+              fullRound={true}
+              divWidth="107px"
+              divHeight="25px"
+              className="ml-6"
+            >
+              <div className="flex w-full text-sm justify-around text-c300">
+                <img src={saveIcon} alt="" className="w-4" />
+                12 Saved
+              </div>
+            </ReusableDiv>
+          </div>
+          <div>
+            <ReusableDiv>
+              <ShareBtn url={url} />
+            </ReusableDiv>
+          </div>
+        </div>
+      </ReusableDiv>
     </div>
   );
 };

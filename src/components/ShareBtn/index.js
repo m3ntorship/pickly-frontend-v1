@@ -15,7 +15,7 @@ export const ShareBtn = ({ url }) => {
         <svg
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
-          className="fill-current text-c500 inline-block w-12 h-12 "
+          className="fill-current text-c500 inline-block w-8 h-8 "
         >
           <path
             fillRule="evenodd"

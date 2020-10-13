@@ -26,5 +26,7 @@ PostSectionCase.args = {
   bgColor: 'white',
   pickIcon: 'http://www.svgshare.com/i/QUe.svg',
   searchIcon: 'https://i.imgur.com/inlBQ6A.png',
-  options: [0]
+  options: [0],
+  url: 'https://www.m3ntorship.com',
+  saveIcon: 'http://www.svgshare.com/i/QW7.svg'
 };
