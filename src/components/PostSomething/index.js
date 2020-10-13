@@ -3,6 +3,7 @@ import { Heading, HEADING_OPTIONS } from '../Heading';
 import { MultiBtn } from './MultipleImagesBtn';
 import { OneImageBtn } from './OneImageBtn';
 import Popup from 'reactjs-popup';
+import { UploadSection } from '../UploadSection';
 
 export const PostSomething = () => {
   return (
@@ -26,7 +27,7 @@ export const PostSomething = () => {
           }
           modal
         >
-          <h1>This was Build By M3ntorship Team.</h1>
+          <UploadSection />
         </Popup>
         <Popup
           trigger={
