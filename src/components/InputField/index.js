@@ -12,7 +12,7 @@ export const InputField = ({ imageURL }) => {
   };
 
   return (
-    <div className="w-11/12 mx-auto my-5 h-20 rounded-lg border border-solid border-c700 flex items-center p-4 z-10 ">
+    <div className="mx-auto my-5 h-20 rounded-lg border border-solid border-c700 flex items-center p-4 z-10 ">
       <img src={imageURL} alt="" className="w-8 h-8 rounded-full " />
       <textarea
         name="postText"

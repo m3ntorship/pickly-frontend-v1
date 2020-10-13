@@ -4,6 +4,9 @@ import 'react-image-crop/dist/ReactCrop.css';
 import Popup from 'reactjs-popup';
 import { ReusableDiv } from '../DivWithCenterdChildren';
 import { InputField } from '../InputField';
+import { Heading } from '../Heading';
+import { ToggleButton } from '../ToggleButton';
+import { Button } from '../Button';
 
 // Setting a high pixel ratio avoids blurriness in the canvas crop preview.
 const pixelRatio = 4;
@@ -154,8 +157,26 @@ export const UploadSection = () => {
 
   return (
     <div className="container">
-      <div className="mx-auto my-auto rounded-lg" style={{ height: '50%' }}>
-        <InputField />
+      <div className="mx-auto my-auto rounded-lg">
+        <Heading
+          as="p"
+          fontSize="sm"
+          fontWeight="medium"
+          lineHeight="normal"
+          textAlign="left"
+          textColor="lightblack"
+          className="my-5"
+        >
+          Post Something
+        </Heading>
+
+        {/* &&&&&&&&&&&&&&&&&&&&&& Input field and post options &&&&&&&&&&&&&&&&&&&&&& */}
+
+        <hr className="w-full text-c800 h-1" />
+        <div style={{ width: 'calc(100% - 2rem)' }} className="mx-auto mb-5">
+          <InputField imageURL="https://www.ludoviccareme.com/files/image_88_image_fr.jpg" />
+          <ToggleButton title="Post anonymoslly" />
+        </div>
 
         {/* &&&&&&&&&&&&&&&&&&&&&& Start Upload Images Section &&&&&&&&&&&&&&&&&&&&&& */}
 
@@ -349,6 +370,28 @@ export const UploadSection = () => {
           </Popup>
         </div>
         {/* &&&&&&&&&&&&&&&&&&&&&& Finish Upload Images Section &&&&&&&&&&&&&&&&&&&&&& */}
+        <div
+          className="my-5 mx-auto opacity-50"
+          style={{ width: 'calc(100% - 2rem)' }}
+        >
+          <p className="text-black text-xs">
+            it’s not recommended to make a poll with photos of your friends
+            without thier consent. we will remove a poll, if it’s reporte.
+            <a className="text-c200">Community Guidelines</a>
+          </p>
+        </div>
+        <hr className="w-full text-c800 h-1" />
+        <div style={{ width: 'calc(100% - 2rem)' }}>
+          <Button
+            backgroundColor="PrimaryGrey"
+            color="White"
+            isRounded
+            padding="big"
+            className="font-semibold text-xs py-1 float-right my-2"
+          >
+            Post
+          </Button>
+        </div>
       </div>
     </div>
   );
