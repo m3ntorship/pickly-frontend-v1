@@ -24,10 +24,13 @@ button:focus{
     @apply mx-auto;
   }
   
-  @media (min-width: 1280px) {
+  @media (min-width: 776px) {
     .container {
       max-width: 690px;
     }
+  }
+
+  @media (min-width: 1200px) {
     .nav__container {
       max-width: 60%;
     }
