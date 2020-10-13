@@ -20,72 +20,70 @@ const PostSection = ({
   options,
   url
 }) => {
-  const [iconDisplay, setIconDisplay] = useState('');
-  const viewWidth = document.body.clientWidth;
-  const orIconSm = { left: '46%' };
-  const orIconLg = { left: '47.7%' };
-
-  if (viewWidth <= 640) {
-    divHeight = 150;
-  }
+  const [iconDisplay, setIconDisplay] = useState(!bgColor);
+  const viewWidth = window.innerWidth || document.body.clientWidth;
 
   return (
     <div className="container">
       <ImageWithSideTitle title={title} subTitle={subTitle} imgURL={imgURL} />
       <p className="my-5 text-sm font-regular">{paragraph}</p>
       <div className="w-full grid grid-cols-2 gap-1 relative">
-        <ReusableDiv
-          bgImage={bgImageOne}
-          divHeight={divHeight}
-          smallRound={smallRound}
-        />
+        <div>
+          <ReusableDiv
+            bgImage={bgImageOne}
+            divHeight={viewWidth <= 640 ? '200px' : divHeight}
+            smallRound={smallRound}
+          />
+        </div>
         <div
-          style={viewWidth <= 460 ? orIconSm : orIconLg}
-          className="absolute bg-white flex items-center self-center justify-center rounded-full h-8 w-8 text-xs"
+          style={{ left: '48%' }}
+          className="absolute bg-white md:flex items-center self-center justify-center rounded-full h-8 w-8 text-xs hidden "
         >
           OR
         </div>
 
-        <ReusableDiv
-          bgImage={bgImageTwo}
-          divHeight={divHeight}
-          smallRound={smallRound}
-        >
-          <div className="flex flex-col items-center">
-            <ReusableDiv
-              bgColor={iconDisplay}
-              fullRound={true}
-              divWidth="60px"
-              divHeight="60px"
-              clickFunction={() => setIconDisplay(bgColor)}
-            >
-              <img src={pickIcon} alt="" style={{ width: '35px' }} />
-            </ReusableDiv>
+        <div>
+          <ReusableDiv
+            bgImage={bgImageTwo}
+            divHeight={viewWidth <= 640 ? '200px' : divHeight}
+            smallRound={smallRound}
+          >
+            <div className="flex flex-col items-center">
+              <ReusableDiv
+                bgColor={iconDisplay}
+                fullRound={true}
+                divWidth="55px"
+                divHeight="55px"
+                clickFunction={() => setIconDisplay(bgColor)}
+              >
+                <img src={pickIcon} alt="" style={{ width: '25px' }} />
+              </ReusableDiv>
 
-            <div className="flex mt-2">
-              <ReusableDiv
-                bgColor="white"
-                fullRound={true}
-                divHeight="28px"
-                divWidth="28px"
-              >
-                <img src={searchIcon} alt="" style={{ width: '13px' }} />
-              </ReusableDiv>
-              <span className="mx-2"></span>
-              <ReusableDiv
-                bgColor="white"
-                fullRound={true}
-                divHeight="28px"
-                divWidth="28px"
-              >
-                <PopUp appearOn="click" options={options} />
-              </ReusableDiv>
+              <div className="flex mt-2">
+                <ReusableDiv
+                  bgColor="white"
+                  fullRound={true}
+                  divHeight="28px"
+                  divWidth="28px"
+                >
+                  <img src={searchIcon} alt="" style={{ width: '13px' }} />
+                </ReusableDiv>
+                <span className="mx-2"></span>
+                <ReusableDiv
+                  bgColor="white"
+                  fullRound={true}
+                  divHeight="28px"
+                  divWidth="28px"
+                >
+                  <PopUp appearOn="click" options={options} />
+                </ReusableDiv>
+              </div>
             </div>
-          </div>
-        </ReusableDiv>
+          </ReusableDiv>
+        </div>
       </div>
       <ReusableDiv>
-        <div className="flex w-full items-center justify-between mt-6 px-4">
+        <div className="flex w-full items-center justify-between mt-6 py-2 px-3">
           <div className="flex">
             <ReusableDiv fullRound={true} divWidth="107px" divHeight="25px">
               <div className="flex w-full text-sm justify-around text-c300">
