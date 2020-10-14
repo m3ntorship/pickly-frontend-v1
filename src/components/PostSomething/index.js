@@ -26,6 +26,7 @@ export const PostSomething = () => {
       <hr className="border-c700" />
       <div className="flex">
         <Popup
+          closeOnDocumentClick={false}
           ref={popupRef}
           contentStyle={{
             borderRadius: '10px',
