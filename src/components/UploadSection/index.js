@@ -372,9 +372,9 @@ export const UploadSection = ({ handleCloseUpload }) => {
                   </div>
                 </div>
               )}
-              {cropedImageOne && (
+              {cropedImageTwo && (
                 <img
-                  src={cropedImageOne}
+                  src={cropedImageTwo}
                   className="absolute h-full w-full left-0 top-0 object-cover"
                 />
               )}
