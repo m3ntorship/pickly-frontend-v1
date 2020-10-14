@@ -5,34 +5,41 @@ import PopUp from '../OptionsBtn/index';
 import { ShareBtn } from '../ShareBtn';
 
 const PostSection = ({
-  title,
-  subTitle,
-  imgURL,
-  paragraph,
-  bgImageOne,
-  bgImageTwo,
-  divHeight,
-  smallRound,
-  bgColor,
-  pickIcon,
-  searchIcon,
-  saveIcon,
-  options,
-  url
+  userName,
+  postDate,
+  userImage,
+  postCaption,
+  leftBgImage,
+  rightBgImage,
+  popupActionOptions,
+  shareUrl,
+  votesNumbers,
+  savesNumbers
 }) => {
-  const [iconDisplay, setIconDisplay] = useState(!bgColor);
   const viewWidth = window.innerWidth || document.body.clientWidth;
+  const postComponentFixedAssets = {
+    pickIcon: 'http://www.svgshare.com/i/QXB.svg',
+    searchIcon: 'https://i.imgur.com/inlBQ6A.png',
+    saveIcon: 'http://www.svgshare.com/i/QW7.svg',
+    bgColor: 'white'
+  };
+  const { pickIcon, searchIcon, saveIcon, bgColor } = postComponentFixedAssets;
+  const [iconDisplay, setIconDisplay] = useState(!bgColor);
 
   return (
     <div className="container">
-      <ImageWithSideTitle title={title} subTitle={subTitle} imgURL={imgURL} />
-      <p className="my-5 text-sm font-regular">{paragraph}</p>
+      <ImageWithSideTitle
+        title={userName}
+        subTitle={postDate}
+        imgURL={userImage}
+      />
+      <p className="my-5 text-sm font-regular">{postCaption}</p>
       <div className="w-full grid grid-cols-2 gap-1 relative">
         <div>
           <ReusableDiv
-            bgImage={bgImageOne}
-            divHeight={viewWidth <= 640 ? '200px' : divHeight}
-            smallRound={smallRound}
+            bgImage={leftBgImage}
+            divHeight={viewWidth <= 640 ? '200px' : '400px'}
+            smallRound={true}
           />
         </div>
         <div
@@ -44,9 +51,9 @@ const PostSection = ({
 
         <div>
           <ReusableDiv
-            bgImage={bgImageTwo}
-            divHeight={viewWidth <= 640 ? '200px' : divHeight}
-            smallRound={smallRound}
+            bgImage={rightBgImage}
+            divHeight={viewWidth <= 640 ? '200px' : '400px'}
+            smallRound={true}
           >
             <div className="flex flex-col items-center">
               <ReusableDiv
@@ -60,56 +67,34 @@ const PostSection = ({
               </ReusableDiv>
 
               <div className="flex mt-2">
-                <ReusableDiv
-                  bgColor="white"
-                  fullRound={true}
-                  divHeight="28px"
-                  divWidth="28px"
-                >
+                <div className="w-8 h-8 rounded-full bg-white flex justify-center items-center">
                   <img src={searchIcon} alt="" style={{ width: '13px' }} />
-                </ReusableDiv>
+                </div>
                 <span className="mx-2"></span>
-                <ReusableDiv
-                  bgColor="white"
-                  fullRound={true}
-                  divHeight="28px"
-                  divWidth="28px"
-                >
-                  <PopUp appearOn="click" options={options} />
-                </ReusableDiv>
+                <div className="w-8 h-8 rounded-full bg-white flex justify-center items-center">
+                  <PopUp appearOn="click" options={popupActionOptions} />
+                </div>
               </div>
             </div>
           </ReusableDiv>
         </div>
       </div>
-      <ReusableDiv>
-        <div className="flex w-full items-center justify-between mt-6 py-2 px-3">
-          <div className="flex">
-            <ReusableDiv fullRound={true} divWidth="107px" divHeight="25px">
-              <div className="flex w-full text-sm justify-around text-c300">
-                <img src={pickIcon} alt="" className="w-5" />
-                120k Votes
-              </div>
-            </ReusableDiv>
-            <ReusableDiv
-              fullRound={true}
-              divWidth="107px"
-              divHeight="25px"
-              className="ml-6"
-            >
-              <div className="flex w-full text-sm justify-around text-c300">
-                <img src={saveIcon} alt="" className="w-4" />
-                12 Saved
-              </div>
-            </ReusableDiv>
+      <div className="flex w-full items-center justify-between mt-6 py-2 px-3">
+        <div className="flex">
+          <div className="flex w-32 text-sm justify-around text-c300">
+            <img src={pickIcon} alt="" className="w-5" />
+            {votesNumbers} Votes
           </div>
-          <div>
-            <ReusableDiv>
-              <ShareBtn url={url} />
-            </ReusableDiv>
+
+          <div className="flex w-32 text-sm justify-around text-c300 ml-6">
+            <img src={saveIcon} alt="" className="w-4" />
+            {savesNumbers} Saved
           </div>
         </div>
-      </ReusableDiv>
+        <div>
+          <ShareBtn url={shareUrl} />
+        </div>
+      </div>
     </div>
   );
 };
