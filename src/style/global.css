@@ -8,7 +8,7 @@ body {
   margin: 0 !important;
 }
 
-button:focus{
+button:focus, input:focus, textarea:focus, select:focus{
   outline:none !important;
 }
 
