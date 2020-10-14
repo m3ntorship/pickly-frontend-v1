@@ -209,7 +209,7 @@ export const UploadSection = ({ handleCloseUpload }) => {
 
       {/* &&&&&&&&&&&&&&&&&&&&&& Start Upload Images Section &&&&&&&&&&&&&&&&&&&&&& */}
 
-      <div className="relative wrap__crop" style={{ height: '450px' }}>
+      <div className="relative" style={{ height: '350px' }}>
         {/* Here is the OR centerd component */}
         <div
           className="absolute z-10"
@@ -241,7 +241,6 @@ export const UploadSection = ({ handleCloseUpload }) => {
           <label htmlFor="file-one" className="cursor-pointer">
             <ReusableDiv
               bgColor={!cropedImageOne && 'c900'}
-              bgImage={cropedImageOne}
               rounded
               divHeight="100%"
             >
@@ -282,6 +281,12 @@ export const UploadSection = ({ handleCloseUpload }) => {
                     </p>
                   </div>
                 </div>
+              )}
+              {cropedImageOne && (
+                <img
+                  src={cropedImageOne}
+                  className="absolute h-full w-full left-0 top-0 object-cover"
+                />
               )}
             </ReusableDiv>
           </label>
@@ -326,7 +331,6 @@ export const UploadSection = ({ handleCloseUpload }) => {
           <label htmlFor="file-two" className="cursor-pointer">
             <ReusableDiv
               bgColor={!cropedImageTwo && 'c900'}
-              bgImage={cropedImageTwo}
               rounded
               divHeight="100%"
             >
@@ -367,6 +371,12 @@ export const UploadSection = ({ handleCloseUpload }) => {
                     </p>
                   </div>
                 </div>
+              )}
+              {cropedImageOne && (
+                <img
+                  src={cropedImageOne}
+                  className="absolute h-full w-full left-0 top-0 object-cover"
+                />
               )}
             </ReusableDiv>
           </label>

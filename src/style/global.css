@@ -23,20 +23,6 @@ button:focus, input:focus, textarea:focus, select:focus{
     margin: auto;
     @apply mx-auto;
   }
-  
-
-  /* Style for the popup */
-
-/*  from Zero To Tablet Screens */
-@media (max-width: 776px) {
-  /* It's a style for the div that wrap the crop divs inside to handle it in several screens  */
-.wrap__crop {
-  height: 250px !important;
-}
-.popup-content {
-  width: 90%   
-}
-}
 
   /* from tablet screens to the largest */
   @media (min-width: 776px) {
