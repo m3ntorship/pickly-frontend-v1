@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Heading, HEADING_OPTIONS } from '../Heading';
 import { Icon } from '../Navbar-icons';
 
@@ -14,27 +13,19 @@ const navLinks = [
 const Navigation = () => {
   return (
     <div className="text-center md:text-right">
-      <Link to="/">
-        <Icon iconURL={navLinks[0]} className="inline-block md:mx-2" />
-      </Link>
-      <Link to="/friends">
-        <Icon iconURL={navLinks[1]} className="inline-block md:mx-2" />
-      </Link>
-      <Link to="/notifications">
-        <Icon iconURL={navLinks[2]} className="inline-block md:mx-2" />
-      </Link>
-      <Link to="/profile">
-        <Icon iconURL={navLinks[3]} className="inline-block md:mx-2" />
-      </Link>
+      <Icon exact to="/" iconURL={navLinks[0]} />
+      <Icon to="/friends" iconURL={navLinks[1]} />
+      <Icon to="/notifications" iconURL={navLinks[2]} />
+      <Icon to="/profile" iconURL={navLinks[3]} />
     </div>
   );
 };
 
 export const Navbar = () => {
   return (
-    <header className="bg-white">
+    <header className="bg-white pt-8 pb-2">
       <div className="nav__container">
-        <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-y-5 md:gap-y-0">
+        <div className="grid grid-cols-1 md:grid-cols-2 items-center  gap-y-5 md:gap-y-0">
           <div>
             <Heading
               as="h1"
