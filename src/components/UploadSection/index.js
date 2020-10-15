@@ -178,21 +178,18 @@ export const UploadSection = ({ handleCloseUpload }) => {
   const openImgTwoPopup = () => imgTwoPopupRef.current.open();
   const closeImgTwoPopup = () => imgTwoPopupRef.current.close();
 
-  const handleFinishCropOne = async () => {
+  const handleFinishCropOne = () => {
     closeImgOnePopup();
-    const image = previewCanvasRefOne.current.toDataURL('image/jpeg', 1);
-    
-    const res = await fetch(image);
-    const blob = await res.blob();
-    debugger;
-    setCropedImageOne(new File([blob], 'nile', { type: 'image/jpeg' }));
+    previewCanvasRefOne.current.toBlob(blob => {
+      setCropedImageOne(new File([blob], 'nile', { type: 'image/jpeg' }));
+    });
   };
 
   const handleFinishCropTwo = () => {
     closeImgTwoPopup();
-    
-    const image = previewCanvasRefTwo.current.toDataURL('image/jpeg', 1);
-    setCropedImageTwo(image);
+    previewCanvasRefTwo.current.toBlob(function (blob) {
+      setCropedImageTwo(new File([blob], 'nile', { type: 'image/jpeg' }));
+    });
   };
 
   return (
