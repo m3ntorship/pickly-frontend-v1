@@ -42,7 +42,7 @@ const PostSection = ({
         <ReusableDiv smallRound={true} divHeight="100%">
           <img
             src={leftBgImage}
-            className="w-full object-cover rounded-sm"
+            className="w-full h-full object-cover rounded-sm"
             style={{ maxHeight: '100%' }}
             alt=""
           />
@@ -70,12 +70,12 @@ const PostSection = ({
         <ReusableDiv divHeight="100%" smallRound={true}>
           <img
             src={rightBgImage}
-            className="w-full object-cover rounded-sm"
+            className="w-full h-full object-cover rounded-sm"
             style={{ maxHeight: '100%' }}
             alt=""
           />
           {/* This section takes class hidden untill we add these features */}
-          <div className="flex-col items-center absolute hidden">
+          {/* <div className="flex-col items-center absolute hidden">
             <ReusableDiv
               bgColor={iconDisplay}
               fullRound={true}
@@ -95,7 +95,7 @@ const PostSection = ({
                 <PopUp appearOn="click" options={popupActionOptions} />
               </div>
             </div>
-          </div>
+          </div> */}
         </ReusableDiv>
       </div>
 

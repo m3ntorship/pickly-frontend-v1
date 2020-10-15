@@ -34,7 +34,8 @@ export const UploadSection = ({ handleCloseUpload }) => {
   const imgTwoRef = useRef();
 
   // Test
-  const [imageToUpload, setImageToUpload] = useState();
+  const [imageOneToUpload, setImageOneToUpload] = useState();
+  const [imageTwoToUpload, setImageTwoToUpload] = useState();
 
   // ======== Other components State and Functions ===========
   const [postAnonymously, setPostAnonymously] = useState(false);
@@ -50,17 +51,20 @@ export const UploadSection = ({ handleCloseUpload }) => {
 
   // Post Data to the database Function
   const postData = e => {
-    // console.log(imageToUpload);
     e.preventDefault();
     const formData = new FormData();
-    formData.append('images', cropedImageOne);
-    formData.append('caption', 'Test22');
+    formData.append('images', imageOneToUpload);
+    formData.append('images', imageTwoToUpload);
+    formData.append('caption', caption);
     fetch('http://localhost:3001/posts', {
       method: 'POST',
       body: formData
     })
       .then(res => {
         console.log(res);
+      })
+      .then(res => {
+        handleCloseUpload();
       })
       .catch(err => console.log(err.message));
     console.log('done');
@@ -69,7 +73,6 @@ export const UploadSection = ({ handleCloseUpload }) => {
 
   const onSelectFileOne = e => {
     if (e.target.files && e.target.files.length > 0) {
-      setImageToUpload(e.target.files[0]);
       const reader = new FileReader();
       reader.addEventListener('load', () => {
         setImgOne(reader.result);
@@ -181,15 +184,17 @@ export const UploadSection = ({ handleCloseUpload }) => {
   const handleFinishCropOne = () => {
     closeImgOnePopup();
     previewCanvasRefOne.current.toBlob(blob => {
-      setCropedImageOne(new File([blob], 'nile', { type: 'image/jpeg' }));
+      setImageOneToUpload(new File([blob], 'nile', { type: 'image/jpeg' }));
     });
+    setCropedImageOne(previewCanvasRefOne.current.toDataURL());
   };
 
   const handleFinishCropTwo = () => {
     closeImgTwoPopup();
     previewCanvasRefTwo.current.toBlob(function (blob) {
-      setCropedImageTwo(new File([blob], 'nile', { type: 'image/jpeg' }));
+      setImageTwoToUpload(new File([blob], 'nile', { type: 'image/jpeg' }));
     });
+    setCropedImageTwo(previewCanvasRefTwo.current.toDataURL());
   };
 
   return (

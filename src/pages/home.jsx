@@ -13,6 +13,7 @@ export const Home = () => {
   const history = useHistory();
   const user = useContext(UserContext);
   const [data, setData] = useState(null);
+  const [postsIds, setPostsIds] = useState();
 
   useEffect(() => {
     API({
@@ -23,9 +24,27 @@ export const Home = () => {
       }
     }).then(({ data }) => {
       console.log(data.data);
+      let idArr = [];
+      data.data.map(({ _id }) => {
+        idArr.push(_id);
+      });
+      setPostsIds(idArr);
       setData(data.data);
     });
   }, []);
+
+  const deleteAll = arr => {
+    arr.forEach(id => {
+      fetch(`http://localhost:3001/posts/${id}`, {
+        method: 'delete'
+      })
+        .then(res => {
+          console.log('deleted', res);
+        })
+        .catch(err => console.log(err));
+    });
+  };
+
   if (!user) {
     history.push('/login');
   }
@@ -34,6 +53,13 @@ export const Home = () => {
       <div className="bg-c700 py-10">
         <div className="container">
           <PostSomething />
+          <button
+            onClick={() => {
+              deleteAll(postsIds);
+            }}
+          >
+            Delete All
+          </button>
           {data.map(
             ({
               _id,
@@ -47,7 +73,7 @@ export const Home = () => {
                 <PostSection
                   key={_id}
                   leftBgImage={images[0].url}
-                  rightBgImage="https://images.unsplash.com/photo-1602341612227-1612891401ac?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
+                  rightBgImage={images[1].url}
                   popupActionOptions={[0]}
                   postCaption={caption}
                   postDate={createdAt}
