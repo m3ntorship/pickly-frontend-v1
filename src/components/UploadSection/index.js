@@ -43,6 +43,9 @@ export const UploadSection = ({ handleCloseUpload }) => {
     setCaption(e.target.value);
   };
 
+  // Post Data to the database Function
+  const postData = () => {};
+
   //===================== IT'S HERE ALL FOR THE CROP IMAGE SECTIONS =========================================
 
   const onSelectFileOne = e => {
@@ -447,6 +450,7 @@ export const UploadSection = ({ handleCloseUpload }) => {
           isRounded
           padding="big"
           className="font-semibold text-xs py-1 float-right my-2"
+          onClick={postData}
         >
           Post
         </Button>
