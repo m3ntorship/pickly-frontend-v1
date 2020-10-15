@@ -1,10 +1,11 @@
 import React from 'react';
 import PostSection from '../components/PostSection';
-
+import { PostSomething } from '../components/PostSomething';
 export const Home = () => {
   return (
     <div className="bg-c700 py-10">
       <div className="container">
+        <PostSomething />
         <PostSection
           leftBgImage="https://images.unsplash.com/photo-1602575910330-f9807b05f69d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
           popupActionOptions={[0]}

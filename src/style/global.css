@@ -8,7 +8,7 @@ body {
   margin: 0 !important;
 }
 
-button:focus{
+button:focus, input:focus, textarea:focus, select:focus{
   outline:none !important;
 }
 
@@ -24,10 +24,23 @@ button:focus{
     @apply mx-auto;
   }
   
-  @media (min-width: 1280px) {
+
+  /* Style for the popup */
+@media (max-width: 776px) {
+.popup-content {
+  width: 95%   
+  }
+}
+
+  /* from tablet screens to the largest */
+  @media (min-width: 776px) {
     .container {
       max-width: 690px;
     }
+  }
+
+  /* from small labtops screen to the largest screen */
+  @media (min-width: 1200px) {
     .nav__container {
       max-width: 60%;
     }

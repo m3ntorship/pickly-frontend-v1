@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-
 export const UploadingProgress = ({ progress }) => {
   const [offset, setOffset] = useState(0);
   let center = 20;
@@ -59,11 +58,9 @@ export const UploadingProgress = ({ progress }) => {
   );
 };
 
-
-
 UploadingProgress.propTypes = {
   /**
    * this is number of uploadng progress
    */
-  progress: PropTypes.number.isRequired
+  progress: PropTypes.number
 };

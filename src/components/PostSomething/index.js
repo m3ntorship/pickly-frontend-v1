@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Heading, HEADING_OPTIONS } from '../Heading';
 import { MultiBtn } from './MultipleImagesBtn';
 import { OneImageBtn } from './OneImageBtn';
 import Popup from 'reactjs-popup';
+import { UploadSection } from '../UploadSection';
 
 export const PostSomething = () => {
+  const popupRef = useRef();
+
+  const handleCloseUpload = () => {
+    popupRef.current.close();
+  };
+
   return (
     <section className="rounded-lg  pb-5 pt-3 bg-white">
       <Heading
@@ -19,6 +26,13 @@ export const PostSomething = () => {
       <hr className="border-c700" />
       <div className="flex">
         <Popup
+          closeOnDocumentClick={false}
+          ref={popupRef}
+          contentStyle={{
+            borderRadius: '10px',
+            overflowY: 'scroll',
+            margin: '10px auto'
+          }}
           trigger={
             <div>
               <MultiBtn />
@@ -26,7 +40,7 @@ export const PostSomething = () => {
           }
           modal
         >
-          <h1>This was Build By M3ntorship Team.</h1>
+          <UploadSection handleCloseUpload={handleCloseUpload} />
         </Popup>
         <Popup
           trigger={
@@ -36,7 +50,10 @@ export const PostSomething = () => {
           }
           modal
         >
-          <h1>This was Build By M3ntorship Team.</h1>
+          <h1 className="text-xlg text-center my-10 ">
+            Div With 2000px height and can't access all the height !!!!.
+          </h1>
+          <div style={{ height: '2000px' }} className=" overflow-visible"></div>
         </Popup>
       </div>
     </section>

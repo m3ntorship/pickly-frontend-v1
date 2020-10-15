@@ -11,5 +11,6 @@ const Template = args => <InputField {...args} />;
 export const inputField = Template.bind({});
 inputField.args = {
   imageURL:
-    'https://res.cloudinary.com/dqmuowojl/image/upload/v1602084848/icons/pjuqygilrebcxnpgsp12.png'
+    'https://res.cloudinary.com/dqmuowojl/image/upload/v1602084848/icons/pjuqygilrebcxnpgsp12.png',
+  caption: ''
 };
