@@ -1,11 +1,24 @@
+* {
+  box-sizing: border-box
+}
+
+body {
+  @apply font-primary;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
 button:focus{
   outline:none !important;
 }
 
-body {
-    @apply font-primary;
-  }
   .container {
+    max-width: 85%;
+    margin: auto;
+    @apply mx-auto;
+  }
+
+  .nav__container {
     max-width: 85%;
     margin: auto;
     @apply mx-auto;
@@ -14,5 +27,8 @@ body {
   @media (min-width: 1280px) {
     .container {
       max-width: 690px;
+    }
+    .nav__container {
+      max-width: 60%;
     }
   }
