@@ -1,36 +1,13 @@
 import React, { useContext } from 'react';
 import background1 from './backgrounds/background1.png';
 import background2 from './backgrounds/background2.png';
-import fire from './fire';
-import firebase from 'firebase';
-import { Redirect, useHistory } from 'react-router-dom';
+import { UserContext } from '../../context/userContext';
 
 export const LoginForm = () => {
-  const history = useHistory();
-
-  const login = e => {
-    e.preventDefault();
-    var provider = new firebase.auth.GoogleAuthProvider();
-    fire
-      .auth()
-      .signInWithPopup(provider)
-      .then(function (result) {
-        history.push('/');
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        var token = result.credential.accessToken;
-        console.log(token);
-        // The signed-in user info.
-        var user = result.user;
-        console.log(user.displayName + 'from index');
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
-
+  const loginUser = useContext(UserContext);
   return (
     <form
-      onSubmit={login}
+      onSubmit={loginUser}
       className="w-full flex h-screen relative items-center justify-center "
     >
       <div

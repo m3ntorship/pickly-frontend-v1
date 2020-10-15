@@ -1,23 +1,58 @@
 import React, { createContext, useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import fire from '../components/LoginForm/fire';
+import firebase from 'firebase';
 
 export const UserContext = createContext(null);
 
 export const UserContextProvider = props => {
   const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
+
+  const history = useHistory();
 
   useEffect(() => {
+    console.log('user useEffect');
     fire.auth().onAuthStateChanged(user => {
       if (user) {
         setUser(user);
-        console.log(user.displayName + 'from context');
+        user.getIdToken().then(token => {
+          console.log(token);
+          setToken(token);
+        });
       } else {
         setUser(null);
       }
     });
-  });
+  }, [user]);
+
+  const loginUser = e => {
+    e.preventDefault();
+    var provider = new firebase.auth.GoogleAuthProvider();
+    fire
+      .auth()
+      .signInWithPopup(provider)
+      .then(function (result) {
+        history.push('/');
+        setUser(result.user);
+      })
+      .catch(function (error) {
+        console.log(error.message);
+      });
+  };
+
+  const logoutUser = () => {
+    firebase
+      .auth()
+      .signOut()
+      .then(function () {
+        history.push('/login');
+      });
+  };
 
   return (
-    <UserContext.Provider value={user}>{props.children}</UserContext.Provider>
+    <UserContext.Provider value={(user, token, loginUser, logoutUser)}>
+      {props.children}
+    </UserContext.Provider>
   );
 };

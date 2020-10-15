@@ -7,6 +7,7 @@ import { InputField } from '../InputField';
 import { Heading } from '../Heading';
 import { ToggleButton } from '../ToggleButton';
 import { Button } from '../Button';
+import { create } from 'axios';
 
 // Setting a high pixel ratio avoids blurriness in the canvas crop preview.
 const pixelRatio = 4;
@@ -23,6 +24,7 @@ export const UploadSection = ({ handleCloseUpload }) => {
   const [imgOne, setImgOne] = useState(null);
   const [imgTwo, setImgTwo] = useState(null);
   const previewCanvasRefOne = useRef(null);
+  // Croped images here
   const [cropedImageOne, setCropedImageOne] = useState(null);
   const [cropedImageTwo, setCropedImageTwo] = useState(null);
   const previewCanvasRefTwo = useRef(null);
@@ -30,6 +32,9 @@ export const UploadSection = ({ handleCloseUpload }) => {
   const imgTwoPopupRef = useRef();
   const imgOneRef = useRef();
   const imgTwoRef = useRef();
+
+  // Test
+  const [imageToUpload, setImageToUpload] = useState();
 
   // ======== Other components State and Functions ===========
   const [postAnonymously, setPostAnonymously] = useState(false);
@@ -44,12 +49,27 @@ export const UploadSection = ({ handleCloseUpload }) => {
   };
 
   // Post Data to the database Function
-  const postData = () => {};
-
+  const postData = e => {
+    // console.log(imageToUpload);
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('images', imageToUpload);
+    formData.append('caption', 'Test22');
+    fetch('http://localhost:3001/posts', {
+      method: 'POST',
+      body: formData
+    })
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => console.log(err.message));
+    console.log('done');
+  };
   //===================== IT'S HERE ALL FOR THE CROP IMAGE SECTIONS =========================================
 
   const onSelectFileOne = e => {
     if (e.target.files && e.target.files.length > 0) {
+      setImageToUpload(e.target.files[0]);
       const reader = new FileReader();
       reader.addEventListener('load', () => {
         setImgOne(reader.result);
@@ -161,6 +181,8 @@ export const UploadSection = ({ handleCloseUpload }) => {
   const handleFinishCropOne = () => {
     closeImgOnePopup();
     const image = previewCanvasRefOne.current.toDataURL('image/jpeg', 1);
+    // const base64 = image.split(';base64,')[1];
+    // setImageToUpload(base64);
     setCropedImageOne(image);
   };
 
@@ -444,16 +466,19 @@ export const UploadSection = ({ handleCloseUpload }) => {
       </div>
       <hr className="w-full text-c800 h-1" />
       <div style={{ width: 'calc(100% - 2rem)' }}>
-        <Button
-          backgroundColor="PrimaryGrey"
-          color="White"
-          isRounded
-          padding="big"
-          className="font-semibold text-xs py-1 float-right my-2"
-          onClick={postData}
-        >
-          Post
-        </Button>
+        <form>
+          <Button
+            type="submit"
+            backgroundColor="PrimaryGrey"
+            color="White"
+            isRounded
+            padding="big"
+            className="font-semibold text-xs py-1 float-right my-2"
+            handleClick={postData}
+          >
+            Post
+          </Button>
+        </form>
       </div>
     </div>
   );
