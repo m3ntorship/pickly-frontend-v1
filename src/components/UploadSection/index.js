@@ -33,9 +33,14 @@ export const UploadSection = ({ handleCloseUpload }) => {
 
   // ======== Other components State and Functions ===========
   const [postAnonymously, setPostAnonymously] = useState(false);
+  const [caption, setCaption] = useState('');
 
   const toggleSelected = () => {
     setPostAnonymously(!postAnonymously);
+  };
+
+  const handleInputChange = e => {
+    setCaption(e.target.value);
   };
 
   //===================== IT'S HERE ALL FOR THE CROP IMAGE SECTIONS =========================================
@@ -210,7 +215,11 @@ export const UploadSection = ({ handleCloseUpload }) => {
 
       <hr className="w-full text-c800 h-1" />
       <div style={{ width: 'calc(100% - 2rem)' }} className="mx-auto mb-5">
-        <InputField imageURL="https://www.ludoviccareme.com/files/image_88_image_fr.jpg" />
+        <InputField
+          caption={caption}
+          onChange={handleInputChange}
+          imageURL="https://www.ludoviccareme.com/files/image_88_image_fr.jpg"
+        />
         <ToggleButton
           selected={postAnonymously}
           toggleSelected={toggleSelected}
