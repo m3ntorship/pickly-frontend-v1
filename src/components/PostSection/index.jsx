@@ -26,20 +26,24 @@ const PostSection = ({
   const [iconDisplay, setIconDisplay] = useState(!bgColor);
 
   return (
-    <div className="container">
-      <ImageWithSideTitle
-        title={userName}
-        subTitle={postDate}
-        imgURL={userImage}
-      />
-      <p className="mt-5 text-sm font-regular">{postCaption}</p>
+    <div className="bg-white py-4 rounded-sm my-5">
+      <div className="w-11/12 mx-auto">
+        <ImageWithSideTitle
+          title={userName}
+          subTitle={postDate}
+          imgURL={userImage}
+        />
+      </div>
+      <p className=" w-11/12 mx-auto mt-5 text-sm font-regular">
+        {postCaption}
+      </p>
 
-      <div className="grid grid-cols-2 gap-1 relative">
+      <div className="grid grid-cols-2 gap-1 relative my-3">
         <ReusableDiv smallRound={true} divHeight="100%">
           <img
             src={leftBgImage}
             className="w-full object-cover rounded-sm"
-            style={{ maxHeight: '89%' }}
+            style={{ maxHeight: '100%' }}
             alt=""
           />
         </ReusableDiv>
@@ -67,10 +71,11 @@ const PostSection = ({
           <img
             src={rightBgImage}
             className="w-full object-cover rounded-sm"
-            style={{ maxHeight: '89%' }}
+            style={{ maxHeight: '100%' }}
             alt=""
           />
-          <div className="flex flex-col items-center absolute">
+          {/* This section takes class hidden untill we add these features */}
+          <div className="flex-col items-center absolute hidden">
             <ReusableDiv
               bgColor={iconDisplay}
               fullRound={true}
@@ -94,17 +99,20 @@ const PostSection = ({
         </ReusableDiv>
       </div>
 
-      <div className="flex items-center justify-between px-3">
+      <div className="flex items-center justify-between w-11/12 mx-auto">
         <div className="flex items-center">
           <div className="flex  text-sm justify-around text-c300">
-            <img src={pickIcon} alt="" className="w-5" />
-
-            <span className="ml-3">{votesNumbers} Votes</span>
+            <img src={pickIcon} alt="" className="w-4 md:w-6" />
+            <span className="ml-1 md:ml-3 text-xs md:text-base mt-1">
+              {votesNumbers} Votes
+            </span>
           </div>
 
-          <div className="flex text-sm justify-around text-c300 lg:ml-6 ml-4">
-            <img src={saveIcon} alt="" className="w-4" />
-            <span className="ml-3">{savesNumbers} Saved</span>
+          <div className="flex text-sm justify-around text-c300 ml-4 lg:ml-6 ">
+            <img src={saveIcon} alt="" className="w-3 md:w-4" />
+            <span className="ml-1 md:ml-3 text-xs md:text-base mt-1">
+              {savesNumbers} Saved
+            </span>
           </div>
         </div>
         <div>

@@ -14,7 +14,9 @@ const ImageWithSideTitle = ({ imgURL, iconURL, title, subTitle }) => {
       </div>
 
       <div className="ml-3 inline-block my-auto">
-        <h6 className="text-sm font-semibold text-c400">{title}</h6>
+        <h6 className="text-sm font-semibold text-c400 leading-none">
+          {title}
+        </h6>
         {subTitle && (
           <span className="block mt-1 text-c500 text-xs text-left">
             {subTitle}
