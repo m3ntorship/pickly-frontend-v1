@@ -1,31 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 import cn from 'classnames';
 import PropTypes from 'prop-types';
 
-export const ToggleButton = ({ title, selected, onToggle }) => {
-  const [toggled, setToggled] = useState(selected);
-
-  const toggle = () => {
-    console.log('clicked');
-    console.log(selected);
-    const currentState = !toggled;
-    setToggled(currentState);
-    onToggle(currentState);
-  };
+export const ToggleButton = ({ title, selected, toggleSelected }) => {
   return (
     <div>
       <button
         className={cn(
           ' w-56 h-10 rounded-lg flex flex-row items-center py-2 px-4 bg-c700 ',
-          { 'bg-c100_op-15': toggled }
+          { 'bg-c100_op-15': selected }
         )}
-        onClick={toggle}
+        onClick={toggleSelected}
       >
         <div className="h-6 flex items-center relative">
           <div
             className={cn(
               {
-                'bg-white right-auto': !toggled
+                'bg-white right-auto': !selected
               },
               ' bg-c100 right-0  w-6 h-6  shadow rounded-full absolute z-10'
             )}
@@ -33,7 +24,7 @@ export const ToggleButton = ({ title, selected, onToggle }) => {
           <div
             className={cn(
               {
-                ' bg-c400 opacity-25': !toggled
+                ' bg-c400 opacity-25': !selected
               },
               'w-10 h-4 bg-c100 opacity-50 rounded-lg  z-0'
             )}

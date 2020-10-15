@@ -13,7 +13,7 @@ export const toggleButton = Template.bind({});
 toggleButton.args = {
   title: 'Post anonymously',
   selected: false,
-  onToggle: isOn => {
+  toggleSelected: isOn => {
     isOn && console.log('ON');
   }
 };

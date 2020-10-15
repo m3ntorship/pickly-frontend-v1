@@ -31,6 +31,13 @@ export const UploadSection = ({ handleCloseUpload }) => {
   const imgOneRef = useRef();
   const imgTwoRef = useRef();
 
+  // ======== Other components State and Functions ===========
+  const [postAnonymously, setPostAnonymously] = useState(false);
+
+  const toggleSelected = () => {
+    setPostAnonymously(!postAnonymously);
+  };
+
   //===================== IT'S HERE ALL FOR THE CROP IMAGE SECTIONS =========================================
 
   const onSelectFileOne = e => {
@@ -204,7 +211,11 @@ export const UploadSection = ({ handleCloseUpload }) => {
       <hr className="w-full text-c800 h-1" />
       <div style={{ width: 'calc(100% - 2rem)' }} className="mx-auto mb-5">
         <InputField imageURL="https://www.ludoviccareme.com/files/image_88_image_fr.jpg" />
-        <ToggleButton title="Post anonymoslly" />
+        <ToggleButton
+          selected={postAnonymously}
+          toggleSelected={toggleSelected}
+          title="Post anonymoslly"
+        />
       </div>
 
       {/* &&&&&&&&&&&&&&&&&&&&&& Start Upload Images Section &&&&&&&&&&&&&&&&&&&&&& */}
