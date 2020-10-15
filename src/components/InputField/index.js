@@ -5,7 +5,6 @@ export const InputField = ({ imageURL, caption, onChange }) => {
   const [lettersCounter, setLettersCounter] = useState(null);
 
   useEffect(() => {
-    console.log('Renderd');
     setLettersCounter(caption.length);
   }, [caption]);
 
@@ -16,7 +15,7 @@ export const InputField = ({ imageURL, caption, onChange }) => {
         name="postText"
         placeholder={'What’s on your mind?'}
         onChange={onChange}
-        maxlength="100"
+        maxLength="100"
         value={caption}
         className="mx-4 z-0 h-16 md:h-10 md:mt-2  flex-auto min-w-0 text-c500 text-base font-primary font-regular leading-6 tracking-tighter md:tracking-wider resize-none"
       ></textarea>
