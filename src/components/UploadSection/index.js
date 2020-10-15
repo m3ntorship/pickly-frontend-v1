@@ -53,7 +53,7 @@ export const UploadSection = ({ handleCloseUpload }) => {
     // console.log(imageToUpload);
     e.preventDefault();
     const formData = new FormData();
-    formData.append('images', imageToUpload);
+    formData.append('images', cropedImageOne);
     formData.append('caption', 'Test22');
     fetch('http://localhost:3001/posts', {
       method: 'POST',
@@ -178,16 +178,19 @@ export const UploadSection = ({ handleCloseUpload }) => {
   const openImgTwoPopup = () => imgTwoPopupRef.current.open();
   const closeImgTwoPopup = () => imgTwoPopupRef.current.close();
 
-  const handleFinishCropOne = () => {
+  const handleFinishCropOne = async () => {
     closeImgOnePopup();
     const image = previewCanvasRefOne.current.toDataURL('image/jpeg', 1);
-    // const base64 = image.split(';base64,')[1];
-    // setImageToUpload(base64);
-    setCropedImageOne(image);
+    
+    const res = await fetch(image);
+    const blob = await res.blob();
+    debugger;
+    setCropedImageOne(new File([blob], 'nile', { type: 'image/jpeg' }));
   };
 
   const handleFinishCropTwo = () => {
     closeImgTwoPopup();
+    
     const image = previewCanvasRefTwo.current.toDataURL('image/jpeg', 1);
     setCropedImageTwo(image);
   };
