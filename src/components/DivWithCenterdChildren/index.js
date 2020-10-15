@@ -32,9 +32,7 @@ export const ReusableDiv = ({
       )}
       style={{
         backgroundImage: `url(${bgImage})`,
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center top',
-        backgroundSize: '100%',
+        backgroundSize: 'cover',
         width: divWidth,
         height: divHeight
       }}
