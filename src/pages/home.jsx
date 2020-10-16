@@ -10,28 +10,30 @@ const API = create({
 });
 
 export const Home = () => {
+  const { user, token } = useContext(UserContext);
+  console.log(user);
   const history = useHistory();
-  const user = useContext(UserContext);
   const [data, setData] = useState(null);
   const [postsIds, setPostsIds] = useState();
 
   useEffect(() => {
-    API({
-      url: '/posts',
-      headers: {
-        // authorization: `bearer ${token}`
-        // authorization: `bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjdkYTc4NjNlODYzN2Q2NjliYzJhMTI2MjJjZWRlMmE4ODEzZDExYjEiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIzNzU3NDcwMDQwMDktNXZuYW04azk4MjZ0b2JwZHVnbGxjN24zamY0ZGdvbGkuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiIzNzU3NDcwMDQwMDktNXZuYW04azk4MjZ0b2JwZHVnbGxjN24zamY0ZGdvbGkuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTA5NzUzODAxMTcxNDMzMTE0ODUiLCJlbWFpbCI6InNlaWZlbGRlZW4zMzg4QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhdF9oYXNoIjoiS08zZHJHdGxpbEliTlBEay1Ob1dZZyIsIm5hbWUiOiJTYWlmLUFsZGluIElicmFoZW0iLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EtL0FPaDE0R2lUQk9tcVp6dzhpNWpQQWZUWXFNYXZlaVFYS2Riczl6OTV4bHBXPXM5Ni1jIiwiZ2l2ZW5fbmFtZSI6IlNhaWYtQWxkaW4iLCJmYW1pbHlfbmFtZSI6IklicmFoZW0iLCJsb2NhbGUiOiJlbiIsImlhdCI6MTYwMjQzOTg5OSwiZXhwIjoxNjAyNDQzNDk5fQ.Q8jHScjhudxOY9aXC2O8mfvuRWlNvD8Y9yc21EmytS2R_LL69hAQXbvtZCWPmn_xlbybKhzvrXQHtLVhXNj0EocoNLFBR2r-wDCxyLzXHkVfGaebqO9Otgd2D9SigpU7KLLwsnzki5RSiAIDdj6VaKOfWy974m0ZXdc70nPFv7ZwdRzSWbbZIiJ5IOHGPiX93eJ7Utj2dP8OH19Kmh-0_a4BHMofS1oxqkh6DMUJmWqma03siYnLTYT9nM7-ptUcFDso0xrEpCa7OVaf9SyRsn7-bFYb-5wJCFbMl35tZqTZhSEbhGuReLFbzgSUqhfI3XJBjZzYBpGPdrOkpYPiZw`
-      }
-    }).then(({ data }) => {
-      console.log(data.data);
-      let idArr = [];
-      data.data.map(({ _id }) => {
-        idArr.push(_id);
+    if (user) {
+      API({
+        url: '/posts',
+        headers: {
+          authorization: `bearer ${token}`
+        }
+      }).then(({ data }) => {
+        console.log(data.data);
+        let idArr = [];
+        data.data.map(({ _id }) => {
+          idArr.push(_id);
+        });
+        setPostsIds(idArr);
+        setData(data.data);
       });
-      setPostsIds(idArr);
-      setData(data.data);
-    });
-  }, []);
+    }
+  }, [user]);
 
   const deleteAll = arr => {
     arr.forEach(id => {
@@ -45,9 +47,6 @@ export const Home = () => {
     });
   };
 
-  if (!user) {
-    history.push('/login');
-  }
   if (data) {
     return (
       <div className="bg-c700 py-10">

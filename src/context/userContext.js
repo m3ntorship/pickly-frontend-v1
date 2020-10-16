@@ -8,20 +8,17 @@ export const UserContext = createContext(null);
 export const UserContextProvider = props => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
-
   const history = useHistory();
-
   useEffect(() => {
-    console.log('user useEffect');
     fire.auth().onAuthStateChanged(user => {
       if (user) {
         setUser(user);
         user.getIdToken().then(token => {
-          console.log(token);
           setToken(token);
         });
       } else {
         setUser(null);
+        history.push('/login');
       }
     });
   }, [user]);
@@ -51,7 +48,7 @@ export const UserContextProvider = props => {
   };
 
   return (
-    <UserContext.Provider value={(user, token, loginUser, logoutUser)}>
+    <UserContext.Provider value={{ user, token, loginUser, logoutUser }}>
       {props.children}
     </UserContext.Provider>
   );
