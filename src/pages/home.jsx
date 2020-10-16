@@ -48,7 +48,7 @@ export const Home = () => {
 
   if (data) {
     return (
-      <div className="bg-c700 py-10">
+      <div className="bg-c900 py-6">
         <div className="container">
           <PostSomething />
           {/* <button

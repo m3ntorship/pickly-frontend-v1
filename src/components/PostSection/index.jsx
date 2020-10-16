@@ -26,7 +26,7 @@ const PostSection = ({
   const [iconDisplay, setIconDisplay] = useState(!bgColor);
 
   return (
-    <div className="bg-white py-4 rounded-lg my-5">
+    <div className="bg-white py-4 rounded-lg my-6">
       <div className="w-11/12 mx-auto">
         <ImageWithSideTitle
           title={userName}
