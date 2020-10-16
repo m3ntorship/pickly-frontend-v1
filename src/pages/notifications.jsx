@@ -6,6 +6,11 @@ export const Notifications = () => {
   const { user } = useContext(UserContext);
   const history = useHistory();
 
+  useEffect(() => {
+    if (!user) {
+      history.push('/login');
+    }
+  });
   return (
     <div className="h-screen bg-c800">
       <h1>Notifications</h1>

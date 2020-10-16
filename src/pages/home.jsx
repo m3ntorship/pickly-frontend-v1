@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../context/userContext';
 import PostSection from '../components/PostSection';
 import { PostSomething } from '../components/PostSomething';
-import { useHistory } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import { create } from 'axios';
 
 const API = create({
@@ -11,7 +11,6 @@ const API = create({
 
 export const Home = () => {
   const { user, token } = useContext(UserContext);
-  console.log(user);
   const history = useHistory();
   const [data, setData] = useState(null);
   const [postsIds, setPostsIds] = useState();
@@ -35,30 +34,30 @@ export const Home = () => {
     }
   }, [user]);
 
-  const deleteAll = arr => {
-    arr.forEach(id => {
-      fetch(`http://localhost:3001/posts/${id}`, {
-        method: 'delete'
-      })
-        .then(res => {
-          console.log('deleted', res);
-        })
-        .catch(err => console.log(err));
-    });
-  };
+  // const deleteAll = arr => {
+  //   arr.forEach(id => {
+  //     fetch(`http://localhost:3001/posts/${id}`, {
+  //       method: 'delete'
+  //     })
+  //       .then(res => {
+  //         console.log('deleted', res);
+  //       })
+  //       .catch(err => console.log(err));
+  //   });
+  // };
 
   if (data) {
     return (
       <div className="bg-c700 py-10">
         <div className="container">
           <PostSomething />
-          <button
+          {/* <button
             onClick={() => {
               deleteAll(postsIds);
             }}
           >
             Delete All
-          </button>
+          </button> */}
           {data.map(
             ({
               _id,
