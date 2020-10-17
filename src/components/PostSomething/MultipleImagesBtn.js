@@ -10,19 +10,19 @@ export const MultiBtn = () => {
     <Button
       shadow={true}
       isRounded={true}
-      padding={BUTTON_OPTIONS.PADDING.BIG}
+      // padding={BUTTON_OPTIONS.PADDING.BIG}
       color={BUTTON_OPTIONS.BACKGROUND_COLOR.PrimaryBlack}
-      className="flex flex-shrink"
+      className="flex flex-shrink py-3 px-6  md:px-12"
     >
       <i className="mr-3 flex-none">
         <img src={Icon} alt="choose multi"></img>
       </i>
       <Heading
         textAlign={HEADING_OPTIONS.TEXT_ALIGN.LEFT}
-        fontSize={HEADING_OPTIONS.FONT_SIZE.BASE}
-        fontWeight={HEADING_OPTIONS.FONT_WEIGHT.BOLD}
+        // fontSize={HEADING_OPTIONS.FONT_SIZE.BASE}
+        // fontWeight={HEADING_OPTIONS.FONT_WEIGHT.BOLD}
         lineHeight={HEADING_OPTIONS.LINE_HEIGHT.LOOSE}
-        className="flex-auto"
+        className="flex-auto text-xs sm:text-base font-medium sm:font-bold "
       >
         Multiple images
       </Heading>
