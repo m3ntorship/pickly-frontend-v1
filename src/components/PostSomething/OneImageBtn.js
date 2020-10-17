@@ -10,9 +10,9 @@ export const OneImageBtn = () => {
       isRounded={true}
       padding={BUTTON_OPTIONS.PADDING.BIG}
       color={BUTTON_OPTIONS.BACKGROUND_COLOR.PrimaryBlack}
-      className="flex ml-2 mt-3"
+      className="flex flex-shrink ml-2"
     >
-      <i className="mr-3">
+      <i className="mr-3 flex-none">
         <img src={Icon2} alt="choose one"></img>
       </i>
       <Heading
@@ -20,6 +20,7 @@ export const OneImageBtn = () => {
         fontSize={HEADING_OPTIONS.FONT_SIZE.BASE}
         fontWeight={HEADING_OPTIONS.FONT_WEIGHT.BOLD}
         lineHeight={HEADING_OPTIONS.LINE_HEIGHT.LOOSE}
+        className="flex-auto "
       >
         One image
       </Heading>

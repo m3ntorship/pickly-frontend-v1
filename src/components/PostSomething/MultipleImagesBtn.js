@@ -12,9 +12,9 @@ export const MultiBtn = () => {
       isRounded={true}
       padding={BUTTON_OPTIONS.PADDING.BIG}
       color={BUTTON_OPTIONS.BACKGROUND_COLOR.PrimaryBlack}
-      className="flex ml-5 mt-3"
+      className="flex flex-shrink"
     >
-      <i className="mr-3">
+      <i className="mr-3 flex-none">
         <img src={Icon} alt="choose multi"></img>
       </i>
       <Heading
@@ -22,6 +22,7 @@ export const MultiBtn = () => {
         fontSize={HEADING_OPTIONS.FONT_SIZE.BASE}
         fontWeight={HEADING_OPTIONS.FONT_WEIGHT.BOLD}
         lineHeight={HEADING_OPTIONS.LINE_HEIGHT.LOOSE}
+        className="flex-auto"
       >
         Multiple images
       </Heading>

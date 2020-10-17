@@ -24,7 +24,7 @@ export const PostSomething = () => {
         Post Something
       </Heading>
       <hr className="border-c700" />
-      <div className="flex">
+      <div className="flex mt-3 ml-5">
         <Popup
           closeOnDocumentClick={false}
           ref={popupRef}
