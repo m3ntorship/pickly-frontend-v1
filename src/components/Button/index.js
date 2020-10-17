@@ -43,10 +43,12 @@ export const Button = ({
   shadow,
   padding,
   isOpacity,
-  className
+  className,
+  handleClick
 }) => {
   return (
     <button
+      onClick={handleClick}
       className={cn(
         'flex items-center justify-center outline-none focus:outline-none',
         { 'shadow-background': shadow },

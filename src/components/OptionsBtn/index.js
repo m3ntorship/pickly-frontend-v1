@@ -33,9 +33,12 @@ export default ({ options, position = 'bottom', appearOn = 'click' }) => (
     position={position}
     keepTooltipInside
   >
-    {options.map(option => {
+    {options.map(({ option, index }) => {
       return (
-        <div className="py-2 px-10 text-md hover:bg-c100 hover:text-white transition-all duration-100 cursor-pointer">
+        <div
+          key={index}
+          className="py-2 px-10 text-md hover:bg-c100 hover:text-white transition-all duration-100 cursor-pointer"
+        >
           {option}
         </div>
       );
