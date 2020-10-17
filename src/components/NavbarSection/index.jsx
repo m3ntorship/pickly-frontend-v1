@@ -12,7 +12,7 @@ const navLinks = [
 
 const Navigation = () => {
   return (
-    <div className="text-center md:text-right">
+    <div className="text-center md:text-right  col-start-1 col-end-4  md:col-start-2">
       <Icon exact to="/" iconURL={navLinks[0]} />
       <Icon to="/friends" iconURL={navLinks[1]} />
       <Icon to="/notifications" iconURL={navLinks[2]} />
@@ -23,9 +23,9 @@ const Navigation = () => {
 
 export const Navbar = () => {
   return (
-    <header className="bg-white pt-8 pb-2">
+    <header className="bg-white lg:pt-8 pb-2">
       <div className="nav__container">
-        <div className="grid grid-cols-1 md:grid-cols-2 items-center  gap-y-5 md:gap-y-0">
+        <div className="grid grid-cols-1 md:grid-cols-3 items-center  gap-y-5 md:gap-y-0">
           <div>
             <Heading
               as="h1"
@@ -35,7 +35,7 @@ export const Navbar = () => {
               lineHeight={HEADING_OPTIONS.LINE_HEIGHT.NORMAL}
               textAlign={HEADING_OPTIONS.TEXT_ALIGN.LEFT}
               textColor={HEADING_OPTIONS.FONT_COLOR.DAWNBLACK}
-              className="max-sm:text-xlg max-sm:text-center max-sm:mt-10"
+              className="max-sm:text-xlg max-sm:text-center max-sm:mt-10  hidden md:block"
             />
           </div>
           <Navigation />
