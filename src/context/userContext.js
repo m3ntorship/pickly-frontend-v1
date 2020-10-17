@@ -9,19 +9,25 @@ export const UserContextProvider = props => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const history = useHistory();
+  const [loading, setLoading] = useState(true);
+  // The problem : it passes the user by null value before check it
+
   useEffect(() => {
     fire.auth().onAuthStateChanged(user => {
       if (user) {
-        setUser(user);
         user.getIdToken().then(token => {
+          console.log(token);
+          setUser(user);
           setToken(token);
+          setLoading(false);
         });
       } else {
+        setLoading(false);
         setUser(null);
         history.push('/login');
       }
     });
-  }, [user]);
+  }, []);
 
   const loginUser = e => {
     e.preventDefault();
@@ -29,26 +35,34 @@ export const UserContextProvider = props => {
     fire
       .auth()
       .signInWithPopup(provider)
-      .then(function (result) {
-        history.push('/');
-        setUser(result.user);
+      .then(() => {
+        // wait for `onAuthStateChanged` to fire
+        // and sets the user and then redirect
+        // to the homepage
+        setTimeout(() => history.push('/'));
       })
-      .catch(function (error) {
-        console.log(error.message);
-      });
+      .catch(console.error);
   };
 
   const logoutUser = () => {
     firebase
       .auth()
       .signOut()
-      .then(function () {
+      .then(() => {
         history.push('/login');
       });
   };
 
+  const contextValue = {
+    loading,
+    user,
+    token,
+    logoutUser,
+    loginUser
+  };
+
   return (
-    <UserContext.Provider value={{ user, token, loginUser, logoutUser }}>
+    <UserContext.Provider value={contextValue}>
       {props.children}
     </UserContext.Provider>
   );

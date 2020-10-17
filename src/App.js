@@ -7,6 +7,7 @@ import { Notifications } from './pages/notifications.jsx';
 import { Friends } from './pages/friends.jsx';
 import { UserContextProvider } from './context/userContext';
 import { LoginForm } from './components/LoginForm/index';
+import { ProtectedRoute } from './pages/protected-route';
 
 function App() {
   return (
@@ -15,10 +16,10 @@ function App() {
         <UserContextProvider>
           <Navbar />
           <Switch>
-            <Route exact path="/" component={Home} />
-            <Route path="/friends" component={Friends} />
-            <Route path="/notifications" component={Notifications} />
-            <Route path="/profile" component={Profile} />
+            <ProtectedRoute exact path="/" component={Home} />
+            <ProtectedRoute path="/friends" component={Friends} />
+            <ProtectedRoute path="/notifications" component={Notifications} />
+            <ProtectedRoute path="/profile" component={Profile} />
             <Route path="/login" component={LoginForm} />
           </Switch>
         </UserContextProvider>

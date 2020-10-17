@@ -9,55 +9,28 @@ const API = create({
   baseURL: 'http://localhost:3001'
 });
 
-export const Home = () => {
+export const Home = props => {
   const { user, token } = useContext(UserContext);
   const history = useHistory();
   const [data, setData] = useState(null);
-  const [postsIds, setPostsIds] = useState();
 
   useEffect(() => {
-    if (user) {
-      API({
-        url: '/posts',
-        headers: {
-          authorization: `bearer ${token}`
-        }
-      }).then(({ data }) => {
-        console.log(data.data);
-        let idArr = [];
-        data.data.map(({ _id }) => {
-          idArr.push(_id);
-        });
-        setPostsIds(idArr);
-        setData(data.data);
-      });
-    }
-  }, [user]);
-
-  // const deleteAll = arr => {
-  //   arr.forEach(id => {
-  //     fetch(`http://localhost:3001/posts/${id}`, {
-  //       method: 'delete'
-  //     })
-  //       .then(res => {
-  //         console.log('deleted', res);
-  //       })
-  //       .catch(err => console.log(err));
-  //   });
-  // };
+    API({
+      url: '/posts',
+      headers: {
+        authorization: `bearer ${token}`
+      }
+    }).then(({ data }) => {
+      console.log(data.data);
+      setData(data.data);
+    });
+  }, []);
 
   if (data) {
     return (
       <div className="bg-c900 py-6">
         <div className="container">
           <PostSomething />
-          {/* <button
-            onClick={() => {
-              deleteAll(postsIds);
-            }}
-          >
-            Delete All
-          </button> */}
           {data.map(
             ({
               _id,
