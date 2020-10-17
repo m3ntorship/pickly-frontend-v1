@@ -1,29 +1,30 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { UserContext } from '../context/userContext';
 import { Route, Redirect } from 'react-router-dom';
 
 export const ProtectedRoute = ({ component: Component, ...rest }) => {
-  const { user } = useContext(UserContext);
-
+  const { user, loading } = useContext(UserContext);
   return (
     <Route
       {...rest}
       render={props => {
-        if (user) {
-          console.log('From True');
-          return <Component {...props} />;
+        if (loading) {
+          return 'loading from protected route.. ';
         } else {
-          console.log('From False');
-          return (
-            <Redirect
-              to={{
-                pathname: '/login',
-                state: {
-                  from: props.location
-                }
-              }}
-            />
-          );
+          if (user) {
+            return <Component {...props} />;
+          } else {
+            return (
+              <Redirect
+                to={{
+                  pathname: '/login',
+                  state: {
+                    from: props.location
+                  }
+                }}
+              />
+            );
+          }
         }
       }}
     />

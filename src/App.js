@@ -17,9 +17,9 @@ function App() {
           <Navbar />
           <Switch>
             <ProtectedRoute exact path="/" component={Home} />
-            <Route path="/friends" component={Friends} />
-            <Route path="/notifications" component={Notifications} />
-            <Route path="/profile" component={Profile} />
+            <ProtectedRoute path="/friends" component={Friends} />
+            <ProtectedRoute path="/notifications" component={Notifications} />
+            <ProtectedRoute path="/profile" component={Profile} />
             <Route path="/login" component={LoginForm} />
           </Switch>
         </UserContextProvider>

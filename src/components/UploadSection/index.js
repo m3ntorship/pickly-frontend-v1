@@ -7,7 +7,7 @@ import { InputField } from '../InputField';
 import { Heading } from '../Heading';
 import { ToggleButton } from '../ToggleButton';
 import { Button } from '../Button';
-import { create } from 'axios';
+import { PICKLY } from '../../apis/pickly';
 
 // Setting a high pixel ratio avoids blurriness in the canvas crop preview.
 const pixelRatio = 4;
@@ -49,22 +49,25 @@ export const UploadSection = ({ handleCloseUpload }) => {
   // Post Data to the database Function
   const postData = e => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append('images', imageOneToUpload);
-    formData.append('images', imageTwoToUpload);
-    formData.append('caption', caption);
-    fetch('http://localhost:3001/posts', {
-      method: 'POST',
-      body: formData
+    const form = new FormData();
+    form.append('images', imageOneToUpload);
+    form.append('images', imageTwoToUpload);
+    form.append('caption', caption);
+    form.append('isAnonymous', postAnonymously);
+    console.log(postAnonymously);
+    PICKLY.post('/posts', form, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
     })
-      .then(res => {
-        console.log(res);
-      })
-      .then(res => {
+      // fetch('http://localhost:3001/posts', {
+      //   method: 'POST',
+      //   body: formData
+      // })
+      .then(({ data }) => {
         handleCloseUpload();
       })
-      .catch(err => console.log(err.message));
-    console.log('done');
+      .catch(console.error);
   };
   //===================== IT'S HERE ALL FOR THE CROP IMAGE SECTIONS =========================================
 

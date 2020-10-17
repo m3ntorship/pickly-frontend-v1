@@ -15,7 +15,6 @@ export const Home = props => {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    console.log('Come To Home');
     API({
       url: '/posts',
       headers: {
