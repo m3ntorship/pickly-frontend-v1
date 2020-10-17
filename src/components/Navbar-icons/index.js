@@ -7,7 +7,7 @@ export const Icon = ({ iconURL, to, exact }) => {
     <NavLink
       exact={exact}
       to={to}
-      className="inline-block rounded-lg w-16 h-16 p-4 mr-8 cursor-pointer text-center"
+      className="inline-block rounded-lg sm:w-16 sm-h-16 p-4 sm:mr-8 cursor-pointer text-center"
       activeClassName="bg-c100_op-10"
       activeStyle={{
         filter:
