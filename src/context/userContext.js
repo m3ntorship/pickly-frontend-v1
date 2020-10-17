@@ -9,6 +9,9 @@ export const UserContextProvider = props => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const history = useHistory();
+
+  // The problem : it passes the user by null value before check it
+
   useEffect(() => {
     fire.auth().onAuthStateChanged(user => {
       if (user) {
@@ -47,8 +50,9 @@ export const UserContextProvider = props => {
       });
   };
 
+  console.log(user);
   return (
-    <UserContext.Provider value={{ user, token, loginUser, logoutUser }}>
+    <UserContext.Provider value={{ user, token, logoutUser, loginUser }}>
       {props.children}
     </UserContext.Provider>
   );

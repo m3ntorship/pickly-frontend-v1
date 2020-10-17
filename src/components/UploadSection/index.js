@@ -21,21 +21,18 @@ export const UploadSection = ({ handleCloseUpload }) => {
   });
   const [completeCropOne, setCompleteCropOne] = useState(null);
   const [completeCropTwo, setCompleteCropTwo] = useState(null);
+  const [cropedImageOne, setCropedImageOne] = useState(null);
+  const [cropedImageTwo, setCropedImageTwo] = useState(null);
+  const [imageOneToUpload, setImageOneToUpload] = useState();
+  const [imageTwoToUpload, setImageTwoToUpload] = useState();
   const [imgOne, setImgOne] = useState(null);
   const [imgTwo, setImgTwo] = useState(null);
   const previewCanvasRefOne = useRef(null);
-  // Croped images here
-  const [cropedImageOne, setCropedImageOne] = useState(null);
-  const [cropedImageTwo, setCropedImageTwo] = useState(null);
   const previewCanvasRefTwo = useRef(null);
   const imgOnePopupRef = useRef();
   const imgTwoPopupRef = useRef();
   const imgOneRef = useRef();
   const imgTwoRef = useRef();
-
-  // Test
-  const [imageOneToUpload, setImageOneToUpload] = useState();
-  const [imageTwoToUpload, setImageTwoToUpload] = useState();
 
   // ======== Other components State and Functions ===========
   const [postAnonymously, setPostAnonymously] = useState(false);

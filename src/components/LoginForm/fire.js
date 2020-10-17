@@ -1,13 +1,13 @@
 import firebase from 'firebase';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyCcpWjIBgQzIc5y404dOqtm8QkXp-1kl0Y',
-  authDomain: 'm3ntorship-pickly.firebaseapp.com',
-  databaseURL: 'https://m3ntorship-pickly.firebaseio.com',
-  projectId: 'm3ntorship-pickly',
-  storageBucket: 'm3ntorship-pickly.appspot.com',
-  messagingSenderId: '56580619370',
-  appId: '1:56580619370:web:e96021c4016eda45455e13'
+  apiKey: 'AIzaSyDvV3-tvyZq-i0PSvbQ1H5Mwn1QmbRM_Dk',
+  authDomain: 'image-upload-90b5d.firebaseapp.com',
+  databaseURL: 'https://image-upload-90b5d.firebaseio.com',
+  projectId: 'image-upload-90b5d',
+  storageBucket: 'image-upload-90b5d.appspot.com',
+  messagingSenderId: '945002063613',
+  appId: '1:945002063613:web:72a0d364acb77a57538094'
 };
 var fire = firebase.initializeApp(firebaseConfig);
 

@@ -1,13 +1,17 @@
 import React, { useContext } from 'react';
+import firebase from 'firebase';
+import fire from './fire';
+import { UserContext } from '../../context/userContext';
 import background1 from './backgrounds/background1.png';
 import background2 from './backgrounds/background2.png';
-import { UserContext } from '../../context/userContext';
+import { useHistory } from 'react-router-dom';
 
 export const LoginForm = () => {
-  const user = useContext(UserContext);
+  const { loginUser } = useContext(UserContext);
+
   return (
     <form
-      onSubmit={user.loginUser}
+      onSubmit={loginUser}
       className="w-full flex h-screen relative items-center justify-center "
     >
       <div
