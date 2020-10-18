@@ -14,24 +14,61 @@ const PostSection = ({
   popupActionOptions,
   shareUrl,
   votesNumbers,
-  savesNumbers
+  savesNumbers,
+  isAnonymous,
+  createdAt,
+  date
 }) => {
   const postComponentFixedAssets = {
     pickIcon: 'http://www.svgshare.com/i/QXB.svg',
     searchIcon: 'https://i.imgur.com/inlBQ6A.png',
     saveIcon: 'http://www.svgshare.com/i/QW7.svg',
-    bgColor: 'white'
+    bgColor: 'white',
+    anonymousIcon: 'http://svgur.com/i/QH6.svg'
   };
-  const { pickIcon, searchIcon, saveIcon, bgColor } = postComponentFixedAssets;
+  const {
+    pickIcon,
+    searchIcon,
+    saveIcon,
+    bgColor,
+    anonymousIcon
+  } = postComponentFixedAssets;
   const [iconDisplay, setIconDisplay] = useState(!bgColor);
+
+  // Handle Post Time
+
+  const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+  ];
+
+  const monthName = months[date.getMonth()];
+  const dayIndex = date.getDate();
+
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const formatedHours = ((hours + 11) % 12) + 1;
 
   return (
     <div className="bg-white py-4 rounded-lg my-6">
       <div className="w-11/12 mx-auto">
         <ImageWithSideTitle
-          title={userName}
-          subTitle={postDate}
-          imgURL={userImage}
+          title={isAnonymous ? '' : userName}
+          subTitle={`${dayIndex} ${monthName} at ${formatedHours}:${minutes} ${
+            hours > 12 ? 'PM' : 'AM'
+          }`}
+          imgURL={userImage && userImage}
+          iconURL={isAnonymous && anonymousIcon}
         />
       </div>
       <p className=" w-11/12 mx-auto mt-5 text-sm font-regular">
