@@ -14,7 +14,7 @@ export const Profile = () => {
 
   return (
     <div className="h-screen bg-c800 ">
-      <div className="nav__container flex justify-around items-end">
+      <div className="nav__container flex justify-around items-end flex-wrap">
         <figure className="mt-12 p-4  flex items-end">
           <img
             src={user.photoURL}
