@@ -13,14 +13,23 @@ export const Profile = () => {
   }, [user]);
 
   return (
-    <div className="h-screen bg-c800">
-      <h1>Hello, This is the home page</h1>
-      <button
-        className="p-5 text-c400 bg-white rounded-sm"
-        onClick={logoutUser}
-      >
-        Log Out
-      </button>
+    <div className="h-screen bg-c800 ">
+      <div className="nav__container flex justify-around items-end">
+        <figure className="mt-12 p-4  flex items-end">
+          <img
+            src={user.photoURL}
+            alt="profile"
+            className="w-24 h-24 rounded-full border-white border-2 border-solid mr-3 "
+          />
+          <h1 className="text-xlg font-bold  ">{user.displayName}</h1>
+        </figure>
+        <button
+          className="p-5 text-c400 bg-white rounded-sm justify-self-end"
+          onClick={logoutUser}
+        >
+          Log Out
+        </button>
+      </div>
     </div>
   );
 };
