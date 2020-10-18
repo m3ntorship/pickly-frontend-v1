@@ -25,7 +25,7 @@ export const Navbar = () => {
     <header className="bg-white pt-4 lg:pt-8 pb-2">
       <div className="nav__container">
         <div className=" items-center grid grid-cols-1 md:grid-cols-3 justify-items-center md:justify-items-end gap-y-4">
-          <div className="md:justify-self-start justify-self-center">
+          <div className="md:justify-self-start mt-4 sm:mt-0 justify-self-center">
             <Heading
               as="h1"
               children="Pickly"
