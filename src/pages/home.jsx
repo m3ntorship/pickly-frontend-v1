@@ -53,6 +53,7 @@ export const Home = props => {
                   userImage="https://images.unsplash.com/photo-1602494518630-f51bfa4e8853?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
                   userName={author.name}
                   votesNumbers="0"
+                  isAnonymous={isAnonymous}
                 />
               );
             }

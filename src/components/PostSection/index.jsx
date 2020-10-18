@@ -15,9 +15,7 @@ const PostSection = ({
   shareUrl,
   votesNumbers,
   savesNumbers,
-  isAnonymous,
-  createdAt,
-  date
+  isAnonymous
 }) => {
   const postComponentFixedAssets = {
     pickIcon: 'http://www.svgshare.com/i/QXB.svg',
@@ -52,6 +50,7 @@ const PostSection = ({
     'December'
   ];
 
+  const date = new Date(postDate);
   const monthName = months[date.getMonth()];
   const dayIndex = date.getDate();
 
@@ -63,7 +62,7 @@ const PostSection = ({
     <div className="bg-white py-4 rounded-lg my-6">
       <div className="w-11/12 mx-auto">
         <ImageWithSideTitle
-          title={isAnonymous ? '' : userName}
+          title={isAnonymous ? 'Anonymous' : userName}
           subTitle={`${dayIndex} ${monthName} at ${formatedHours}:${minutes} ${
             hours > 12 ? 'PM' : 'AM'
           }`}

@@ -11,7 +11,7 @@ const Template = args => <PostSection {...args} />;
 export const PostSectionCase = Template.bind({});
 PostSectionCase.args = {
   userName: 'Someone Profile',
-  postDate: 'simple subtitle here',
+  postDate: '2020-10-18T13:33:27.102Z',
   userImage: '',
   postCaption:
     'One of the perks of working in an international company is sharing knowledge with your colleagues.',
