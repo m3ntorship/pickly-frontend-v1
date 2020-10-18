@@ -4,6 +4,7 @@ import PostSection from '../components/PostSection';
 import { PostSomething } from '../components/PostSomething';
 import { Redirect, useHistory } from 'react-router-dom';
 import { create } from 'axios';
+import { PICKLY } from '../apis/pickly/index';
 
 const API = create({
   baseURL: 'http://localhost:3001'
@@ -15,8 +16,7 @@ export const Home = props => {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    API({
-      url: '/posts',
+    PICKLY.get('/posts', {
       headers: {
         authorization: `bearer ${token}`
       }
@@ -34,7 +34,7 @@ export const Home = props => {
           {data.map(
             ({
               _id,
-              author,
+              // author,
               caption,
               createdAt,
               isAnonymous,
@@ -51,7 +51,7 @@ export const Home = props => {
                   savesNumbers="0"
                   shareUrl="https://www.m3ntorship.com"
                   userImage="https://images.unsplash.com/photo-1602494518630-f51bfa4e8853?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
-                  userName={author.name}
+                  // userName={author.name}
                   votesNumbers="0"
                 />
               );
