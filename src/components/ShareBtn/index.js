@@ -7,7 +7,7 @@ export const ShareBtn = ({ url }) => {
   });
   const handleClick = React.useCallback(() => {
     clipboard.copy(url); // programmatically copying a value
-  }, [clipboard.copy, url]);
+  }, [clipboard, url]);
 
   return (
     <div>

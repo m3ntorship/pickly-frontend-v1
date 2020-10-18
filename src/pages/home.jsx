@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../context/userContext';
 import PostSection from '../components/PostSection';
 import { PostSomething } from '../components/PostSomething';
-import { Redirect, useHistory } from 'react-router-dom';
 import { create } from 'axios';
 
 const API = create({
@@ -11,7 +10,6 @@ const API = create({
 
 export const Home = props => {
   const { user, token } = useContext(UserContext);
-  const history = useHistory();
   const [data, setData] = useState(null);
 
   useEffect(() => {

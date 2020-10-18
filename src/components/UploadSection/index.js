@@ -60,10 +60,6 @@ export const UploadSection = ({ handleCloseUpload }) => {
         'Content-Type': 'multipart/form-data'
       }
     })
-      // fetch('http://localhost:3001/posts', {
-      //   method: 'POST',
-      //   body: formData
-      // })
       .then(({ data }) => {
         handleCloseUpload();
       })

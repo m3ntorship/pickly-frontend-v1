@@ -13,7 +13,7 @@ export const UploadingProgress = ({ progress }) => {
     }
     const progressOffset = ((100 - progress) / 100) * circumference;
     setOffset(progressOffset);
-  }, [progress]);
+  }, [progress, circumference]);
 
   return (
     <div>
