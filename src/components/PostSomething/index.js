@@ -19,12 +19,12 @@ export const PostSomething = () => {
         fontSize={HEADING_OPTIONS.FONT_SIZE.BASE}
         fontWeight={HEADING_OPTIONS.FONT_WEIGHT.MEDIUM}
         lineHeight={HEADING_OPTIONS.LINE_HEIGHT.LOOSE}
-        className="mb-3 ml-2 sm:ml-5"
+        className="mb-3 ml-5"
       >
         Post Something
       </Heading>
       <hr className="border-c700" />
-      <div className="flex mt-3  sm:ml-5">
+      <div className="flex mt-3 ml-5">
         <Popup
           closeOnDocumentClick={false}
           ref={popupRef}
