@@ -14,7 +14,7 @@ export const MultiBtn = () => {
       className="flex flex-shrink py-3 px-4  md:px-12"
     >
       <i className="mr-3 hidden sm:block">
-        <img src={Icon} alt="choose multi"></img>
+        <img src={Icon} alt="choose multiple"></img>
       </i>
       <Heading
         textAlign={HEADING_OPTIONS.TEXT_ALIGN.LEFT}

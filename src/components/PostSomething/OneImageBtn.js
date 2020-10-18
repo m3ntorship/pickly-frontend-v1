@@ -8,11 +8,10 @@ export const OneImageBtn = () => {
     <Button
       shadow={true}
       isRounded={true}
-      // padding={BUTTON_OPTIONS.PADDING.SMALL}
       color={BUTTON_OPTIONS.BACKGROUND_COLOR.PrimaryBlack}
-      className="flex flex-shrink ml-2 py-3 px-4  md:px-12"
+      className="flex flex-shrink py-3 px-4  md:px-12"
     >
-      <i className="mr-3 hidden sm:block  ">
+      <i className="mr-3 hidden sm:block">
         <img src={Icon2} alt="choose one"></img>
       </i>
       <Heading

@@ -12,7 +12,7 @@ const navLinks = [
 
 const Navigation = () => {
   return (
-    <div className="text-center md:text-right sm:col-start-2 sm:col-end-4 ">
+    <div className="text-center md:text-right md:col-start-2 md:col-end-4 ">
       <Icon exact to="/" iconURL={navLinks[0]} />
       <Icon to="/friends" iconURL={navLinks[1]} />
       <Icon to="/notifications" iconURL={navLinks[2]} />
@@ -24,8 +24,8 @@ export const Navbar = () => {
   return (
     <header className="bg-white pt-4 lg:pt-8 pb-2">
       <div className="nav__container">
-        <div className=" items-center grid grid-cols-1 sm:grid-cols-3 justify-items-center sm:justify-items-end gap-y-4">
-          <div className="sm:justify-self-start justify-self-center">
+        <div className=" items-center grid grid-cols-1 md:grid-cols-3 justify-items-center md:justify-items-end gap-y-4">
+          <div className="md:justify-self-start justify-self-center">
             <Heading
               as="h1"
               children="Pickly"
