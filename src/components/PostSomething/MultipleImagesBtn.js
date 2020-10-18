@@ -2,7 +2,6 @@ import React from 'react';
 import { Heading, HEADING_OPTIONS } from '../Heading';
 import { Button, BUTTON_OPTIONS } from '../Button';
 import Icon from './Icon1.svg';
-import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 
 export const MultiBtn = () => {

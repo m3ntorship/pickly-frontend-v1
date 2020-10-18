@@ -9,7 +9,7 @@ const API = create({
 });
 
 export const Home = props => {
-  const { user, token } = useContext(UserContext);
+  const { token } = useContext(UserContext);
   const [data, setData] = useState(null);
 
   useEffect(() => {
@@ -19,17 +19,16 @@ export const Home = props => {
         authorization: `bearer ${token}`
       }
     }).then(({ data }) => {
-      console.log(data.data);
       setData(data.data);
     });
-  }, []);
+  }, [token]);
 
-  if (data) {
-    return (
-      <div className="bg-c900 py-6">
-        <div className="container">
-          <PostSomething />
-          {data.map(
+  return (
+    <div className="bg-c900 py-6">
+      <div className="container">
+        <PostSomething />
+        {data &&
+          data.map(
             ({
               _id,
               author,
@@ -56,10 +55,7 @@ export const Home = props => {
               );
             }
           )}
-        </div>
       </div>
-    );
-  } else {
-    return '....Loading';
-  }
+    </div>
+  );
 };

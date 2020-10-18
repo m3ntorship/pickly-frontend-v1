@@ -16,7 +16,6 @@ export const UserContextProvider = props => {
     fire.auth().onAuthStateChanged(user => {
       if (user) {
         user.getIdToken().then(token => {
-          console.log(token);
           setUser(user);
           setToken(token);
           setLoading(false);
@@ -27,7 +26,7 @@ export const UserContextProvider = props => {
         history.push('/login');
       }
     });
-  }, []);
+  }, [history]);
 
   const loginUser = e => {
     e.preventDefault();
