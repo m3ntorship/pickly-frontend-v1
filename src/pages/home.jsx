@@ -6,7 +6,7 @@ import { Redirect, useHistory } from 'react-router-dom';
 import { create } from 'axios';
 
 const API = create({
-  baseURL: 'http://localhost:3001'
+  baseURL: process.env.REACT_APP_BACKEND_URL
 });
 
 export const Home = props => {
