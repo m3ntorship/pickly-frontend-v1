@@ -12,7 +12,7 @@ export const OneImageBtn = () => {
       color={BUTTON_OPTIONS.BACKGROUND_COLOR.PrimaryBlack}
       className="flex flex-shrink ml-2 py-3 px-6  md:px-12"
     >
-      <i className="mr-3 flex-none">
+      <i className="mr-3 hidden sm:block  ">
         <img src={Icon2} alt="choose one"></img>
       </i>
       <Heading
@@ -20,7 +20,7 @@ export const OneImageBtn = () => {
         // fontSize={HEADING_OPTIONS.FONT_SIZE.BASE}
         // fontWeight={HEADING_OPTIONS.FONT_WEIGHT.BOLD}
         lineHeight={HEADING_OPTIONS.LINE_HEIGHT.LOOSE}
-        className="flex-auto text-xs sm:text-base font-medium sm:font-bold "
+        className="flex-auto text-xs sm:text-base font-medium sm:font-semibold "
       >
         One Image
       </Heading>

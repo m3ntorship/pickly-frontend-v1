@@ -14,7 +14,7 @@ export const MultiBtn = () => {
       color={BUTTON_OPTIONS.BACKGROUND_COLOR.PrimaryBlack}
       className="flex flex-shrink py-3 px-6  md:px-12"
     >
-      <i className="mr-3 flex-none">
+      <i className="mr-3 hidden sm:block">
         <img src={Icon} alt="choose multi"></img>
       </i>
       <Heading
@@ -22,7 +22,7 @@ export const MultiBtn = () => {
         // fontSize={HEADING_OPTIONS.FONT_SIZE.BASE}
         // fontWeight={HEADING_OPTIONS.FONT_WEIGHT.BOLD}
         lineHeight={HEADING_OPTIONS.LINE_HEIGHT.LOOSE}
-        className="flex-auto text-xs sm:text-base font-medium sm:font-bold "
+        className="flex-auto text-xs sm:text-base font-medium sm:font-semibold "
       >
         Multiple images
       </Heading>
