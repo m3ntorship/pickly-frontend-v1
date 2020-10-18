@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 export const Profile = () => {
   const { user, token, logoutUser } = useContext(UserContext);
   const history = useHistory();
+
   useEffect(() => {
     if (!user) {
       history.push('/login');
