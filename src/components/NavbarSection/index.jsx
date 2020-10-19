@@ -6,22 +6,26 @@ const Navigation = () => {
   // Icons Links
   const navData = [
     {
+      id: 1,
       iconUrl:
         'https://res.cloudinary.com/dqmuowojl/image/upload/v1601849139/icons/vzrzfrgclizafzzzjwml.svg',
       path: '/',
       exact: true
     },
     {
+      id: 2,
       iconUrl:
         'https://res.cloudinary.com/dqmuowojl/image/upload/v1601833247/icons/dqx6nlqzgq2htwakja7b.svg',
       path: '/friends'
     },
     {
+      id: 3,
       iconUrl:
         'https://res.cloudinary.com/dqmuowojl/image/upload/v1601849139/icons/uxm0ry0c9xwkz3zmooxv.svg',
       path: '/notifications'
     },
     {
+      id: 4,
       iconUrl:
         'https://res.cloudinary.com/dqmuowojl/image/upload/v1601849139/icons/cgafox7opgi6le1eomg4.svg',
       path: '/profile'
@@ -29,8 +33,8 @@ const Navigation = () => {
   ];
   return (
     <div className="text-center md:text-right md:col-start-2 md:col-end-4 ">
-      {navData.map(({ iconUrl, path, exact }) => (
-        <Icon iconURL={iconUrl} to={path} exact={exact} />
+      {navData.map(({ id, iconUrl, path, exact }) => (
+        <Icon key={id} iconURL={iconUrl} to={path} exact={exact} />
       ))}
     </div>
   );
