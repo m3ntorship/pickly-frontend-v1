@@ -37,7 +37,6 @@ export const Home = () => {
     <div className="bg-c900 py-6">
       <div className="container">
         <CreatePostButton />
-
         {loading && <PostLoader />}
         {error && <ErrorComponent />}
         {data &&

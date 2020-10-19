@@ -5,15 +5,16 @@ import React from 'react';
 
 const CreatePostButton = () => {
   return (
-    <div className="w-48">
+    <div className="inline-block">
       <NavLink exact to="/post">
         <Button
           shadow={true}
           isRounded={true}
+          backgroundColor={BUTTON_OPTIONS.BACKGROUND_COLOR.White}
           color={BUTTON_OPTIONS.BACKGROUND_COLOR.PrimaryBlack}
           className="flex flex-shrink py-3 px-6 my-5"
         >
-          <i className="mr-3 h-6 w-6">
+          <i className="mr-3 h-8 w-8">
             <img
               src={
                 'https://www.flaticon.com/svg/static/icons/svg/1578/1578253.svg'
