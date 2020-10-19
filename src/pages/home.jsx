@@ -2,13 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../context/userContext';
 import PostSection from '../components/PostSection';
 import { PostSomething } from '../components/PostSomething';
-import { create } from 'axios';
 import { PICKLY } from '../apis/pickly/index';
 import PostLoader from '../components/LoadingComponents/PostLoader';
-
-const API = create({
-  baseURL: process.env.REACT_APP_BACKEND_URL || 'http://localhost:3001/'
-});
 
 export const Home = () => {
   const { token } = useContext(UserContext);
@@ -56,7 +51,6 @@ export const Home = () => {
                   savesNumbers="0"
                   shareUrl="https://www.m3ntorship.com"
                   userImage="https://images.unsplash.com/photo-1602494518630-f51bfa4e8853?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
-                  // userName={author.name}
                   userName={author && author.name}
                   votesNumbers="0"
                   isAnonymous={isAnonymous}
