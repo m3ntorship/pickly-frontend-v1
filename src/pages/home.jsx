@@ -1,13 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../context/userContext';
 import PostSection from '../components/PostSection';
+import { PostSomething } from '../components/PostSomething';
+import { PICKLY } from '../apis/pickly/index';
 import { create } from 'axios';
 import PostLoader from '../components/LoadingComponents/PostLoader';
 import CreatePostButton from '../components/CreatePostButon';
-
-const API = create({
-  baseURL: process.env.REACT_APP_BACKEND_URL || 'http://localhost:3001/'
-});
 
 export const Home = () => {
   const { token } = useContext(UserContext);
@@ -17,12 +15,7 @@ export const Home = () => {
 
   useEffect(() => {
     setLoading(true);
-    API({
-      url: '/posts',
-      headers: {
-        authorization: `bearer ${token}`
-      }
-    })
+    PICKLY.get('/posts')
       .then(({ data }) => {
         setData(data.data);
         setLoading(false);
