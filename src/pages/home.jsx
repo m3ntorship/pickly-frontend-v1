@@ -25,6 +25,7 @@ export const Home = () => {
     })
       .then(({ data }) => {
         setData(data.data);
+        console.log(data.data);
         setLoading(false);
       })
       .catch(err => {
@@ -52,8 +53,8 @@ export const Home = () => {
               return (
                 <PostSection
                   key={_id}
-                  leftBgImage={images[0].url}
-                  rightBgImage={images[1].url}
+                  leftImage={images[0]}
+                  rightImage={images[1]}
                   popupActionOptions={[0]}
                   postCaption={caption}
                   postDate={createdAt}

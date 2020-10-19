@@ -2,19 +2,21 @@ import React from 'react';
 import ImageWithSideTitle from '../ImageWithSideTitle/index';
 import { ReusableDiv } from '../DivWithCenterdChildren/index';
 import { ShareBtn } from '../ShareBtn';
+import { PICKLY } from '../../apis/pickly';
 
 const PostSection = ({
   userName,
   postDate,
   userImage,
   postCaption,
-  leftBgImage,
-  rightBgImage,
+  leftImage,
+  rightImage,
   // popupActionOptions,
   shareUrl,
   votesNumbers,
   savesNumbers,
-  isAnonymous
+  isAnonymous,
+  voted
 }) => {
   const postComponentFixedAssets = {
     pickIcon: 'http://www.svgshare.com/i/QXB.svg',
@@ -25,13 +27,10 @@ const PostSection = ({
   };
   const {
     pickIcon,
-    // searchIcon,
     saveIcon,
-    // bgColor,
+    bgColor,
     anonymousIcon
   } = postComponentFixedAssets;
-  // const [iconDisplay, setIconDisplay] = useState(!bgColor);
-
   // Handle Post Time
 
   const months = [
@@ -57,6 +56,16 @@ const PostSection = ({
   const minutes = date.getMinutes();
   const formatedHours = ((hours + 11) % 12) + 1;
 
+  const handleVote = (imageID, voted) => {
+    console.log('Clicked');
+    console.log(imageID);
+    if (voted) {
+      console.log("It's voooooted");
+    } else {
+      PICKLY.put(`/images/${imageID}`).then(res => console.log);
+    }
+  };
+
   return (
     <div className="bg-white py-4 rounded-lg my-6">
       <div className="w-11/12 mx-auto">
@@ -76,11 +85,18 @@ const PostSection = ({
       <div className="grid grid-cols-2 gap-1 relative my-3">
         <ReusableDiv smallRound={true} divHeight="100%">
           <img
-            src={leftBgImage}
+            src={leftImage.url}
             className="w-full h-full object-cover rounded-sm"
             style={{ maxHeight: '100%' }}
             alt=""
           />
+          <div>
+            <HeartComponent
+              handleVoteFun={handleVote}
+              imageID={leftImage._id}
+              voted
+            />
+          </div>
         </ReusableDiv>
 
         <div
@@ -104,33 +120,18 @@ const PostSection = ({
 
         <ReusableDiv divHeight="100%" smallRound={true}>
           <img
-            src={rightBgImage}
+            src={rightImage.url}
             className="w-full h-full object-cover rounded-sm"
             style={{ maxHeight: '100%' }}
             alt=""
           />
-          {/* This section takes class hidden untill we add these features */}
-          {/* <div className="flex-col items-center absolute hidden">
-            <ReusableDiv
-              bgColor={iconDisplay}
-              fullRound={true}
-              divWidth="50px"
-              divHeight="50px"
-              clickFunction={() => setIconDisplay(bgColor)}
-            >
-              <img src={pickIcon} alt="" />
-            </ReusableDiv>
-
-            <div className="flex mt-2">
-              <div className="w-8 h-8 rounded-full bg-white flex justify-center items-center">
-                <img src={searchIcon} alt="" style={{ width: '13px' }} />
-              </div>
-              <span className="mx-2"></span>
-              <div className="w-8 h-8 rounded-full bg-white flex justify-center items-center">
-                <PopUp appearOn="click" options={popupActionOptions} />
-              </div>
-            </div>
-          </div> */}
+          <div>
+            <HeartComponent
+              handleVoteFun={handleVote}
+              imageID={rightImage._id}
+              voted
+            />
+          </div>
         </ReusableDiv>
       </div>
 
@@ -159,3 +160,16 @@ const PostSection = ({
 };
 
 export default PostSection;
+
+const HeartComponent = ({ imageID, handleVoteFun, voted }) => {
+  return (
+    <h1
+      className="absolute left-0"
+      onDoubleClick={() => {
+        handleVoteFun(imageID, voted);
+      }}
+    >
+      Header
+    </h1>
+  );
+};
