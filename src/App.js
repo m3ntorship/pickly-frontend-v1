@@ -8,7 +8,7 @@ import { Friends } from './pages/friends.jsx';
 import { UserContextProvider } from './context/userContext';
 import { LoginForm } from './components/LoginForm/index';
 import { ProtectedRoute } from './pages/protected-route';
-
+import { Post } from './pages/post';
 function App() {
   return (
     <Router>
@@ -20,6 +20,7 @@ function App() {
             <ProtectedRoute path="/friends" component={Friends} />
             <ProtectedRoute path="/notifications" component={Notifications} />
             <ProtectedRoute path="/profile" component={Profile} />
+            <ProtectedRoute path="/post" component={Post} />
             <Route path="/login" component={LoginForm} />
           </Switch>
         </UserContextProvider>
