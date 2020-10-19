@@ -57,8 +57,6 @@ const PostSection = ({
   const formatedHours = ((hours + 11) % 12) + 1;
 
   const handleVote = (imageID, voted) => {
-    console.log('Clicked');
-    console.log(imageID);
     if (voted) {
       console.log("It's voooooted");
     } else {
@@ -84,17 +82,17 @@ const PostSection = ({
 
       <div className="grid grid-cols-2 gap-1 relative my-3">
         <ReusableDiv smallRound={true} divHeight="100%">
-          <img
-            src={leftImage.url}
-            className="w-full h-full object-cover rounded-sm"
-            style={{ maxHeight: '100%' }}
-            alt=""
-          />
           <div>
+            <img
+              src={leftImage.url}
+              className="w-full h-full object-cover rounded-sm"
+              style={{ maxHeight: '100%' }}
+              alt=""
+            />
             <HeartComponent
               handleVoteFun={handleVote}
               imageID={leftImage._id}
-              voted
+              voted={voted}
             />
           </div>
         </ReusableDiv>
@@ -119,17 +117,17 @@ const PostSection = ({
         </div>
 
         <ReusableDiv divHeight="100%" smallRound={true}>
-          <img
-            src={rightImage.url}
-            className="w-full h-full object-cover rounded-sm"
-            style={{ maxHeight: '100%' }}
-            alt=""
-          />
           <div>
+            <img
+              src={rightImage.url}
+              className="w-full h-full object-cover rounded-sm"
+              style={{ maxHeight: '100%' }}
+              alt=""
+            />
             <HeartComponent
               handleVoteFun={handleVote}
               imageID={rightImage._id}
-              voted
+              voted={voted}
             />
           </div>
         </ReusableDiv>
@@ -164,12 +162,12 @@ export default PostSection;
 const HeartComponent = ({ imageID, handleVoteFun, voted }) => {
   return (
     <h1
-      className="absolute left-0"
+      className="mx-auto bg-c100 p-2 text-white cursor-pointer"
       onDoubleClick={() => {
         handleVoteFun(imageID, voted);
       }}
     >
-      Header
+      {voted ? 'Voted' : 'Vote Now'}
     </h1>
   );
 };

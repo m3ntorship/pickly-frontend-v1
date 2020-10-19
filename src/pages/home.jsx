@@ -48,10 +48,12 @@ export const Home = () => {
               caption,
               createdAt,
               isAnonymous,
-              resources: { images }
+              resources: { images },
+              Voted
             }) => {
               return (
                 <PostSection
+                  voted={Voted}
                   key={_id}
                   leftImage={images[0]}
                   rightImage={images[1]}
