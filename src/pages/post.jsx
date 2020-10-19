@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from 'react';
 import { UserContext } from '../context/userContext';
 import { useHistory } from 'react-router-dom';
-
+import { UploadSection } from '../components/UploadSection';
 export const Post = () => {
   const { user } = useContext(UserContext);
   const history = useHistory();
@@ -13,9 +13,9 @@ export const Post = () => {
   });
 
   return (
-    <div className="h-screen">
-      <div className="container flex  justify-center ">
-        <h1 className="text-xxlg font-regular tracking-widest pt-12">Post</h1>
+    <div className="h-full container ">
+      <div className="grid grid-cols-1 ">
+        <UploadSection />
       </div>
     </div>
   );
