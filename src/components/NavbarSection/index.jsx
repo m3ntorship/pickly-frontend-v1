@@ -2,21 +2,36 @@ import React from 'react';
 import { Heading, HEADING_OPTIONS } from '../Heading';
 import { Icon } from '../Navbar-icons';
 
-// Icons Links
-const navLinks = [
-  'https://res.cloudinary.com/dqmuowojl/image/upload/v1601849139/icons/vzrzfrgclizafzzzjwml.svg',
-  'https://res.cloudinary.com/dqmuowojl/image/upload/v1601833247/icons/dqx6nlqzgq2htwakja7b.svg',
-  'https://res.cloudinary.com/dqmuowojl/image/upload/v1601833247/icons/uxm0ry0c9xwkz3zmooxv.svg',
-  'https://res.cloudinary.com/dqmuowojl/image/upload/v1601833247/icons/cgafox7opgi6le1eomg4.svg'
-];
-
 const Navigation = () => {
+  // Icons Links
+  const navData = [
+    {
+      iconUrl:
+        'https://res.cloudinary.com/dqmuowojl/image/upload/v1601849139/icons/vzrzfrgclizafzzzjwml.svg',
+      path: '/',
+      exact: true
+    },
+    {
+      iconUrl:
+        'https://res.cloudinary.com/dqmuowojl/image/upload/v1601833247/icons/dqx6nlqzgq2htwakja7b.svg',
+      path: '/friends'
+    },
+    {
+      iconUrl:
+        'https://res.cloudinary.com/dqmuowojl/image/upload/v1601849139/icons/uxm0ry0c9xwkz3zmooxv.svg',
+      path: '/notifications'
+    },
+    {
+      iconUrl:
+        'https://res.cloudinary.com/dqmuowojl/image/upload/v1601849139/icons/cgafox7opgi6le1eomg4.svg',
+      path: '/profile'
+    }
+  ];
   return (
     <div className="text-center md:text-right md:col-start-2 md:col-end-4 ">
-      <Icon exact to="/" iconURL={navLinks[0]} />
-      <Icon to="/friends" iconURL={navLinks[1]} />
-      <Icon to="/notifications" iconURL={navLinks[2]} />
-      <Icon to="/profile" iconURL={navLinks[3]} />
+      {navData.map(({ iconUrl, path, exact }) => (
+        <Icon iconURL={iconUrl} to={path} exact={exact} />
+      ))}
     </div>
   );
 };
