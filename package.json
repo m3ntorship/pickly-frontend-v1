@@ -15,6 +15,7 @@
     "react": "^16.13.1",
     "react-app-rewire-postcss": "^3.0.2",
     "react-app-rewired": "^2.1.6",
+    "react-content-loader": "^5.1.2",
     "react-dom": "^16.13.1",
     "react-image-crop": "^8.6.6",
     "react-router-dom": "^5.2.0",

@@ -60,10 +60,6 @@ export const UploadSection = ({ handleCloseUpload }) => {
         'Content-Type': 'multipart/form-data'
       }
     })
-      // fetch('http://localhost:3001/posts', {
-      //   method: 'POST',
-      //   body: formData
-      // })
       .then(({ data }) => {
         handleCloseUpload();
       })
@@ -198,7 +194,7 @@ export const UploadSection = ({ handleCloseUpload }) => {
   };
 
   return (
-    <div className="mx-auto my-auto rounded-lg">
+    <div className="mx-auto my-auto rounded-lg mt-4 grid grid-cols-1">
       <div>
         <Heading
           as="p"
@@ -212,7 +208,7 @@ export const UploadSection = ({ handleCloseUpload }) => {
           Post Something
         </Heading>
         {/* Close Button */}
-        <div
+        {/* <div
           className="inline-block float-right mt-2 cursor-pointer"
           onClick={handleCloseUpload}
         >
@@ -238,9 +234,8 @@ export const UploadSection = ({ handleCloseUpload }) => {
               strokeLinejoin="round"
             />
           </svg>
-        </div>
+        </div> */}
       </div>
-
       {/* &&&&&&&&&&&&&&&&&&&&&& Input field and post options &&&&&&&&&&&&&&&&&&&&&& */}
 
       <hr className="w-full text-c800 h-1" />
@@ -334,6 +329,7 @@ export const UploadSection = ({ handleCloseUpload }) => {
               )}
               {cropedImageOne && (
                 <img
+                  alt=""
                   src={cropedImageOne}
                   className="absolute h-full w-full left-0 top-0 object-cover"
                 />
@@ -424,6 +420,7 @@ export const UploadSection = ({ handleCloseUpload }) => {
               )}
               {cropedImageTwo && (
                 <img
+                  alt=""
                   src={cropedImageTwo}
                   className="absolute h-full w-full left-0 top-0 object-cover"
                 />
@@ -466,7 +463,9 @@ export const UploadSection = ({ handleCloseUpload }) => {
         <p className="text-black text-xs">
           it’s not recommended to make a poll with photos of your friends
           without thier consent. we will remove a poll, if it’s reporte.
-          <a className="text-c200">Community Guidelines</a>
+          <a className="text-c200" href="/">
+            Community Guidelines
+          </a>
         </p>
       </div>
       <hr className="w-full text-c800 h-1" />

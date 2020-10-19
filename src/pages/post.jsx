@@ -1,8 +1,8 @@
 import React, { useEffect, useContext } from 'react';
 import { UserContext } from '../context/userContext';
 import { useHistory } from 'react-router-dom';
-
-export const Friends = () => {
+import { UploadSection } from '../components/UploadSection';
+export const Post = () => {
   const { user } = useContext(UserContext);
   const history = useHistory();
 
@@ -13,11 +13,9 @@ export const Friends = () => {
   });
 
   return (
-    <div className="h-screen bg-c800">
-      <div className="container flex  justify-center ">
-        <h1 className="text-xxlg font-regular tracking-widest pt-12">
-          Friends
-        </h1>
+    <div className="h-full container ">
+      <div className="grid grid-cols-1 ">
+        <UploadSection />
       </div>
     </div>
   );
