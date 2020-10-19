@@ -11,8 +11,9 @@ const PageLoader = props => (
       backgroundColor="#f3f3f3"
       foregroundColor="#ecebeb"
       {...props}
+      className="w-full"
     >
-      <rect x="0" y="55" rx="0" ry="0" width="600" height="109" />
+      <rect x="0" y="55" rx="0" ry="0" width="100%" height="109" />
     </ContentLoader>
   </div>
 );

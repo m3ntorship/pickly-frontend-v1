@@ -12,33 +12,33 @@ const API = create({
 export const Home = () => {
   const { token } = useContext(UserContext);
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  useEffect(() => {
-    setLoading(true);
-    API({
-      url: '/posts',
-      headers: {
-        authorization: `bearer ${token}`
-      }
-    })
-      .then(({ data }) => {
-        setData(data.data);
-        setLoading(false);
-      })
-      .catch(err => {
-        setLoading(false);
-        setError(true);
-      });
-  }, [token]);
+  // useEffect(() => {
+  //   setLoading(true);
+  //   API({
+  //     url: '/posts',
+  //     headers: {
+  //       authorization: `bearer ${token}`
+  //     }
+  //   })
+  //     .then(({ data }) => {
+  //       setData(data.data);
+  //       setLoading(false);
+  //     })
+  //     .catch(err => {
+  //       setLoading(false);
+  //       setError(true);
+  //     });
+  // }, [token]);
 
   return (
     <div className="bg-c900 py-6">
       <div className="container">
         <PostSomething />
         {loading && <PostLoader />}
-        {error && <ErrorComponent />}
+        {/* {error && <ErrorComponent />}
         {data &&
           data.map(
             ({
@@ -66,7 +66,7 @@ export const Home = () => {
                 />
               );
             }
-          )}
+          )} */}
       </div>
     </div>
   );
