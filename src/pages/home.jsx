@@ -3,30 +3,42 @@ import { UserContext } from '../context/userContext';
 import PostSection from '../components/PostSection';
 import { PostSomething } from '../components/PostSomething';
 import { create } from 'axios';
+import PostLoader from '../components/LoadingComponents/PostLoader';
 
 const API = create({
   baseURL: process.env.REACT_APP_BACKEND_URL || 'http://localhost:3001/'
 });
 
-export const Home = props => {
+export const Home = () => {
   const { token } = useContext(UserContext);
   const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     API({
       url: '/posts',
       headers: {
         authorization: `bearer ${token}`
       }
-    }).then(({ data }) => {
-      setData(data.data);
-    });
+    })
+      .then(({ data }) => {
+        setData(data.data);
+        setLoading(false);
+      })
+      .catch(err => {
+        setLoading(false);
+        setError(true);
+      });
   }, [token]);
 
   return (
     <div className="bg-c900 py-6">
       <div className="container">
         <PostSomething />
+        {loading && <PostLoader />}
+        {error && <ErrorComponent />}
         {data &&
           data.map(
             ({
@@ -56,6 +68,18 @@ export const Home = props => {
             }
           )}
       </div>
+    </div>
+  );
+};
+
+const ErrorComponent = () => {
+  return (
+    <div
+      class="bg-c900 border border-c200 text-c200 px-4 py-3 rounded relative"
+      role="alert"
+    >
+      <strong class="font-bold">Sorry!</strong>
+      <span class="block sm:inline ml-2">Can't find your data.</span>
     </div>
   );
 };
