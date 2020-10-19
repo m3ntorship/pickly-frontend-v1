@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import ImageWithSideTitle from '../ImageWithSideTitle/index';
 import { ReusableDiv } from '../DivWithCenterdChildren/index';
-import PopUp from '../OptionsBtn/index';
 import { ShareBtn } from '../ShareBtn';
 
 const PostSection = ({
@@ -11,7 +10,7 @@ const PostSection = ({
   postCaption,
   leftBgImage,
   rightBgImage,
-  popupActionOptions,
+  // popupActionOptions,
   shareUrl,
   votesNumbers,
   savesNumbers,
@@ -26,12 +25,12 @@ const PostSection = ({
   };
   const {
     pickIcon,
-    searchIcon,
+    // searchIcon,
     saveIcon,
-    bgColor,
+    // bgColor,
     anonymousIcon
   } = postComponentFixedAssets;
-  const [iconDisplay, setIconDisplay] = useState(!bgColor);
+  // const [iconDisplay, setIconDisplay] = useState(!bgColor);
 
   // Handle Post Time
 

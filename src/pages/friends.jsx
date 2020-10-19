@@ -15,7 +15,9 @@ export const Friends = () => {
   return (
     <div className="h-screen bg-c800">
       <div className="container flex  justify-center ">
-        <h1 className="text-xxlg font-bold pt-12">Friends</h1>
+        <h1 className="text-xxlg font-regular tracking-widest pt-12">
+          Friends
+        </h1>
       </div>
     </div>
   );

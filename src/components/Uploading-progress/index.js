@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-export const UploadingProgress = ({ progress }) => {
+export const ProgressCircle = ({ progress }) => {
   const [offset, setOffset] = useState(0);
   let center = 20;
   const radius = 17;
@@ -13,7 +13,7 @@ export const UploadingProgress = ({ progress }) => {
     }
     const progressOffset = ((100 - progress) / 100) * circumference;
     setOffset(progressOffset);
-  }, [progress]);
+  }, [progress, circumference]);
 
   return (
     <div>
@@ -58,7 +58,7 @@ export const UploadingProgress = ({ progress }) => {
   );
 };
 
-UploadingProgress.propTypes = {
+ProgressCircle.propTypes = {
   /**
    * this is number of uploadng progress
    */

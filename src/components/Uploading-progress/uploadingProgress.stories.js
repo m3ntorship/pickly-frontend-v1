@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { UploadingProgress } from './';
+import { ProgressCircle } from './';
 
 export default {
   title: 'components/UploadigProgress',
-  component: UploadingProgress
+  component: ProgressCircle
 };
 
-const Template = args => <UploadingProgress {...args} />;
+const Template = args => <ProgressCircle {...args} />;
 
 export const uploadigProgress = Template.bind({});
 uploadigProgress.args = {

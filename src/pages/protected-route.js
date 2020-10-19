@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { UserContext } from '../context/userContext';
 import { Route, Redirect } from 'react-router-dom';
+import PageLoader from '../components/LoadingComponents/PageLoader';
 
 export const ProtectedRoute = ({ component: Component, ...rest }) => {
   const { user, loading } = useContext(UserContext);
@@ -9,7 +10,7 @@ export const ProtectedRoute = ({ component: Component, ...rest }) => {
       {...rest}
       render={props => {
         if (loading) {
-          return 'loading from protected route.. ';
+          return <PageLoader />;
         } else {
           if (user) {
             return <Component {...props} />;
