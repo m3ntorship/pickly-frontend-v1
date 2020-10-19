@@ -2,12 +2,10 @@ import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../context/userContext';
 import PostSection from '../components/PostSection';
 import { PostSomething } from '../components/PostSomething';
+import { PICKLY } from '../apis/pickly/index';
 import { create } from 'axios';
 import PostLoader from '../components/LoadingComponents/PostLoader';
-
-const API = create({
-  baseURL: process.env.REACT_APP_BACKEND_URL || 'http://localhost:3001/'
-});
+import CreatePostButton from '../components/CreatePostButon';
 
 export const Home = () => {
   const { token } = useContext(UserContext);
@@ -17,12 +15,7 @@ export const Home = () => {
 
   useEffect(() => {
     setLoading(true);
-    API({
-      url: '/posts',
-      headers: {
-        authorization: `bearer ${token}`
-      }
-    })
+    PICKLY.get('/posts')
       .then(({ data }) => {
         setData(data.data);
         console.log(data.data);
@@ -37,7 +30,7 @@ export const Home = () => {
   return (
     <div className="bg-c900 py-6">
       <div className="container">
-        <PostSomething />
+        <CreatePostButton />
         {loading && <PostLoader />}
         {error && <ErrorComponent />}
         {data &&
@@ -78,11 +71,11 @@ export const Home = () => {
 const ErrorComponent = () => {
   return (
     <div
-      class="bg-c900 border border-c200 text-c200 px-4 py-3 rounded relative"
+      className="bg-c900 border border-c200 text-c200 px-4 py-3 rounded relative"
       role="alert"
     >
-      <strong class="font-bold">Sorry!</strong>
-      <span class="block sm:inline ml-2">Can't find your data.</span>
+      <strong className="font-bold">Sorry!</strong>
+      <span className="block sm:inline ml-2">Can't find your data.</span>
     </div>
   );
 };
