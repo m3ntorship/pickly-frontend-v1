@@ -11,7 +11,7 @@ const CreatePostButton = () => {
           shadow={true}
           isRounded={true}
           color={BUTTON_OPTIONS.BACKGROUND_COLOR.PrimaryBlack}
-          className="flex flex-shrink py-3 px-4 my-6"
+          className="flex flex-shrink py-3 px-6 my-5"
         >
           <i className="mr-3 h-6 w-6">
             <img
