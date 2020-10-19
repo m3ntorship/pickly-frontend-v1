@@ -194,7 +194,7 @@ export const UploadSection = ({ handleCloseUpload }) => {
   };
 
   return (
-    <div className="mx-auto my-auto rounded-lg">
+    <div className="mx-auto my-auto rounded-lg mt-4 grid grid-cols-1">
       <div>
         <Heading
           as="p"
@@ -208,7 +208,7 @@ export const UploadSection = ({ handleCloseUpload }) => {
           Post Something
         </Heading>
         {/* Close Button */}
-        <div
+        {/* <div
           className="inline-block float-right mt-2 cursor-pointer"
           onClick={handleCloseUpload}
         >
@@ -234,9 +234,8 @@ export const UploadSection = ({ handleCloseUpload }) => {
               strokeLinejoin="round"
             />
           </svg>
-        </div>
+        </div> */}
       </div>
-
       {/* &&&&&&&&&&&&&&&&&&&&&& Input field and post options &&&&&&&&&&&&&&&&&&&&&& */}
 
       <hr className="w-full text-c800 h-1" />
