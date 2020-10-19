@@ -39,7 +39,7 @@ export const Home = () => {
           data.map(
             ({
               _id,
-              // author,
+              author,
               caption,
               createdAt,
               isAnonymous,
