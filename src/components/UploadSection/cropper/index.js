@@ -1,51 +1,6 @@
-// import React, { useState, useCallback } from 'react';
-import Cropper from 'react-easy-crop';
-// import Popup from 'reactjs-popup';
-// import getCroppedImg from './cropImage';
-
-// const NewUploadSection = () => {
-//   return (
-//     <div className="w-full h-full my-2">
-//       <Popup
-//         trigger={() => {
-//           return <button> open Popup </button>;
-//         }}
-//         modal
-//       >
-//         <CropImage />
-//       </Popup>
-//     </div>
-//   );
-// };
-
-// const CropImage = () => {
-//   const [crop, setCrop] = useState({ x: 0, y: 0 });
-//   const [zoom, setZoom] = useState(1);
-//   const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
-//     console.log(croppedArea, croppedAreaPixels);
-//   }, []);
-//   return (
-//     <div className="crop-image absolute top-0 left-0 right-0 bottom-0">
-//       <div className="crop-container absolute top-0 left-0 right-0 bottom-0">
-//         <Cropper
-//           image="https://img.huffingtonpost.com/asset/5ab4d4ac2000007d06eb2c56.jpeg?cache=sih0jwle4e&ops=1910_1000"
-//           crop={crop}
-//           zoom={zoom}
-//           aspect={3 / 4}
-//           onCropChange={setCrop}
-//           onCropComplete={onCropComplete}
-//           onZoomChange={setZoom}
-//         />
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default NewUploadSection;
-
 import React, { useState, useCallback, useRef, useEffect } from 'react';
-import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
+import Cropper from 'react-easy-crop';
 import Popup from 'reactjs-popup';
 import { ReusableDiv } from '../../DivWithCenterdChildren';
 import { InputField } from '../../InputField';
@@ -54,16 +9,7 @@ import { ToggleButton } from '../../ToggleButton';
 // import { Button } from '../Button';
 import { PICKLY } from '../../../apis/pickly';
 
-// Setting a high pixel ratio avoids blurriness in the canvas crop preview.
-const pixelRatio = 4;
-
 export const CropImage = ({ handleCloseUpload }) => {
-  // =============== crop image states ===========================
-  // const [crop, setCrop] = useState({
-  //   unit: '%',
-  //   width: 30,
-  //   aspect: 3 / 4
-  // });
   const [completeCropOne, setCompleteCropOne] = useState(null);
   const [completeCropTwo, setCompleteCropTwo] = useState(null);
   const [cropedImageOne, setCropedImageOne] = useState(null);
@@ -79,7 +25,7 @@ export const CropImage = ({ handleCloseUpload }) => {
   const imgOneRef = useRef();
   const imgTwoRef = useRef();
 
-  // Fot Test
+  // Fot Test For new Crop package
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
