@@ -57,5 +57,9 @@
     "@storybook/react": "^6.0.22",
     "babel-loader": "^8.1.0",
     "react-is": "^16.13.1"
-  }
+  },
+  "main": "index.js",
+  "repository": "https://github.com/moatazalaa14/pickly-frontend",
+  "author": "Mu'taz <mutazalaasalah@gmail.com>",
+  "license": "MIT"
 }
