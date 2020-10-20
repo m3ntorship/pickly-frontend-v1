@@ -1,0 +1,21 @@
+
+.crop-image {
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+}
+
+.crop-container {
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+bottom: 80px;
+}
+
+.popup-content {
+    width: 60% !important;
+    height: 100%;
+}
