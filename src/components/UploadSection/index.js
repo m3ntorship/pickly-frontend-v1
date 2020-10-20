@@ -56,13 +56,13 @@ export const UploadSection = ({ handleCloseUpload }) => {
     form.append('images', imageTwoToUpload);
     form.append('caption', caption);
     form.append('isAnonymous', postAnonymously);
-    console.log(postAnonymously);
     PICKLY.post('/posts', form, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
     })
       .then(({ data }) => {
+        console.log('posted');
         history.push('/');
       })
       .catch(console.error);

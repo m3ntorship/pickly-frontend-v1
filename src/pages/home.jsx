@@ -27,6 +27,14 @@ export const Home = () => {
       });
   }, [token]);
 
+  const updatePostData = (postId, updatedData) => {
+    const foundPost = data.findIndex(x => (x._id = postId));
+    let newData = data;
+    newData[foundPost] = updatedData;
+    setData(newData);
+    console.log(data);
+  };
+
   return (
     <div className="bg-c900 py-6">
       <div className="container">
@@ -44,10 +52,12 @@ export const Home = () => {
               resources: { images },
               Voted
             }) => {
+              console.log(Voted);
               return (
                 <PostSection
                   voted={Voted}
                   key={_id}
+                  _id={_id}
                   leftImage={images[0]}
                   rightImage={images[1]}
                   popupActionOptions={[0]}
@@ -59,6 +69,7 @@ export const Home = () => {
                   userName={author && author.name}
                   votesNumbers="0"
                   isAnonymous={isAnonymous}
+                  updatePostData={updatePostData}
                 />
               );
             }

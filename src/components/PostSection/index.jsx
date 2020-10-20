@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ImageWithSideTitle from '../ImageWithSideTitle/index';
 import { ReusableDiv } from '../DivWithCenterdChildren/index';
 import { ShareBtn } from '../ShareBtn';
 import { PICKLY } from '../../apis/pickly';
+import cn from 'classnames';
+import { useState } from 'react';
 
 const PostSection = ({
+  _id,
   userName,
   postDate,
   userImage,
@@ -16,8 +19,13 @@ const PostSection = ({
   votesNumbers,
   savesNumbers,
   isAnonymous,
-  voted
+  voted,
+  updatePostData
 }) => {
+  const [reload, setReload] = useState(false);
+  useEffect(() => {
+    console.log('Effected');
+  }, [voted, reload]);
   const postComponentFixedAssets = {
     pickIcon: 'http://www.svgshare.com/i/QXB.svg',
     searchIcon: 'https://i.imgur.com/inlBQ6A.png',
@@ -31,8 +39,8 @@ const PostSection = ({
     bgColor,
     anonymousIcon
   } = postComponentFixedAssets;
-  // Handle Post Time
 
+  // Handle Post Time
   const months = [
     'January',
     'February',
@@ -47,20 +55,30 @@ const PostSection = ({
     'November',
     'December'
   ];
-
   const date = new Date(postDate);
   const monthName = months[date.getMonth()];
   const dayIndex = date.getDate();
-
   const hours = date.getHours();
   const minutes = date.getMinutes();
   const formatedHours = ((hours + 11) % 12) + 1;
 
-  const handleVote = (imageID, voted) => {
+  const handleVote = (imageID, voted, postId) => {
     if (voted) {
       console.log("It's voooooted");
+      // updatePostData(imageID, { Test: 'test' });
     } else {
-      PICKLY.put(`/images/${imageID}`).then(res => console.log);
+      PICKLY.put(`/images/${imageID}`).then(res => {
+        console.log(res);
+        PICKLY.get(`/posts/${postId}`).then(res => {
+          console.log(res);
+          async function test() {
+            updatePostData(imageID, res.data.data);
+          }
+          test().then(res => {
+            setReload(!reload);
+          });
+        });
+      });
     }
   };
 
@@ -93,6 +111,7 @@ const PostSection = ({
               handleVoteFun={handleVote}
               imageID={leftImage._id}
               voted={voted}
+              postId={_id}
             />
           </div>
         </ReusableDiv>
@@ -128,6 +147,7 @@ const PostSection = ({
               handleVoteFun={handleVote}
               imageID={rightImage._id}
               voted={voted}
+              postId={_id}
             />
           </div>
         </ReusableDiv>
@@ -159,12 +179,15 @@ const PostSection = ({
 
 export default PostSection;
 
-const HeartComponent = ({ imageID, handleVoteFun, voted }) => {
+const HeartComponent = ({ imageID, handleVoteFun, voted, postId }) => {
   return (
     <h1
-      className="mx-auto bg-c100 p-2 text-white cursor-pointer"
+      className={cn(
+        'mx-auto bg-c100 p-2 text-white cursor-pointer',
+        voted && 'bg-c200'
+      )}
       onDoubleClick={() => {
-        handleVoteFun(imageID, voted);
+        handleVoteFun(imageID, voted, postId);
       }}
     >
       {voted ? 'Voted' : 'Vote Now'}
