@@ -44,6 +44,9 @@ export const CropImage = ({ handleCloseUpload }) => {
       const cropedImageOne = await getCroppedImg(imgOne, croppedAreaPixels);
       console.log('donee', { cropedImageOne });
       setCropedImageOne(cropedImageOne);
+      // previewCanvasRefOne.current.toBlob(blob => {
+      //   setImageOneToUpload(new File([blob], 'nile', { type: 'image/jpeg' }));
+      // });
       console.log(cropedImageOne);
       closeImgOnePopup();
     } catch (e) {
