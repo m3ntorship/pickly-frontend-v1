@@ -6,8 +6,10 @@ import { ReusableDiv } from '../../DivWithCenterdChildren';
 import { InputField } from '../../InputField';
 import { Heading } from '../../Heading';
 import { ToggleButton } from '../../ToggleButton';
-// import { Button } from '../Button';
+import { Button } from '../../Button';
 import { PICKLY } from '../../../apis/pickly';
+import getCroppedImg from './cropImage';
+import { useHistory } from 'react-router-dom';
 
 export const CropImage = ({ handleCloseUpload }) => {
   const [completeCropOne, setCompleteCropOne] = useState(null);
@@ -24,12 +26,33 @@ export const CropImage = ({ handleCloseUpload }) => {
   const imgTwoPopupRef = useRef();
   const imgOneRef = useRef();
   const imgTwoRef = useRef();
+  const history = useHistory();
 
   // Fot Test For new Crop package
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
+
+  // Test Functions
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+
   const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
-    console.log(croppedArea, croppedAreaPixels);
+    setCroppedAreaPixels(croppedAreaPixels);
+  }, []);
+
+  const showCroppedImage = useCallback(async () => {
+    try {
+      const cropedImageOne = await getCroppedImg(imgOne, croppedAreaPixels);
+      console.log('donee', { cropedImageOne });
+      setCropedImageOne(cropedImageOne);
+      console.log(cropedImageOne);
+      closeImgOnePopup();
+    } catch (e) {
+      console.error(e);
+    }
+  }, [croppedAreaPixels]);
+
+  const onClose = useCallback(() => {
+    setCropedImageOne(null);
   }, []);
 
   // ======== Other components State and Functions ===========
@@ -59,7 +82,7 @@ export const CropImage = ({ handleCloseUpload }) => {
       }
     })
       .then(({ data }) => {
-        handleCloseUpload();
+        history.push('/');
       })
       .catch(console.error);
   };
@@ -76,51 +99,51 @@ export const CropImage = ({ handleCloseUpload }) => {
     }
   };
 
-  const onSelectFileTwo = e => {
-    if (e.target.files && e.target.files.length > 0) {
-      const reader = new FileReader();
-      reader.addEventListener('load', () => {
-        setImgTwo(reader.result);
-        openImgTwoPopup();
-      });
-      reader.readAsDataURL(e.target.files[0]);
-    }
-  };
+  // const onSelectFileTwo = e => {
+  //   if (e.target.files && e.target.files.length > 0) {
+  //     const reader = new FileReader();
+  //     reader.addEventListener('load', () => {
+  //       setImgTwo(reader.result);
+  //       openImgTwoPopup();
+  //     });
+  //     reader.readAsDataURL(e.target.files[0]);
+  //   }
+  // };
 
   const onLoadOne = useCallback(img => {
     imgOneRef.current = img;
   }, []);
 
-  const onLoadTwo = useCallback(img => {
-    imgTwoRef.current = img;
-  }, []);
+  // const onLoadTwo = useCallback(img => {
+  //   imgTwoRef.current = img;
+  // }, []);
 
   // Handle Img One Popup
   const openImgOnePopup = () => imgOnePopupRef.current.open();
   const closeImgOnePopup = () => imgOnePopupRef.current.close();
 
   // Handle Img One Popup
-  const openImgTwoPopup = () => imgTwoPopupRef.current.open();
-  const closeImgTwoPopup = () => imgTwoPopupRef.current.close();
+  // const openImgTwoPopup = () => imgTwoPopupRef.current.open();
+  // const closeImgTwoPopup = () => imgTwoPopupRef.current.close();
 
-  const handleFinishCropOne = () => {
-    closeImgOnePopup();
-    previewCanvasRefOne.current.toBlob(blob => {
-      setImageOneToUpload(new File([blob], 'nile', { type: 'image/jpeg' }));
-    });
-    setCropedImageOne(previewCanvasRefOne.current.toDataURL());
-  };
+  // const handleFinishCropOne = () => {
+  //   closeImgOnePopup();
+  //   // previewCanvasRefOne.current.toBlob(blob => {
+  //   //   setImageOneToUpload(new File([blob], 'nile', { type: 'image/jpeg' }));
+  //   // });
+  //   // setCropedImageOne(previewCanvasRefOne.current.toDataURL());
+  // };
 
-  const handleFinishCropTwo = () => {
-    closeImgTwoPopup();
-    previewCanvasRefTwo.current.toBlob(function (blob) {
-      setImageTwoToUpload(new File([blob], 'nile', { type: 'image/jpeg' }));
-    });
-    setCropedImageTwo(previewCanvasRefTwo.current.toDataURL());
-  };
+  // const handleFinishCropTwo = () => {
+  //   closeImgTwoPopup();
+  //   previewCanvasRefTwo.current.toBlob(function (blob) {
+  //     setImageTwoToUpload(new File([blob], 'nile', { type: 'image/jpeg' }));
+  //   });
+  //   setCropedImageTwo(previewCanvasRefTwo.current.toDataURL());
+  // };
 
   return (
-    <div className="mx-auto my-auto rounded-lg">
+    <div className="container">
       <div>
         <Heading
           as="p"
@@ -133,34 +156,6 @@ export const CropImage = ({ handleCloseUpload }) => {
         >
           Post Something
         </Heading>
-        {/* Close Button */}
-        <div
-          className="inline-block float-right mt-2 cursor-pointer"
-          onClick={handleCloseUpload}
-        >
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M18 6L6 18"
-              stroke="#212429"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M6 6L18 18"
-              stroke="#212429"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </div>
       </div>
 
       {/* &&&&&&&&&&&&&&&&&&&&&& Input field and post options &&&&&&&&&&&&&&&&&&&&&& */}
@@ -264,30 +259,27 @@ export const CropImage = ({ handleCloseUpload }) => {
             </ReusableDiv>
           </label>
         </div>
-        <Popup ref={imgOnePopupRef}>
-          <div className="w-6/12">
-            <div className="crop-image absolute top-0 left-0 right-0 bottom-0">
-              <div className="crop-container absolute top-0 left-0 right-0 bottom-0">
-                <Cropper
-                  image={imgOne}
-                  crop={crop}
-                  zoom={zoom}
-                  aspect={3 / 4}
-                  onCropChange={setCrop}
-                  onCropComplete={onCropComplete}
-                  onZoomChange={setZoom}
-                />
-              </div>
-            </div>
-
-            <button
-              onClick={() => {
-                handleFinishCropOne();
-              }}
-            >
-              Done
-            </button>
+        <Popup ref={imgOnePopupRef} className="my-20">
+          <div className="relative w-full" style={{ height: '80%' }}>
+            <Cropper
+              image={imgOne}
+              crop={crop}
+              zoom={zoom}
+              aspect={3 / 4}
+              onCropChange={setCrop}
+              onCropComplete={onCropComplete}
+              onZoomChange={setZoom}
+              className="w-48"
+            />
           </div>
+
+          <button
+            onClick={() => {
+              showCroppedImage();
+            }}
+          >
+            Done
+          </button>
         </Popup>
         {/*
         =================================================================
@@ -377,10 +369,10 @@ export const CropImage = ({ handleCloseUpload }) => {
           >
             Selected
           </button>
-        </Popup>
-      </div> */}
-        {/* &&&&&&&&&&&&&&&&&&&&&& Finish Upload Images Section &&&&&&&&&&&&&&&&&&&&&& */}
-        {/* <div
+        </Popup>*/}
+      </div>
+      {/* &&&&&&&&&&&&&&&&&&&&&& Finish Upload Images Section &&&&&&&&&&&&&&&&&&&&&& */}
+      <div
         className="my-5 mx-auto opacity-50"
         style={{ width: 'calc(100% - 2rem)' }}
       >
@@ -392,8 +384,8 @@ export const CropImage = ({ handleCloseUpload }) => {
           </a>
         </p>
       </div>
-      <hr className="w-full text-c800 h-1" /> */}
-        {/* <div style={{ width: 'calc(100% - 2rem)' }}>
+      <hr className="w-full text-c800 h-1" />
+      <div style={{ width: 'calc(100% - 2rem)' }}>
         <form>
           <Button
             type="submit"
@@ -407,7 +399,6 @@ export const CropImage = ({ handleCloseUpload }) => {
             Post
           </Button>
         </form>
-      </div> */}
       </div>
     </div>
   );
