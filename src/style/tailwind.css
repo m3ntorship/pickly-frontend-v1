@@ -7,5 +7,6 @@
 @import "tailwindcss/components";
 
 @import "./global.css";
+@import "./upload.css";
 
 @import "tailwindcss/utilities";
