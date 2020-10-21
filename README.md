@@ -18,4 +18,4 @@ You will also see any lint errors in the console.
 
 ### `yarn storybook`
 
-Launches the storybook runner - (Storybook) [https://storybook.js.org/]
+Launches the storybook runner - [https://storybook.js.org/]
