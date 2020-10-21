@@ -10,18 +10,14 @@ import { Button } from '../../Button';
 import { PICKLY } from '../../../apis/pickly';
 import getCroppedImg from './cropImage';
 import { useHistory } from 'react-router-dom';
-
-export const CropImage = ({ handleCloseUpload }) => {
-  const [completeCropOne, setCompleteCropOne] = useState(null);
-  const [completeCropTwo, setCompleteCropTwo] = useState(null);
+import { ImageOne } from './Imageone';
+export const CropImage = () => {
   const [cropedImageOne, setCropedImageOne] = useState(null);
   const [cropedImageTwo, setCropedImageTwo] = useState(null);
   const [imageOneToUpload, setImageOneToUpload] = useState();
   const [imageTwoToUpload, setImageTwoToUpload] = useState();
   const [imgOne, setImgOne] = useState(null);
   const [imgTwo, setImgTwo] = useState(null);
-  const previewCanvasRefOne = useRef(null);
-  const previewCanvasRefTwo = useRef(null);
   const imgOnePopupRef = useRef();
   const imgTwoPopupRef = useRef();
   const imgOneRef = useRef();
@@ -31,33 +27,25 @@ export const CropImage = ({ handleCloseUpload }) => {
   // Fot Test For new Crop package
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
-
   // Test Functions
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
-
   const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels);
   }, []);
-
   const showCroppedImage = useCallback(async () => {
     try {
       const cropedImageOne = await getCroppedImg(imgOne, croppedAreaPixels);
-      console.log('donee', { cropedImageOne });
       setCropedImageOne(cropedImageOne);
-      // previewCanvasRefOne.current.toBlob(blob => {
-      //   setImageOneToUpload(new File([blob], 'nile', { type: 'image/jpeg' }));
-      // });
+      setImageOneToUpload(cropedImageOne);
       console.log(cropedImageOne);
       closeImgOnePopup();
     } catch (e) {
       console.error(e);
     }
   }, [croppedAreaPixels]);
-
   const onClose = useCallback(() => {
     setCropedImageOne(null);
   }, []);
-
   // ======== Other components State and Functions ===========
   const [postAnonymously, setPostAnonymously] = useState(false);
   const [caption, setCaption] = useState('');
@@ -101,6 +89,9 @@ export const CropImage = ({ handleCloseUpload }) => {
       reader.readAsDataURL(e.target.files[0]);
     }
   };
+  // Handle Img One Popup
+  const openImgOnePopup = () => imgOnePopupRef.current.open();
+  const closeImgOnePopup = () => imgOnePopupRef.current.close();
 
   // const onSelectFileTwo = e => {
   //   if (e.target.files && e.target.files.length > 0) {
@@ -113,17 +104,13 @@ export const CropImage = ({ handleCloseUpload }) => {
   //   }
   // };
 
-  const onLoadOne = useCallback(img => {
-    imgOneRef.current = img;
-  }, []);
+  // const onLoadOne = useCallback(img => {
+  //   imgOneRef.current = img;
+  // }, []);
 
   // const onLoadTwo = useCallback(img => {
   //   imgTwoRef.current = img;
   // }, []);
-
-  // Handle Img One Popup
-  const openImgOnePopup = () => imgOnePopupRef.current.open();
-  const closeImgOnePopup = () => imgOnePopupRef.current.close();
 
   // Handle Img One Popup
   // const openImgTwoPopup = () => imgTwoPopupRef.current.open();
@@ -204,7 +191,9 @@ export const CropImage = ({ handleCloseUpload }) => {
         Crop Image One
         =================================================================
 */}
-        <div
+
+        <ImageOne imageOneToUpload={imageOneToUpload} />
+        {/* <div
           className="absolute left-0 h-full"
           style={{ width: 'calc(50% - 2px)' }}
         >
@@ -283,7 +272,7 @@ export const CropImage = ({ handleCloseUpload }) => {
           >
             Done
           </button>
-        </Popup>
+        </Popup> */}
         {/*
         =================================================================
         Crop Image Tow
