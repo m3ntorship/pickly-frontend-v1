@@ -35,12 +35,31 @@ export const Home = () => {
     console.log(data);
   };
 
+  const deleteAll = () => {
+    for (let el of data) {
+      // console.log(el._id);
+      PICKLY.delete(`/posts/${el._id}`).then(res => console.log('deleted'));
+    }
+  };
+
+  const createPost = () => {
+    PICKLY.post('/posts', form);
+  };
+
   return (
     <div className="bg-c900 py-6">
       <div className="container">
         <CreatePostButton />
         {loading && <PostLoader />}
         {error && <ErrorComponent />}
+        <button
+          onClick={() => {
+            deleteAll();
+          }}
+        >
+          DeleteAll
+        </button>
+        <button onClick={createPost}>create Fast Post</button>
         {data &&
           data.map(
             ({
