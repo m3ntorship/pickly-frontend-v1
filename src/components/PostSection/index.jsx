@@ -67,18 +67,17 @@ const PostSection = ({
       console.log("It's voooooted");
       // updatePostData(imageID, { Test: 'test' });
     } else {
-      PICKLY.put(`/images/${imageID}`).then(res => {
-        console.log(res);
-        PICKLY.get(`/posts/${postId}`).then(res => {
+      console.log(imageID);
+      PICKLY.put(`/images/${imageID}/votes`)
+        .then(res => {
           console.log(res);
-          async function test() {
+        })
+        .then(res => {
+          PICKLY.get(`/posts/${postId}`).then(res => {
+            console.log('Done');
             updatePostData(imageID, res.data.data);
-          }
-          test().then(res => {
-            setReload(!reload);
           });
         });
-      });
     }
   };
 
@@ -104,7 +103,7 @@ const PostSection = ({
             <img
               src={leftImage.url}
               className="w-full h-full object-cover rounded-sm"
-              style={{ maxHeight: '100%' }}
+              style={{ Height: '100%' }}
               alt=""
             />
             <HeartComponent
@@ -140,7 +139,7 @@ const PostSection = ({
             <img
               src={rightImage.url}
               className="w-full h-full object-cover rounded-sm"
-              style={{ maxHeight: '100%' }}
+              style={{ Height: '100%' }}
               alt=""
             />
             <HeartComponent
