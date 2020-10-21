@@ -60,7 +60,6 @@ jobs:
           docker build -t $M3_IMAGE:$M3_VERSION -f $M3_DOCKER_FILE .
           docker push $M3_IMAGE:$M3_VERSION
   deploy_dev:
-    if: false
     needs: 
       - prepare
       - build 
@@ -87,11 +86,11 @@ jobs:
           M3_DEPLOYMENT_PATH: deploy/storybook
           TEMP_DIR: temp
           M3_NAMESPACE: default
-          M3_PROJECT: m3ntorshipcom
+          M3_PROJECT: pickly
           M3_COMPONENET: storybook
           M3_ENVIRONMENT: dev
           M3_REPLICAS: "1"
-          M3_PORT: "5000"
+          M3_PORT: "3006"
         run: |
           mkdir -p $TEMP_DIR
           for f in $M3_DEPLOYMENT_PATH/apply/*; do mo -u "$f" > $TEMP_DIR/"$(basename $f)"; done
