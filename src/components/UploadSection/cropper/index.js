@@ -24,6 +24,8 @@ export const CropImage = () => {
   const imgTwoRef = useRef();
   const history = useHistory();
 
+  console.log(imageOneToUpload);
+
   // Fot Test For new Crop package
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
@@ -32,20 +34,20 @@ export const CropImage = () => {
   const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels);
   }, []);
-  const showCroppedImage = useCallback(async () => {
-    try {
-      const cropedImageOne = await getCroppedImg(imgOne, croppedAreaPixels);
-      setCropedImageOne(cropedImageOne);
-      setImageOneToUpload(cropedImageOne);
-      console.log(cropedImageOne);
-      closeImgOnePopup();
-    } catch (e) {
-      console.error(e);
-    }
-  }, [croppedAreaPixels]);
-  const onClose = useCallback(() => {
-    setCropedImageOne(null);
-  }, []);
+  // const showCroppedImage = useCallback(async () => {
+  //   try {
+  //     const cropedImageOne = await getCroppedImg(imgOne, croppedAreaPixels);
+  //     setCropedImageOne(cropedImageOne);
+  //     setImageOneToUpload(cropedImageOne);
+  //     console.log(cropedImageOne);
+  //     closeImgOnePopup();
+  //   } catch (e) {
+  //     console.error(e);
+  //   }
+  // }, [croppedAreaPixels]);
+  // const onClose = useCallback(() => {
+  //   setCropedImageOne(null);
+  // }, []);
   // ======== Other components State and Functions ===========
   const [postAnonymously, setPostAnonymously] = useState(false);
   const [caption, setCaption] = useState('');
@@ -77,21 +79,26 @@ export const CropImage = () => {
       })
       .catch(console.error);
   };
+
+  const setImageOneToAUploadState = image => {
+    setImageOneToUpload(image);
+  };
+
   //===================== IT'S HERE ALL FOR THE CROP IMAGE SECTIONS =========================================
 
-  const onSelectFileOne = e => {
-    if (e.target.files && e.target.files.length > 0) {
-      const reader = new FileReader();
-      reader.addEventListener('load', () => {
-        setImgOne(reader.result);
-        openImgOnePopup();
-      });
-      reader.readAsDataURL(e.target.files[0]);
-    }
-  };
+  // const onSelectFileOne = e => {
+  //   if (e.target.files && e.target.files.length > 0) {
+  //     const reader = new FileReader();
+  //     reader.addEventListener('load', () => {
+  //       setImgOne(reader.result);
+  //       openImgOnePopup();
+  //     });
+  //     reader.readAsDataURL(e.target.files[0]);
+  //   }
+  // };
   // Handle Img One Popup
-  const openImgOnePopup = () => imgOnePopupRef.current.open();
-  const closeImgOnePopup = () => imgOnePopupRef.current.close();
+  // const openImgOnePopup = () => imgOnePopupRef.current.open();
+  // const closeImgOnePopup = () => imgOnePopupRef.current.close();
 
   // const onSelectFileTwo = e => {
   //   if (e.target.files && e.target.files.length > 0) {
@@ -192,7 +199,7 @@ export const CropImage = () => {
         =================================================================
 */}
 
-        <ImageOne imageOneToUpload={imageOneToUpload} />
+        <ImageOne setFun={setImageOneToAUploadState} />
         {/* <div
           className="absolute left-0 h-full"
           style={{ width: 'calc(50% - 2px)' }}

@@ -5,9 +5,9 @@ import Popup from 'reactjs-popup';
 import { ReusableDiv } from '../../DivWithCenterdChildren';
 import getCroppedImg from './cropImage';
 
-export const ImageOne = ({}) => {
+export const ImageOne = ({ setFun }) => {
   const [cropedImageOne, setCropedImageOne] = useState(null);
-  const [imageOneToUpload, setImageOneToUpload] = useState();
+  // const [imageOneToUpload, setImageOneToUpload] = useState();
   const [imgOne, setImgOne] = useState(null);
   const imgOnePopupRef = useRef();
   // Fot Test For new Crop package
@@ -22,9 +22,13 @@ export const ImageOne = ({}) => {
     try {
       const cropedImageOne = await getCroppedImg(imgOne, croppedAreaPixels);
       setCropedImageOne(cropedImageOne);
-      setImageOneToUpload(cropedImageOne);
+      // setImageOneToUpload(cropedImageOne);
       console.log(cropedImageOne);
-      closeImgOnePopup();
+      //   closeImgOnePopup();
+      //       previewCanvasRefOne.current.toBlob(blob => {
+      //   setImageOneToUpload(new File([blob], 'nile', { type: 'image/jpeg' }));
+      // });
+      setFun(new File([cropedImageOne], 'nile', { type: 'image/jpeg' }));
     } catch (e) {
       console.error(e);
     }
