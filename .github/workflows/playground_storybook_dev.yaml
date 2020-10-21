@@ -12,9 +12,19 @@ env:
   M3_DOCKER_FILE: Dockerfile.playground.storybook
 
 jobs:
-  naga3ay:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v2
+      # dynamic deployment envs
+      - name: set templating envs
+        id: version
+        run: |
+          echo ::set-output name=version::$(git rev-parse --short=4 ${{ github.sha }})
+  test-env:
+    needs: prepare
     runs-on: ubuntu-latest
     steps:
-      - run: echo 'besm ellah'
-      - run: echo $M3_IMAGE
-      - run: echo $M3_DOCKER_FILE
+      - run: echo ${{ needs.prepare.outputs.version }}
