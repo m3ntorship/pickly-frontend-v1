@@ -28,3 +28,71 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo ${{ needs.prepare.outputs.version }}
+
+  build:
+    needs: prepare
+    runs-on: ubuntu-latest
+    env:
+      M3_VERSION: ${{needs.prepare.outputs.version}}
+    steps:
+      # checkout the code commit
+      - name: checkout the code
+        uses: actions/checkout@v2
+
+      # Installing dependencies
+      - name: installing dependencies
+        run: yarn
+
+      # building storybook
+      - name: building storybook
+        run: yarn build-storybook
+
+      # login to docker
+      - uses: azure/docker-login@v1
+        with:
+          username: ${{ secrets.M3NTORSHIP_DOCKERHUB_USERNAME }}
+          password: ${{ secrets.M3NTORSHIP_DOCKERHUB_PASSWORD }}
+
+      # build and push docker image
+      - name: build and push the app
+        run: |
+          echo $M3_VERSION
+          docker build -t $M3_IMAGE:$M3_VERSION -f $M3_DOCKER_FILE .
+          docker push $M3_IMAGE:$M3_VERSION
+  deploy_dev:
+    if: false
+    needs: 
+      - prepare
+      - build 
+    runs-on: ubuntu-latest
+    env:
+      M3_VERSION: ${{needs.prepare.outputs.version}}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: azure/setup-kubectl@v1
+      - name: Kubectl configuration
+        shell: bash
+        run: |
+          mkdir -p ~/.kube
+          echo ${{ secrets.KUBE_CONFIG }} | base64 -d -i > ~/.kube/config
+      - name: install moustache
+        run: |
+          curl -sSL https://git.io/get-mo -o mo
+          chmod +x mo
+          sudo mv mo /usr/local/bin/
+          echo "works" | mo
+      # deploy dev
+      - name: deploy-dev
+        env:
+          M3_DEPLOYMENT_PATH: deploy/storybook
+          TEMP_DIR: temp
+          M3_NAMESPACE: default
+          M3_PROJECT: m3ntorshipcom
+          M3_COMPONENET: storybook
+          M3_ENVIRONMENT: dev
+          M3_REPLICAS: "1"
+          M3_PORT: "5000"
+        run: |
+          mkdir -p $TEMP_DIR
+          for f in $M3_DEPLOYMENT_PATH/apply/*; do mo -u "$f" > $TEMP_DIR/"$(basename $f)"; done
+          kubectl apply -f $TEMP_DIR
