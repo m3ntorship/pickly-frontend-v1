@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { UserContext } from '../../context/userContext';
-import background1 from './backgrounds/background1.png';
-import background2 from './backgrounds/background2.png';
+import background from './backgrounds/background_Loginpage.webp';
 import { useHistory } from 'react-router-dom';
 
 export const LoginForm = () => {
@@ -23,15 +22,9 @@ export const LoginForm = () => {
           }}
         ></div>
         <div
-          className="h-full w-1/2 bg-no-repeat bg-cover bg-center z-0 "
+          className="h-full w-full bg-no-repeat bg-cover bg-center z-0 "
           style={{
-            backgroundImage: `url(${background1})`
-          }}
-        ></div>
-        <div
-          className="h-full w-1/2 bg-no-repeat bg-cover bg-c100_op-10 z-0"
-          style={{
-            backgroundImage: `url(${background2})`
+            backgroundImage: `url(${background})`
           }}
         ></div>
         <div className="bg-white absolute z-30 rounded-lg flex flex-col md:rounded-xlg items-center justify-center px-4 py-20 w-5/6 lg:px-4 md:w-3/4 lg:w-2/4 md:pb-40 md:pt-20 ">

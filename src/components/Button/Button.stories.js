@@ -54,7 +54,7 @@ export default {
 const Template = args => <Button {...args} />;
 export const Primary = Template.bind({});
 Primary.args = {
-  children: 'Test Button',
+  children: 'Test Deploy',
   isRounded: true,
   shadow: true,
   isOpacity: false,
