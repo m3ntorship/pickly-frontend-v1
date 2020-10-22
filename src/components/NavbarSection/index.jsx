@@ -1,7 +1,7 @@
 import React from 'react';
 import { Heading, HEADING_OPTIONS } from '../Heading';
 import { Icon } from '../Navbar-icons';
-
+import {Link} from "react-router-dom"
 const Navigation = () => {
   // Icons Links
   const navData = [
@@ -45,15 +45,17 @@ export const Navbar = () => {
       <div className="nav__container">
         <div className=" items-center grid grid-cols-1 md:grid-cols-3 justify-items-center md:justify-items-end gap-y-4">
           <div className="md:justify-self-start mt-4 sm:mt-0 justify-self-center">
-            <Heading
-              as="h1"
-              children="Pickly"
-              fontWeight={HEADING_OPTIONS.FONT_WEIGHT.SEMIBOLD}
-              fontSize={HEADING_OPTIONS.FONT_SIZE.LARGE}
-              lineHeight={HEADING_OPTIONS.LINE_HEIGHT.NORMAL}
-              textAlign={HEADING_OPTIONS.TEXT_ALIGN.LEFT}
-              textColor={HEADING_OPTIONS.FONT_COLOR.DAWNBLACK}
-            />
+            <Link to="/">
+              <Heading
+                as="h1"
+                children="Pickly"
+                fontWeight={HEADING_OPTIONS.FONT_WEIGHT.SEMIBOLD}
+                fontSize={HEADING_OPTIONS.FONT_SIZE.LARGE}
+                lineHeight={HEADING_OPTIONS.LINE_HEIGHT.NORMAL}
+                textAlign={HEADING_OPTIONS.TEXT_ALIGN.LEFT}
+                textColor={HEADING_OPTIONS.FONT_COLOR.DAWNBLACK}
+              />
+            </Link>
           </div>
 
           <Navigation />

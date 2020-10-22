@@ -2,7 +2,7 @@ import React from 'react';
 import ImageWithSideTitle from '../ImageWithSideTitle/index';
 import { ReusableDiv } from '../DivWithCenterdChildren/index';
 import { ShareBtn } from '../ShareBtn';
-
+import { HeartIcon } from "./HeartIcon/index"
 const PostSection = ({
   userName,
   postDate,
@@ -14,7 +14,8 @@ const PostSection = ({
   shareUrl,
   votesNumbers,
   savesNumbers,
-  isAnonymous
+  isAnonymous,
+  voted
 }) => {
   const postComponentFixedAssets = {
     pickIcon: 'http://www.svgshare.com/i/QXB.svg',
@@ -137,7 +138,8 @@ const PostSection = ({
       <div className="flex items-center justify-between w-11/12 mx-auto">
         <div className="flex items-center">
           <div className="flex  text-sm justify-around text-c300">
-            <img src={pickIcon} alt="" className="w-4 md:w-6" />
+            {/* <img src={pickIcon} alt="" className="w-4 md:w-6" /> */}
+            <HeartIcon voted={voted}/>
             <span className="ml-1 md:ml-3 text-xs md:text-base mt-1">
               {votesNumbers} Votes
             </span>
