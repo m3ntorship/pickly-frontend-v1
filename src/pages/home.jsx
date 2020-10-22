@@ -1,9 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../context/userContext';
 import PostSection from '../components/PostSection';
-import { PostSomething } from '../components/PostSomething';
 import { PICKLY } from '../apis/pickly/index';
-import { create } from 'axios';
 import PostLoader from '../components/LoadingComponents/PostLoader';
 import CreatePostButton from '../components/CreatePostButon';
 
@@ -13,12 +11,12 @@ export const Home = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
+  // This useEffect() for fetching data when the route load
   useEffect(() => {
     setLoading(true);
     PICKLY.get('/posts')
       .then(({ data }) => {
         setData(data.data);
-        console.log(data.data);
         setLoading(false);
       })
       .catch(err => {
@@ -27,39 +25,41 @@ export const Home = () => {
       });
   }, [token]);
 
+  // This useEffect for update the feed__when data value change
+  useEffect(() => {
+    console.log('Data changed');
+  }, [data]);
+
+  // taje the post id and pass the updated data to it__ will use in postSection component
   const updatePostData = (postId, updatedData) => {
-    const foundPost = data.findIndex(x => (x._id = postId));
-    let newData = data;
+    const foundPost = data.findIndex(x => x._id == postId);
+    console.log(foundPost);
+    console.log(updatedData);
+    let newData = [...data];
     newData[foundPost] = updatedData;
     setData(newData);
-    console.log(data);
   };
 
+  // Just for test__ loop on the data and delete all the posts from the database
   const deleteAll = () => {
+    setData(null);
     for (let el of data) {
-      // console.log(el._id);
       PICKLY.delete(`/posts/${el._id}`).then(res => console.log('deleted'));
     }
-  };
-
-  const createPost = () => {
-    PICKLY.post('/posts', form);
   };
 
   return (
     <div className="bg-c900 py-6">
       <div className="container">
+        <button
+          className="bg-c200 py-2 px-4 block text-white"
+          onClick={deleteAll}
+        >
+          Delete All Posts
+        </button>
         <CreatePostButton />
         {loading && <PostLoader />}
         {error && <ErrorComponent />}
-        <button
-          onClick={() => {
-            deleteAll();
-          }}
-        >
-          DeleteAll
-        </button>
-        <button onClick={createPost}>create Fast Post</button>
         {data &&
           data.map(
             ({
@@ -71,7 +71,6 @@ export const Home = () => {
               resources: { images },
               Voted
             }) => {
-              console.log(Voted);
               return (
                 <PostSection
                   voted={Voted}

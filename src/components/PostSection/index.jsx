@@ -1,10 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import ImageWithSideTitle from '../ImageWithSideTitle/index';
 import { ReusableDiv } from '../DivWithCenterdChildren/index';
 import { ShareBtn } from '../ShareBtn';
 import { PICKLY } from '../../apis/pickly';
-import cn from 'classnames';
-import { useState } from 'react';
 
 const PostSection = ({
   _id,
@@ -14,7 +12,6 @@ const PostSection = ({
   postCaption,
   leftImage,
   rightImage,
-  // popupActionOptions,
   shareUrl,
   votesNumbers,
   savesNumbers,
@@ -22,10 +19,6 @@ const PostSection = ({
   voted,
   updatePostData
 }) => {
-  const [reload, setReload] = useState(false);
-  useEffect(() => {
-    console.log('Effected');
-  }, [voted, reload]);
   const postComponentFixedAssets = {
     pickIcon: 'http://www.svgshare.com/i/QXB.svg',
     searchIcon: 'https://i.imgur.com/inlBQ6A.png',
@@ -39,6 +32,10 @@ const PostSection = ({
     bgColor,
     anonymousIcon
   } = postComponentFixedAssets;
+
+  // useEffect(() => {
+  //   console.log('Test');
+  // }, [voted]);
 
   // Handle Post Time
   const months = [
@@ -62,22 +59,19 @@ const PostSection = ({
   const minutes = date.getMinutes();
   const formatedHours = ((hours + 11) % 12) + 1;
 
+  // handle double Ckick event on the image
   const handleVote = (imageID, voted, postId) => {
     if (voted) {
-      console.log("It's voooooted");
-      // updatePostData(imageID, { Test: 'test' });
+      // here we will handle the vote on a voted post
+      console.log("It's voooooted before");
     } else {
-      console.log(imageID);
-      PICKLY.put(`/images/${imageID}/votes`)
-        .then(res => {
-          console.log(res);
-        })
-        .then(res => {
-          PICKLY.get(`/posts/${postId}`).then(res => {
-            console.log('Done');
-            updatePostData(imageID, res.data.data);
-          });
+      PICKLY.put(`/images/${imageID}/votes`).then(res => {
+        console.log('voted');
+        // get the new post data objrct and padd it to the function
+        PICKLY.get(`/posts/${postId}`).then(res => {
+          updatePostData(postId, res.data.data);
         });
+      });
     }
   };
 
@@ -105,12 +99,9 @@ const PostSection = ({
               className="w-full h-full object-cover rounded-sm"
               style={{ Height: '100%' }}
               alt=""
-            />
-            <HeartComponent
-              handleVoteFun={handleVote}
-              imageID={leftImage._id}
-              voted={voted}
-              postId={_id}
+              onDoubleClick={() => {
+                handleVote(leftImage._id, voted, _id);
+              }}
             />
           </div>
         </ReusableDiv>
@@ -141,12 +132,9 @@ const PostSection = ({
               className="w-full h-full object-cover rounded-sm"
               style={{ Height: '100%' }}
               alt=""
-            />
-            <HeartComponent
-              handleVoteFun={handleVote}
-              imageID={rightImage._id}
-              voted={voted}
-              postId={_id}
+              onDoubleClick={() => {
+                handleVote(rightImage._id, voted, _id);
+              }}
             />
           </div>
         </ReusableDiv>
@@ -177,19 +165,3 @@ const PostSection = ({
 };
 
 export default PostSection;
-
-const HeartComponent = ({ imageID, handleVoteFun, voted, postId }) => {
-  return (
-    <h1
-      className={cn(
-        'mx-auto bg-c100 p-2 text-white cursor-pointer',
-        voted && 'bg-c200'
-      )}
-      onDoubleClick={() => {
-        handleVoteFun(imageID, voted, postId);
-      }}
-    >
-      {voted ? 'Voted' : 'Vote Now'}
-    </h1>
-  );
-};
