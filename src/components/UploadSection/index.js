@@ -62,7 +62,6 @@ export const UploadSection = ({ handleCloseUpload }) => {
       }
     })
       .then(({ data }) => {
-        console.log('posted');
         history.push('/');
       })
       .catch(console.error);

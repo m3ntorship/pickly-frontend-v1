@@ -32,9 +32,7 @@ export const Home = () => {
 
   // taje the post id and pass the updated data to it__ will use in postSection component
   const updatePostData = (postId, updatedData) => {
-    const foundPost = data.findIndex(x => x._id == postId);
-    console.log(foundPost);
-    console.log(updatedData);
+    const foundPost = data.findIndex(x => x._id === postId);
     let newData = [...data];
     newData[foundPost] = updatedData;
     setData(newData);

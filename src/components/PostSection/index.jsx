@@ -3,8 +3,8 @@ import ImageWithSideTitle from '../ImageWithSideTitle/index';
 import { ReusableDiv } from '../DivWithCenterdChildren/index';
 import { ShareBtn } from '../ShareBtn';
 import { PICKLY } from '../../apis/pickly';
-
 import { HeartIcon } from './HeartIcon/index';
+
 const PostSection = ({
   _id,
   userName,
@@ -54,7 +54,6 @@ const PostSection = ({
       console.log("It's voooooted before");
     } else {
       PICKLY.put(`/images/${imageID}/votes`).then(res => {
-        console.log('voted');
         // get the new post data objrct and padd it to the function
         PICKLY.get(`/posts/${postId}`).then(res => {
           updatePostData(postId, res.data.data);
