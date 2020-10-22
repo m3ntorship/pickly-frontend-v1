@@ -2,38 +2,29 @@ import React from 'react';
 import ImageWithSideTitle from '../ImageWithSideTitle/index';
 import { ReusableDiv } from '../DivWithCenterdChildren/index';
 import { ShareBtn } from '../ShareBtn';
-import { HeartIcon } from "./HeartIcon/index"
+import { PICKLY } from '../../apis/pickly';
+import { HeartIcon } from './HeartIcon/index';
+
 const PostSection = ({
+  _id,
   userName,
   postDate,
   userImage,
   postCaption,
-  leftBgImage,
-  rightBgImage,
-  // popupActionOptions,
+  leftImage,
+  rightImage,
   shareUrl,
   votesNumbers,
   savesNumbers,
   isAnonymous,
-  voted
+  voted,
+  updatePostData
 }) => {
   const postComponentFixedAssets = {
-    pickIcon: 'http://www.svgshare.com/i/QXB.svg',
-    searchIcon: 'https://i.imgur.com/inlBQ6A.png',
     saveIcon: 'http://www.svgshare.com/i/QW7.svg',
-    bgColor: 'white',
     anonymousIcon: 'http://svgur.com/i/QH6.svg'
   };
-  const {
-    pickIcon,
-    // searchIcon,
-    saveIcon,
-    // bgColor,
-    anonymousIcon
-  } = postComponentFixedAssets;
-  // const [iconDisplay, setIconDisplay] = useState(!bgColor);
-
-  // Handle Post Time
+  const { saveIcon, anonymousIcon } = postComponentFixedAssets;
 
   const months = [
     'January',
@@ -49,14 +40,27 @@ const PostSection = ({
     'November',
     'December'
   ];
-
   const date = new Date(postDate);
   const monthName = months[date.getMonth()];
   const dayIndex = date.getDate();
-
   const hours = date.getHours();
   const minutes = date.getMinutes();
   const formatedHours = ((hours + 11) % 12) + 1;
+
+  // handle double Ckick event on the image
+  const handleVote = (imageID, voted, postId) => {
+    if (voted) {
+      // here we will handle the vote on a voted post
+      console.log("It's voooooted before");
+    } else {
+      PICKLY.put(`/images/${imageID}/votes`).then(res => {
+        // get the new post data objrct and padd it to the function
+        PICKLY.get(`/posts/${postId}`).then(res => {
+          updatePostData(postId, res.data.data);
+        });
+      });
+    }
+  };
 
   return (
     <div className="bg-white py-4 rounded-lg my-6">
@@ -76,12 +80,17 @@ const PostSection = ({
 
       <div className="grid grid-cols-2 gap-1 relative my-3">
         <ReusableDiv smallRound={true} divHeight="100%">
-          <img
-            src={leftBgImage}
-            className="w-full h-full object-cover rounded-sm"
-            style={{ maxHeight: '100%' }}
-            alt=""
-          />
+          <div>
+            <img
+              src={leftImage.url}
+              className="w-full h-full object-cover rounded-sm"
+              style={{ Height: '100%' }}
+              alt=""
+              onDoubleClick={() => {
+                handleVote(leftImage._id, voted, _id);
+              }}
+            />
+          </div>
         </ReusableDiv>
 
         <div
@@ -104,42 +113,24 @@ const PostSection = ({
         </div>
 
         <ReusableDiv divHeight="100%" smallRound={true}>
-          <img
-            src={rightBgImage}
-            className="w-full h-full object-cover rounded-sm"
-            style={{ maxHeight: '100%' }}
-            alt=""
-          />
-          {/* This section takes class hidden untill we add these features */}
-          {/* <div className="flex-col items-center absolute hidden">
-            <ReusableDiv
-              bgColor={iconDisplay}
-              fullRound={true}
-              divWidth="50px"
-              divHeight="50px"
-              clickFunction={() => setIconDisplay(bgColor)}
-            >
-              <img src={pickIcon} alt="" />
-            </ReusableDiv>
-
-            <div className="flex mt-2">
-              <div className="w-8 h-8 rounded-full bg-white flex justify-center items-center">
-                <img src={searchIcon} alt="" style={{ width: '13px' }} />
-              </div>
-              <span className="mx-2"></span>
-              <div className="w-8 h-8 rounded-full bg-white flex justify-center items-center">
-                <PopUp appearOn="click" options={popupActionOptions} />
-              </div>
-            </div>
-          </div> */}
+          <div>
+            <img
+              src={rightImage.url}
+              className="w-full h-full object-cover rounded-sm"
+              style={{ Height: '100%' }}
+              alt=""
+              onDoubleClick={() => {
+                handleVote(rightImage._id, voted, _id);
+              }}
+            />
+          </div>
         </ReusableDiv>
       </div>
 
       <div className="flex items-center justify-between w-11/12 mx-auto">
         <div className="flex items-center">
           <div className="flex  text-sm justify-around text-c300">
-            {/* <img src={pickIcon} alt="" className="w-4 md:w-6" /> */}
-            <HeartIcon voted={voted}/>
+            <HeartIcon voted={voted} />
             <span className="ml-1 md:ml-3 text-xs md:text-base mt-1">
               {votesNumbers} Votes
             </span>
