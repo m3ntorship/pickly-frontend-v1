@@ -1,11 +1,11 @@
 import React from 'react';
-import { CropImage } from './';
+import { UploadSection } from '.';
 
 export default {
   title: 'sections/upload section',
-  component: CropImage
+  component: UploadSection
 };
 
 export const CropImageSection = () => {
-  return <CropImage />;
+  return <UploadSection />;
 };

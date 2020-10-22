@@ -27,14 +27,14 @@ export const OneImage = ({ setFun, id }) => {
   return (
     <div>
       <div>
-        <label htmlFor="file-One" className="cursor-pointer">
+        <label htmlFor={`file-${id}`} className="cursor-pointer">
           <ReusableDiv
             bgColor={!cropedImage && 'c900'}
             rounded
             divHeight="100%"
           >
             <input
-              id="file-One"
+              id={`file-${id}`}
               type="file"
               accept="image/*"
               onChange={onSelectFile}

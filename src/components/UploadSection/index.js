@@ -8,7 +8,7 @@ import { PICKLY } from '../../apis/pickly';
 import { useHistory } from 'react-router-dom';
 import { OneImage } from './OneImage';
 
-export const CropImage = () => {
+export const UploadSection = () => {
   const [imagesToUpload, setImagesToUpload] = useState([]);
   const [postAnonymously, setPostAnonymously] = useState(false);
   const [caption, setCaption] = useState('');
