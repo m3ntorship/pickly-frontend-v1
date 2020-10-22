@@ -5,7 +5,7 @@ import Popup from 'reactjs-popup';
 import { ReusableDiv } from '../DivWithCenterdChildren';
 import getCroppedImg from './cropImage';
 
-export const OneImage = ({ setFun }) => {
+export const OneImage = ({ setFun, id }) => {
   const [img, setImg] = useState(null);
   const [cropedImage, setCropedImage] = useState(null);
   const imgPopupRef = useRef();
@@ -26,18 +26,15 @@ export const OneImage = ({ setFun }) => {
 
   return (
     <div>
-      <div
-        className="absolute left-0 h-full"
-        style={{ width: 'calc(50% - 2px)' }}
-      >
-        <label htmlFor="file-one" className="cursor-pointer">
+      <div>
+        <label htmlFor="file-One" className="cursor-pointer">
           <ReusableDiv
             bgColor={!cropedImage && 'c900'}
             rounded
             divHeight="100%"
           >
             <input
-              id="file-one"
+              id="file-One"
               type="file"
               accept="image/*"
               onChange={onSelectFile}
@@ -59,11 +56,7 @@ export const OneImage = ({ setFun }) => {
               </div>
             )}
             {cropedImage && (
-              <img
-                alt=""
-                src={cropedImage}
-                className="absolute h-full w-full left-0 top-0 object-cover"
-              />
+              <img alt="" src={cropedImage} className="max-w-full max-h-full" />
             )}
           </ReusableDiv>
         </label>
@@ -117,7 +110,6 @@ const CropPopup = ({
     try {
       const cropedImage = await getCroppedImg(img, croppedAreaPixels);
       setCropedImage(cropedImage);
-      console.log(cropedImage);
       setFun(new File([cropedImage], 'nile', { type: 'image/jpeg' }));
       closeimgPopup();
     } catch (e) {
