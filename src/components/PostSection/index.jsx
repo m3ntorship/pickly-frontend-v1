@@ -4,6 +4,7 @@ import { ReusableDiv } from '../DivWithCenterdChildren/index';
 import { ShareBtn } from '../ShareBtn';
 import { PICKLY } from '../../apis/pickly';
 
+import { HeartIcon } from './HeartIcon/index';
 const PostSection = ({
   _id,
   userName,
@@ -20,24 +21,11 @@ const PostSection = ({
   updatePostData
 }) => {
   const postComponentFixedAssets = {
-    pickIcon: 'http://www.svgshare.com/i/QXB.svg',
-    searchIcon: 'https://i.imgur.com/inlBQ6A.png',
     saveIcon: 'http://www.svgshare.com/i/QW7.svg',
-    bgColor: 'white',
     anonymousIcon: 'http://svgur.com/i/QH6.svg'
   };
-  const {
-    pickIcon,
-    saveIcon,
-    bgColor,
-    anonymousIcon
-  } = postComponentFixedAssets;
+  const { saveIcon, anonymousIcon } = postComponentFixedAssets;
 
-  // useEffect(() => {
-  //   console.log('Test');
-  // }, [voted]);
-
-  // Handle Post Time
   const months = [
     'January',
     'February',
@@ -143,7 +131,7 @@ const PostSection = ({
       <div className="flex items-center justify-between w-11/12 mx-auto">
         <div className="flex items-center">
           <div className="flex  text-sm justify-around text-c300">
-            <img src={pickIcon} alt="" className="w-4 md:w-6" />
+            <HeartIcon voted={voted} />
             <span className="ml-1 md:ml-3 text-xs md:text-base mt-1">
               {votesNumbers} Votes
             </span>
