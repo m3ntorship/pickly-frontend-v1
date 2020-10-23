@@ -7,6 +7,8 @@ import { Button } from '../Button';
 import { PICKLY } from '../../apis/pickly';
 import { useHistory } from 'react-router-dom';
 import { OneImage } from './OneImage';
+import Popup from 'reactjs-popup';
+import OptionsButton from '../OptionsBtn';
 import cn from 'classnames';
 
 export const UploadSection = () => {
@@ -14,7 +16,12 @@ export const UploadSection = () => {
   const [postAnonymously, setPostAnonymously] = useState(false);
   const [caption, setCaption] = useState('');
   const history = useHistory();
-  const [imagesNum, setImagesNum] = useState([1, 2]); // will handle by user choice
+  const [imagesArr, setImagesArr] = useState([1, 1]); // will handle by user choice
+
+  const setImagesArrFun = num => {
+    const imagesArr = new Array(num).fill(num);
+    setImagesArr(imagesArr);
+  };
 
   const toggleSelected = () => {
     setPostAnonymously(!postAnonymously);
@@ -66,17 +73,26 @@ export const UploadSection = () => {
           toggleSelected={toggleSelected}
           title="Post anonymoslly"
         />
+        <Button
+          backgroundColor="White"
+          color="SecondaryGrey"
+          isRounded
+          padding="small"
+          shadow
+        >
+          <OptionsPopup clickFun={setImagesArrFun} />
+        </Button>
       </div>
 
       <div
         className={cn('relative grid grid-cols-1 gap-1', {
-          'sm:grid-cols-2': imagesNum.length > 1
+          'sm:grid-cols-2': imagesArr.length > 1
         })}
       >
-        {imagesNum.length > 1 && or}
-        {imagesNum.map(img => (
+        {imagesArr.length > 1 && or}
+        {imagesArr.map((img, index) => (
           <div className="relative">
-            <OneImage setFun={setFun} id={img} imagesNum={imagesNum.length} />
+            <OneImage setFun={setFun} id={index} imagesNum={imagesArr.length} />
           </div>
         ))}
       </div>
@@ -107,6 +123,53 @@ const PostSomethingHeading = (
     </Heading>
   </div>
 );
+
+const OptionsPopup = ({ clickFun }) => {
+  const [currentOpt, setCurrentOpt] = useState('Two Images');
+  const optionsList = [
+    {
+      option: 'One Image',
+      num: 1
+    },
+    {
+      option: 'Two Images',
+      num: 2
+    },
+    {
+      option: 'Three Images',
+      num: 3
+    },
+    {
+      option: 'Four Images',
+      num: 4
+    }
+  ];
+
+  return (
+    <Popup
+      trigger={<button>{currentOpt}</button>}
+      position="right top"
+      on="hover"
+    >
+      <div>
+        {optionsList.map(({ option, num }) => {
+          return (
+            <div
+              key={num}
+              className="py-2 px-10 text-md hover:bg-c100 hover:text-white transition-all duration-100 cursor-pointer"
+              onClick={() => {
+                clickFun(num);
+                setCurrentOpt(option);
+              }}
+            >
+              {option}
+            </div>
+          );
+        })}
+      </div>
+    </Popup>
+  );
+};
 
 const or = (
   <div

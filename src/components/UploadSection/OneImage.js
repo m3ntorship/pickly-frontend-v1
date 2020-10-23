@@ -48,7 +48,7 @@ export const OneImage = ({ setFun, id, imagesNum }) => {
                 <div className="mx-auto mb-3 w-4/12">{imageIcon}</div>
                 <div>
                   <h2 className="text-sm opacity-50 md:my-5 font-bold">
-                    {`Choice ${id}`}
+                    {`Choice ${id + 1}`}
                   </h2>
                 </div>
                 <div>
@@ -59,19 +59,21 @@ export const OneImage = ({ setFun, id, imagesNum }) => {
               </div>
             )}
             {cropedImage && (
-              <img alt="" src={cropedImage} className="max-w-full max-h-full" />
+              <img alt="" src={cropedImage} className="w-full h-full" />
             )}
           </ReusableDiv>
         </label>
       </div>
-      <CropPopup
-        img={img}
-        setCropedImage={setCropedImage}
-        closeimgPopup={closeimgPopup}
-        imgPopupRef={imgPopupRef}
-        setFun={setFun}
-        imagesNum={imagesNum}
-      />
+      <div className="nav__container">
+        <CropPopup
+          img={img}
+          setCropedImage={setCropedImage}
+          closeimgPopup={closeimgPopup}
+          imgPopupRef={imgPopupRef}
+          setFun={setFun}
+          imagesNum={imagesNum}
+        />
+      </div>
     </div>
   );
 };
