@@ -4,8 +4,9 @@ import Cropper from 'react-easy-crop';
 import Popup from 'reactjs-popup';
 import { ReusableDiv } from '../DivWithCenterdChildren';
 import getCroppedImg from './cropImage';
+import cn from 'classnames';
 
-export const OneImage = ({ setFun, id }) => {
+export const OneImage = ({ setFun, id, imagesNum }) => {
   const [img, setImg] = useState(null);
   const [cropedImage, setCropedImage] = useState(null);
   const imgPopupRef = useRef();
@@ -25,13 +26,15 @@ export const OneImage = ({ setFun, id }) => {
   const closeimgPopup = () => imgPopupRef.current.close();
 
   return (
-    <div>
+    <div className={cn('w-full pb-16/9', { 'pb-full': imagesNum == 2 })}>
       <div>
         <label htmlFor={`file-${id}`} className="cursor-pointer">
           <ReusableDiv
             bgColor={!cropedImage && 'c900'}
             rounded
             divHeight="100%"
+            divWidth="100%"
+            className="absolute"
           >
             <input
               id={`file-${id}`}
@@ -42,10 +45,10 @@ export const OneImage = ({ setFun, id }) => {
             />
             {!cropedImage && (
               <div className="text-center">
-                <div className="mx-auto mb-3 w-5/12">{imageIcon}</div>
+                <div className="mx-auto mb-3 w-4/12">{imageIcon}</div>
                 <div>
                   <h2 className="text-sm opacity-50 md:my-5 font-bold">
-                    Choice 1
+                    {`Choice ${id}`}
                   </h2>
                 </div>
                 <div>
@@ -67,6 +70,7 @@ export const OneImage = ({ setFun, id }) => {
         closeimgPopup={closeimgPopup}
         imgPopupRef={imgPopupRef}
         setFun={setFun}
+        imagesNum={imagesNum}
       />
     </div>
   );
@@ -96,7 +100,8 @@ const CropPopup = ({
   setCropedImage,
   imgPopupRef,
   setFun,
-  closeimgPopup
+  closeimgPopup,
+  imagesNum
 }) => {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
@@ -124,7 +129,7 @@ const CropPopup = ({
           image={img}
           crop={crop}
           zoom={zoom}
-          aspect={3 / 4}
+          aspect={imagesNum != 2 ? `${16 / 9}` : `${1 / 1}`}
           onCropChange={setCrop}
           onCropComplete={onCropComplete}
           onZoomChange={setZoom}

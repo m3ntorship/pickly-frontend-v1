@@ -7,12 +7,14 @@ import { Button } from '../Button';
 import { PICKLY } from '../../apis/pickly';
 import { useHistory } from 'react-router-dom';
 import { OneImage } from './OneImage';
+import cn from 'classnames';
 
 export const UploadSection = () => {
   const [imagesToUpload, setImagesToUpload] = useState([]);
   const [postAnonymously, setPostAnonymously] = useState(false);
   const [caption, setCaption] = useState('');
   const history = useHistory();
+  const [imagesNum, setImagesNum] = useState([1, 2]); // will handle by user choice
 
   const toggleSelected = () => {
     setPostAnonymously(!postAnonymously);
@@ -66,12 +68,17 @@ export const UploadSection = () => {
         />
       </div>
 
-      <div className="grid grid-cols-2 gap-1 relative">
-        {or}
-        <OneImage setFun={setFun} id={0} />
-        <OneImage setFun={setFun} id={1} />
-        <OneImage setFun={setFun} id={2} />
-        <OneImage setFun={setFun} id={3} />
+      <div
+        className={cn('relative grid grid-cols-1 gap-1', {
+          'sm:grid-cols-2': imagesNum.length > 1
+        })}
+      >
+        {imagesNum.length > 1 && or}
+        {imagesNum.map(img => (
+          <div className="relative">
+            <OneImage setFun={setFun} id={img} imagesNum={imagesNum.length} />
+          </div>
+        ))}
       </div>
 
       {warningParagrapg}
@@ -103,7 +110,7 @@ const PostSomethingHeading = (
 
 const or = (
   <div
-    className="absolute z-10"
+    className={cn('absolute z-10 hidden sm:block')}
     style={{
       left: 'calc(50% - 15px)',
       top: 'calc(50% - 15px)'
