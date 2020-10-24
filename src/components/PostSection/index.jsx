@@ -2,7 +2,7 @@ import React from 'react';
 import ImageWithSideTitle from '../ImageWithSideTitle/index';
 import { ReusableDiv } from '../DivWithCenterdChildren/index';
 import { ShareBtn } from '../ShareBtn';
-import { PICKLY } from '../../apis/pickly';
+import { PICKLY } from '../../apis/clients';
 import { HeartIcon } from './HeartIcon/index';
 
 const PostSection = ({
@@ -48,16 +48,13 @@ const PostSection = ({
   const formatedHours = ((hours + 11) % 12) + 1;
 
   // handle double Ckick event on the image
-  const handleVote = (imageID, voted, postId) => {
+  const handleVote = (imageId, voted, postId) => {
     if (voted) {
       // here we will handle the vote on a voted post
       console.log("It's voooooted before");
     } else {
-      PICKLY.put(`/images/${imageID}/votes`).then(res => {
-        // get the new post data objrct and padd it to the function
-        PICKLY.get(`/posts/${postId}`).then(res => {
-          updatePostData(postId, res.data.data);
-        });
+      PICKLY.createVoteAndRefetchPost(imageId, postId).then(res => {
+        updatePostData(postId, res.data.data);
       });
     }
   };

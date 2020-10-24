@@ -7,7 +7,7 @@ import { InputField } from '../InputField';
 import { Heading } from '../Heading';
 import { ToggleButton } from '../ToggleButton';
 import { Button } from '../Button';
-import { PICKLY } from '../../apis/pickly';
+import { PICKLY } from '../../apis/clients';
 import { useHistory } from 'react-router-dom';
 
 // Setting a high pixel ratio avoids blurriness in the canvas crop preview.
@@ -56,11 +56,8 @@ export const UploadSection = ({ handleCloseUpload }) => {
     form.append('images', imageTwoToUpload);
     form.append('caption', caption);
     form.append('isAnonymous', postAnonymously);
-    PICKLY.post('/posts', form, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    })
+    console.log(postAnonymously);
+    PICKLY.createPost(form)
       .then(({ data }) => {
         history.push('/');
       })
