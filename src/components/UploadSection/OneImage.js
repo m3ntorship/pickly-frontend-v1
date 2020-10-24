@@ -128,11 +128,11 @@ const CropPopup = ({
     }
   }, [croppedAreaPixels]);
 
-  const contentStyle = { width: '50%', height: '80%' };
+  const contentStyle = { width: '60%', height: '60%' };
 
   return (
     <Popup ref={imgPopupRef} className="my-20" {...{ contentStyle }}>
-      <div className="relative w-full" style={{ height: '80%' }}>
+      <div className="relative w-full" style={{ height: '85%' }}>
         <Cropper
           image={img}
           crop={crop}
@@ -144,9 +144,9 @@ const CropPopup = ({
           className="w-48"
         />
       </div>
-      <div className="flex justify-center items-center">
+      <div className="flex my-3 justify-center items-center">
         <button
-          className="py-3 px-12 my-4 bg-c500 rounded-lg  text-white font-bold  shadow-md"
+          className="py-3 px-12 bg-c500 rounded-lg  text-white font-bold  shadow-md"
           onClick={() => {
             showCroppedImage();
           }}
