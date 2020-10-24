@@ -1,0 +1,108 @@
+name: deploy frontend PR to playground cluster
+
+# trigger
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+    branches:
+      - develop
+      - playground-deployment-frontend
+env:
+  # fixed deployment envs
+  M3_IMAGE: m3ntorshipci/pickly-frontend
+  M3_DOCKER_FILE: Dockerfile.playground.frontend
+  M3_VERSION: 'pr-${{ github.event.number }}-${{ github.run_number}}'
+  M3_NAMESPACE: 'pr-${{ github.event.number }}'
+
+jobs:
+  test-env:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo '${{ github.event.number }} ${{ github.run_number}}'
+      - run: echo ${{ needs.prepare.outputs.version }}
+      - name: comment PR
+        if: ${{github.event.action != 'closed'}}
+        uses: unsplash/comment-on-pr@master
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          msg: "Start deploying your feature branch, you can find it [here](https://pickly-frontend-pr-${{ github.event.number }}.m3ntorship.net)"
+          check_for_duplicate_msg: true
+  build:
+    if: ${{github.event.action != 'closed'}}
+    runs-on: ubuntu-latest
+    steps:
+      # checkout the code commit
+      - name: checkout the code
+        uses: actions/checkout@v2
+
+      # Installing dependencies
+      - name: installing dependencies
+        run: yarn
+
+      # building frontend
+      - name: building frontend
+        env:
+          REACT_APP_POSTS_SERVICE_URL: 'https://pickly-posts-dev.m3ntorship.net'
+        run: yarn build
+
+      # login to docker
+      - uses: azure/docker-login@v1
+        with:
+          username: ${{ secrets.M3NTORSHIP_DOCKERHUB_USERNAME }}
+          password: ${{ secrets.M3NTORSHIP_DOCKERHUB_PASSWORD }}
+
+      # build and push docker image
+      - name: build and push the app
+        run: |
+          echo $M3_VERSION
+          docker build -t $M3_IMAGE:$M3_VERSION -f $M3_DOCKER_FILE .
+          docker push $M3_IMAGE:$M3_VERSION
+  deploy_pr:
+    if: ${{github.event.action != 'closed'}}
+    needs: 
+      - build 
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: azure/setup-kubectl@v1
+      - name: Kubectl configuration
+        run: |
+          mkdir -p ~/.kube
+          echo ${{ secrets.KUBE_CONFIG }} | base64 -d -i > ~/.kube/config
+      - name: install moustache
+        run: |
+          curl -sSL https://git.io/get-mo -o mo
+          chmod +x mo
+          sudo mv mo /usr/local/bin/
+          echo "works" | mo
+      # deploy pr
+      - name: deploy-pr
+        env:
+          M3_DEPLOYMENT_PATH: deploy/dev/frontend
+          TEMP_DIR: temp
+          M3_PROJECT: pickly
+          M3_COMPONENET: frontend
+          M3_ENVIRONMENT: 'pr-${{ github.event.number }}'
+          M3_REPLICAS: "1"
+          M3_PORT: "3000"
+          M3_MEMORY: '64Mi'
+          M3_CPU: '50m'
+        run: |
+          echo $M3_NAMESPACE
+          mkdir -p $TEMP_DIR
+          for f in $M3_DEPLOYMENT_PATH/apply/*; do mo -u "$f" > $TEMP_DIR/"$(basename $f)"; done
+          kubectl apply -f $TEMP_DIR
+  undeploy_pr:
+    if: ${{github.event.action == 'closed'}}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: azure/setup-kubectl@v1
+      - name: Kubectl configuration
+        run: |
+          mkdir -p ~/.kube
+          echo ${{ secrets.KUBE_CONFIG }} | base64 -d -i > ~/.kube/config
+
+      # undeploy pr
+      - name: undeploy-pr
+        run: kubectl delete namespace $M3_NAMESPACE --ignore-not-found
