@@ -102,15 +102,11 @@ jobs:
       - deploy_dev
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - run: yarn global add @actions/core
       - id: delete_old_tags
         name: Delete old docker image tags
-        uses: ./.github/actions/action-dockerhub-cleanup
+        uses: m3ntorship/action-dockerhub-cleanup@1.2
         with:
-          token: ${{secrets.DOCKER_HUB_M3NTORSHIP_TOKEN}}
+          token: ${{secrets.DOCKER_HUB_M3NTORSHIPCI_TOKEN}}
           keep-last: 5
           user: "m3ntorshipci"
           repos: '["pickly-frontend"]'
-
-    
