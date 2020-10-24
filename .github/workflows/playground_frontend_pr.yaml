@@ -1,0 +1,117 @@
+name: deploy frontend PR to playground cluster
+
+# trigger
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+    branches:
+      - develop
+      - playground-deployment-frontend
+env:
+  # fixed deployment envs
+  M3_IMAGE: m3ntorshipci/pickly-frontend
+  M3_DOCKER_FILE: Dockerfile.playground.frontend
+
+jobs:
+
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v2
+      # dynamic deployment envs
+      - name: set templating envs
+        id: version
+        run: |
+          echo ::set-output name=version::$(git rev-parse --short=4 ${{ github.sha }})
+  test-env:
+    needs: prepare
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo '${{ github.event.number }} ${{ github.run_number}} '
+      - run: echo ${{ needs.prepare.outputs.version }}
+
+  build:
+    needs: prepare
+    runs-on: ubuntu-latest
+    env:
+      M3_VERSION: ${{needs.prepare.outputs.version}}
+    steps:
+      # checkout the code commit
+      - name: checkout the code
+        uses: actions/checkout@v2
+
+      # Installing dependencies
+      - name: installing dependencies
+        run: yarn
+
+      # building frontend
+      - name: building frontend
+        env:
+          REACT_APP_POSTS_SERVICE_URL: 'https://pickly-posts-dev.m3ntorship.net'
+        run: yarn build
+
+      # login to docker
+      - uses: azure/docker-login@v1
+        with:
+          username: ${{ secrets.M3NTORSHIP_DOCKERHUB_USERNAME }}
+          password: ${{ secrets.M3NTORSHIP_DOCKERHUB_PASSWORD }}
+
+      # build and push docker image
+      - name: build and push the app
+        run: |
+          echo $M3_VERSION
+          docker build -t $M3_IMAGE:$M3_VERSION -f $M3_DOCKER_FILE .
+          docker push $M3_IMAGE:$M3_VERSION
+  deploy_dev:
+    if: false
+    needs: 
+      - prepare
+      - build 
+    runs-on: ubuntu-latest
+    env:
+      M3_VERSION: ${{needs.prepare.outputs.version}}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: azure/setup-kubectl@v1
+      - name: Kubectl configuration
+        shell: bash
+        run: |
+          mkdir -p ~/.kube
+          echo ${{ secrets.KUBE_CONFIG }} | base64 -d -i > ~/.kube/config
+      - name: install moustache
+        run: |
+          curl -sSL https://git.io/get-mo -o mo
+          chmod +x mo
+          sudo mv mo /usr/local/bin/
+          echo "works" | mo
+      # deploy dev
+      - name: deploy-dev
+        env:
+          M3_DEPLOYMENT_PATH: deploy/dev/frontend
+          TEMP_DIR: temp
+          M3_NAMESPACE: default
+          M3_PROJECT: pickly
+          M3_COMPONENET: frontend
+          M3_ENVIRONMENT: dev
+          M3_REPLICAS: "1"
+          M3_PORT: "3000"
+        run: |
+          mkdir -p $TEMP_DIR
+          for f in $M3_DEPLOYMENT_PATH/apply/*; do mo -u "$f" > $TEMP_DIR/"$(basename $f)"; done
+          kubectl apply -f $TEMP_DIR
+  cleanup_docker_tags:
+    if: false
+    needs: 
+      - deploy_dev
+    runs-on: ubuntu-latest
+    steps:
+      - id: delete_old_tags
+        name: Delete old docker image tags
+        uses: m3ntorship/action-dockerhub-cleanup@1.2
+        with:
+          token: ${{secrets.DOCKER_HUB_M3NTORSHIPCI_TOKEN}}
+          keep-last: 5
+          user: "m3ntorshipci"
+          repos: '["pickly-frontend"]'
