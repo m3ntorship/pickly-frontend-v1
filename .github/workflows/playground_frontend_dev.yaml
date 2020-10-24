@@ -97,3 +97,18 @@ jobs:
           mkdir -p $TEMP_DIR
           for f in $M3_DEPLOYMENT_PATH/apply/*; do mo -u "$f" > $TEMP_DIR/"$(basename $f)"; done
           kubectl apply -f $TEMP_DIR
+  cleanup_docker_tags:
+    needs: 
+      - deploy_dev
+    runs-on: ubuntu-latest
+    steps:
+      - id: delete_old_tags
+        name: Delete old docker image tags
+        uses: m3ntorship/action-dockerhub-cleanup@v1
+        with:
+          token: ${{secrets.DOCKER_HUB_M3NTORSHIP_TOKEN}}
+          keep-last: 5
+          user: "m3ntorshipci"
+          repos: '["pickly-frontend"]'
+
+    
