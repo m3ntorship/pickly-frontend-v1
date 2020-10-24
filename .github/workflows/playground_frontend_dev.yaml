@@ -1,15 +1,15 @@
-name: deploy storybook to playground cluster
+name: deploy frontend to playground cluster
 
 # trigger
 on:
   push:
     branches:
       - develop
-      - playground-deployment-storybook
+      - playground-deployment-frontend
 env:
   # fixed deployment envs
-  M3_IMAGE: m3ntorshipci/pickly-storybook
-  M3_DOCKER_FILE: Dockerfile.playground.storybook
+  M3_IMAGE: m3ntorshipci/pickly-frontend
+  M3_DOCKER_FILE: Dockerfile.playground.frontend
 
 jobs:
   prepare:
@@ -43,9 +43,11 @@ jobs:
       - name: installing dependencies
         run: yarn
 
-      # building storybook
-      - name: building storybook
-        run: yarn build-storybook
+      # building frontend
+      - name: building frontend
+        env:
+          REACT_APP_POSTS_SERVICE_URL: 'https://pickly-posts-dev.m3ntorship.net'
+        run: yarn build
 
       # login to docker
       - uses: azure/docker-login@v1
@@ -83,14 +85,14 @@ jobs:
       # deploy dev
       - name: deploy-dev
         env:
-          M3_DEPLOYMENT_PATH: deploy/dev/storybook
+          M3_DEPLOYMENT_PATH: deploy/dev/frontend
           TEMP_DIR: temp
           M3_NAMESPACE: default
           M3_PROJECT: pickly
-          M3_COMPONENET: storybook
+          M3_COMPONENET: frontend
           M3_ENVIRONMENT: dev
           M3_REPLICAS: "1"
-          M3_PORT: "3006"
+          M3_PORT: "3000"
         run: |
           mkdir -p $TEMP_DIR
           for f in $M3_DEPLOYMENT_PATH/apply/*; do mo -u "$f" > $TEMP_DIR/"$(basename $f)"; done

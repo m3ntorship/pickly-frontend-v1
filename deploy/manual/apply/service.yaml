@@ -8,7 +8,7 @@ metadata:
     environment: 'dev'
     componenet: 'frontend'
     application: 'pickly-frontend-dev'
-    version: '0.2'
+    version: '0.5'
 spec:
   selector:
     application: 'pickly-frontend-dev'
