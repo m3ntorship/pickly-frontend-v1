@@ -74,18 +74,19 @@ export const UploadSection = () => {
           title="Post anonymoslly"
         />
         <Button
+          isRounded
+          shadow
           backgroundColor="White"
           color="SecondaryGrey"
-          isRounded
           padding="small"
-          shadow
+          className="mt-4"
         >
           <OptionsPopup clickFun={setImagesArrFun} />
         </Button>
       </div>
 
       <div
-        className={cn('relative grid grid-cols-1 gap-1', {
+        className={cn('relative grid grid-cols-1   gap-1', {
           'sm:grid-cols-2': imagesArr.length > 1
         })}
       >
@@ -144,19 +145,22 @@ const OptionsPopup = ({ clickFun }) => {
       num: 4
     }
   ];
+  const contentStyle = { hieght: '50%' };
+  const arrowStyle = { display: 'none' }; // style for an svg element
 
   return (
     <Popup
       trigger={<button>{currentOpt}</button>}
-      position="right top"
-      on="hover"
+      position="center center"
+      on={['hover', 'focus']}
+      {...{ contentStyle, arrowStyle }}
     >
       <div>
         {optionsList.map(({ option, num }) => {
           return (
             <div
               key={num}
-              className="py-2 px-10 text-md hover:bg-c100 hover:text-white transition-all duration-100 cursor-pointer"
+              className="py-4 px-4 text-md hover:bg-c100 hover:text-white transition-all duration-100 cursor-pointer"
               onClick={() => {
                 clickFun(num);
                 setCurrentOpt(option);

@@ -59,7 +59,11 @@ export const OneImage = ({ setFun, id, imagesNum }) => {
               </div>
             )}
             {cropedImage && (
-              <img alt="" src={cropedImage} className="w-full h-full" />
+              <img
+                alt="cropped"
+                src={cropedImage}
+                className="w-full h-full object-cover"
+              />
             )}
           </ReusableDiv>
         </label>
@@ -124,27 +128,32 @@ const CropPopup = ({
     }
   }, [croppedAreaPixels]);
 
+  const contentStyle = { width: '50%', height: '80%' };
+
   return (
-    <Popup ref={imgPopupRef} className="my-20">
+    <Popup ref={imgPopupRef} className="my-20" {...{ contentStyle }}>
       <div className="relative w-full" style={{ height: '80%' }}>
         <Cropper
           image={img}
           crop={crop}
           zoom={zoom}
-          aspect={imagesNum != 2 ? `${16 / 9}` : `${1 / 1}`}
+          aspect={imagesNum != 2 ? `${16 / 9}` : `${4 / 3}`}
           onCropChange={setCrop}
           onCropComplete={onCropComplete}
           onZoomChange={setZoom}
           className="w-48"
         />
       </div>
-      <button
-        onClick={() => {
-          showCroppedImage();
-        }}
-      >
-        Done
-      </button>
+      <div className="flex justify-center items-center">
+        <button
+          className="py-3 px-12 my-4 bg-c500 rounded-lg  text-white font-bold  shadow-md"
+          onClick={() => {
+            showCroppedImage();
+          }}
+        >
+          Done
+        </button>
+      </div>
     </Popup>
   );
 };
