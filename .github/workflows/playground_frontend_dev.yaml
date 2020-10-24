@@ -93,6 +93,8 @@ jobs:
           M3_ENVIRONMENT: dev
           M3_REPLICAS: "1"
           M3_PORT: "3000"
+          M3_MEMORY: '64Mi'
+          M3_CPU: '50m'
         run: |
           mkdir -p $TEMP_DIR
           for f in $M3_DEPLOYMENT_PATH/apply/*; do mo -u "$f" > $TEMP_DIR/"$(basename $f)"; done

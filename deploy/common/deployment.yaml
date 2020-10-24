@@ -30,3 +30,10 @@ spec:
             - name: web
               containerPort: {{{M3_PORT}}}
               protocol: TCP
+          resources:
+            requests:
+              memory: "{{{M3_MEMORY}}}"
+              cpu: "{{{M3_CPU}}}"
+            limits:
+              memory: "{{{M3_MEMORY}}}"
+              cpu: "{{{M3_CPU}}}"
