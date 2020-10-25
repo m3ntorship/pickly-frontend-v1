@@ -17,7 +17,7 @@ env:
   TEMP_DIR: temp
   M3_NAMESPACE: 'pr-${{ github.event.number }}'
   M3_REPLICAS: '1'
-  
+
   # FRONTEND
   M3_DOCKER_FILE_FRONTEND: Dockerfile.playground.frontend
   M3_IMAGE_FRONTEND: m3ntorshipci/pickly-frontend
@@ -33,19 +33,6 @@ env:
   M3_CPU_STORYBOOK: '50m'
 
 jobs:
-  test-env:
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo '${{ github.event.number }} ${{ github.run_number}}'
-      - run: echo ${{ needs.prepare.outputs.version }}
-      - name: comment PR
-        if: ${{github.event.action != 'closed'}}
-        uses: unsplash/comment-on-pr@master
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        with:
-          msg: 'Start deploying your feature branch, you can find it [here](https://pickly-frontend-pr-${{ github.event.number }}.m3ntorship.net)'
-          check_for_duplicate_msg: true
   build_frontend:
     if: ${{github.event.action != 'closed'}}
     runs-on: ubuntu-latest
@@ -106,7 +93,8 @@ jobs:
   deploy_pr:
     if: ${{github.event.action != 'closed'}}
     needs:
-      - build
+      - build_frontend
+      - build_storybook
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -119,7 +107,7 @@ jobs:
         run: |
           curl -sSL https://git.io/get-mo -o mo
           chmod +x mo
-          sudo mv mo /usr/local/bin/substrings
+          sudo mv mo /usr/local/bin
           echo "works" | mo
       # deploy pr
       - name: deploy-pr
@@ -128,6 +116,20 @@ jobs:
           mkdir -p $TEMP_DIR
           for f in $M3_DEPLOYMENT_PATH/apply/*; do mo -u "$f" > $TEMP_DIR/"$(basename $f)"; done
           kubectl apply -f $TEMP_DIR
+
+      - name: comment PR with deployment links
+        if: ${{github.event.action != 'closed'}}
+        uses: unsplash/comment-on-pr@master
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          msg: >-
+            Start deploying your feature branch, visit
+            [frontend](https://pickly-frontstory-fe-pr-${{ github.event.number }}.m3ntorship.net)
+            and the
+            [storybook](https://pickly-frontstory-sb-pr-${{ github.event.number }}.m3ntorship.net)
+          check_for_duplicate_msg: true
+
   undeploy_pr:
     if: ${{github.event.action == 'closed'}}
     runs-on: ubuntu-latest
@@ -159,9 +161,9 @@ jobs:
           repos: '["pickly-frontend","pickly-storybook"]'
 
           # because in this workflow, we produce two temp docker images (frontend and storybook)
-          # to be deployed for the lifetime of a PR, when we clean up, we are deleting all tags 
-          # produced by all pushes to that particular PR, so here we specify three arguments to the 
-          # action (keep-last, force-full-cleanup, and substrings), the combination of these three 
+          # to be deployed for the lifetime of a PR, when we clean up, we are deleting all tags
+          # produced by all pushes to that particular PR, so here we specify three arguments to the
+          # action (keep-last, force-full-cleanup, and substrings), the combination of these three
           # paramaters makes it delete all the temporarly created images
           keep-last: 0
           force-full-cleanup: true
