@@ -4,11 +4,10 @@ import { InputField } from '../InputField';
 import { Heading } from '../Heading';
 import { ToggleButton } from '../ToggleButton';
 import { Button } from '../Button';
-import { PICKLY } from '../../apis/pickly';
+import { PICKLY } from '../../apis/clients';
 import { useHistory } from 'react-router-dom';
 import { OneImage } from './OneImage';
 import Popup from 'reactjs-popup';
-import OptionsButton from '../OptionsBtn';
 import cn from 'classnames';
 
 export const UploadSection = () => {
@@ -42,11 +41,7 @@ export const UploadSection = () => {
     form.append('caption', caption);
     form.append('isAnonymous', postAnonymously);
     console.log(postAnonymously);
-    PICKLY.post('/posts', form, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    })
+    PICKLY.createPost(form)
       .then(({ data }) => {
         history.push('/');
       })

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../context/userContext';
 import PostSection from '../components/PostSection';
-import { PICKLY } from '../apis/pickly/index';
+import { PICKLY } from '../apis/clients/pickly';
 import PostLoader from '../components/LoadingComponents/PostLoader';
 import CreatePostButton from '../components/CreatePostButon';
 
@@ -14,7 +14,7 @@ export const Home = () => {
   // This useEffect() for fetching data when the route load
   useEffect(() => {
     setLoading(true);
-    PICKLY.get('/posts')
+    PICKLY.getAllPosts()
       .then(({ data }) => {
         setData(data.data);
         setLoading(false);

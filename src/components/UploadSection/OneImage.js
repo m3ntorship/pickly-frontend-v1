@@ -26,7 +26,7 @@ export const OneImage = ({ setFun, id, imagesNum }) => {
   const closeimgPopup = () => imgPopupRef.current.close();
 
   return (
-    <div className={cn('w-full pb-16/9', { 'pb-full': imagesNum == 2 })}>
+    <div className={cn('w-full pb-16/9', { 'pb-full': imagesNum === 2 })}>
       <div>
         <label htmlFor={`file-${id}`} className="cursor-pointer">
           <ReusableDiv
@@ -126,7 +126,7 @@ const CropPopup = ({
     } catch (e) {
       console.error(e);
     }
-  }, [croppedAreaPixels]);
+  }, [croppedAreaPixels, closeimgPopup, img, setCropedImage, setFun]);
 
   const contentStyle = { width: '60%', height: '60%' };
 
@@ -137,7 +137,7 @@ const CropPopup = ({
           image={img}
           crop={crop}
           zoom={zoom}
-          aspect={imagesNum != 2 ? `${16 / 9}` : `${4 / 3}`}
+          aspect={imagesNum !== 2 ? `${16 / 9}` : `${4 / 3}`}
           onCropChange={setCrop}
           onCropComplete={onCropComplete}
           onZoomChange={setZoom}
