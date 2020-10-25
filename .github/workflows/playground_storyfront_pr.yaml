@@ -1,4 +1,4 @@
-name: deploy frontend PR to playground cluster
+name: deploy frontstory PR to playground cluster
 
 # trigger
 on:
@@ -66,6 +66,7 @@ jobs:
           docker build -t $M3_IMAGE_FRONTEND:$M3_VERSION -f $M3_DOCKER_FILE_FRONTEND .
           docker push $M3_IMAGE_FRONTEND:$M3_VERSION
   build_storybook:
+    if: ${{github.event.action != 'closed'}}
     runs-on: ubuntu-latest
     steps:
       # checkout the code commit

@@ -85,6 +85,8 @@ jobs:
         env:
           M3_DEPLOYMENT_PATH: deploy/dev/storybook
           TEMP_DIR: temp
+          M3_ORGANIZATION: ${{github.event.organization.login}}
+          M3_REPOSITORY: ${{github.event.repository.name}}
           M3_NAMESPACE: default
           M3_PROJECT: pickly
           M3_COMPONENET: storybook
