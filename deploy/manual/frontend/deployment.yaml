@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 'pickly-frontend-dev'
+  namespace: 'default'
+  labels:
+    project: 'pickly'
+    environment: 'dev'
+    componenet: 'frontend'
+    application: 'pickly-frontend-dev'
+    version: '0.5'
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      application: 'pickly-frontend-dev'
+  template:
+    metadata:
+      labels:
+        project: 'pickly'
+        environment: 'dev'
+        componenet: 'frontend'
+        application: 'pickly-frontend-dev'
+    spec:
+      containers:
+        - name: 'pickly-frontend-dev'
+          image: 'm3ntorshipci/pickly-frontend:0.5'
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: web
+              containerPort: 3000
+              protocol: TCP
