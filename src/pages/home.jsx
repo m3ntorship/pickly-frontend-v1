@@ -74,8 +74,7 @@ export const Home = () => {
                   voted={Voted}
                   key={_id}
                   _id={_id}
-                  leftImage={images[0]}
-                  rightImage={images[1]}
+                  images={images}
                   popupActionOptions={[0]}
                   postCaption={caption}
                   postDate={createdAt}
