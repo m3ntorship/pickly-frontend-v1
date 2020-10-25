@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ReusableDiv } from '../DivWithCenterdChildren';
 import { InputField } from '../InputField';
 import { Heading } from '../Heading';
@@ -17,6 +17,41 @@ export const UploadSection = () => {
   const [caption, setCaption] = useState('');
   const history = useHistory();
   const [imagesArr, setImagesArr] = useState([1, 1]); // will handle by user choice
+  // validataion states
+  const intialValues = { imagesToUpload, caption: '' };
+  const [formValues, setFormValues] = useState(intialValues);
+  const [formErrors, setFormErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const submitForm = () => {
+    console.log(formValues);
+  };
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
+  };
+
+  const validate = values => {
+    let errors = {};
+    const regex = /\.(jpe?g|png|gif|bmp)$/i;
+    if (!values.imagesToUpload) {
+      errors.imagesToUpload = 'Cannot be blank';
+    } else if (!regex.test(values.imagesToUpload)) {
+      errors.imagesToUpload = 'Invalid image format';
+    }
+    if (!values.caption) {
+      errors.caption = 'Cannot be blank';
+    } else if (values.caption.length > 8) {
+      errors.caption = 'Password must be more than 8 characters';
+    }
+    return errors;
+    console.log(errors);
+  };
+
+  useEffect(() => {
+    if (Object.keys(formErrors).length === 0 && isSubmitting) {
+      submitForm();
+    }
+  }, [formErrors]);
 
   const setImagesArrFun = num => {
     const imagesArr = new Array(num).fill(num);
@@ -29,11 +64,15 @@ export const UploadSection = () => {
 
   const handleInputChange = e => {
     setCaption(e.target.value);
+    const { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
   };
 
   // Post Data to the database Function
   const postData = e => {
     e.preventDefault();
+    setFormErrors(validate(formValues));
+    setIsSubmitting(true);
     const form = new FormData();
     console.log(imagesToUpload);
     for (let img of imagesToUpload) {
@@ -60,6 +99,9 @@ export const UploadSection = () => {
   return (
     <div className="container">
       {PostSomethingHeading}
+      {Object.keys(formErrors).length === 0 && isSubmitting && (
+        <span className="success-msg">posted</span>
+      )}
 
       <hr className="w-full text-c800 h-1" />
       <div style={{ width: 'calc(100% - 2rem)' }} className="mx-auto mb-5">
@@ -67,6 +109,7 @@ export const UploadSection = () => {
           caption={caption}
           onChange={handleInputChange}
           imageURL="https://www.ludoviccareme.com/files/image_88_image_fr.jpg"
+          value={formValues.caption}
         />
         <ToggleButton
           selected={postAnonymously}
@@ -80,8 +123,10 @@ export const UploadSection = () => {
           color="SecondaryGrey"
           padding="small"
           className="mt-4"
+          className=" border-solid border-2 border-c500"
         >
           <OptionsPopup clickFun={setImagesArrFun} />
+          <span></span>
         </Button>
       </div>
 
@@ -93,7 +138,13 @@ export const UploadSection = () => {
         {imagesArr.length > 1 && or}
         {imagesArr.map((img, index) => (
           <div className="relative">
-            <OneImage setFun={setFun} id={index} imagesNum={imagesArr.length} />
+            <OneImage
+              setFun={setFun}
+              id={index}
+              imagesNum={imagesArr.length}
+              value={formValues.cropedImage}
+              onChange={handleChange}
+            />
           </div>
         ))}
       </div>
@@ -145,9 +196,9 @@ const OptionsPopup = ({ clickFun }) => {
       num: 4
     }
   ];
+
   const contentStyle = { hieght: '50%' };
   const arrowStyle = { display: 'none' }; // style for an svg element
-
   return (
     <Popup
       trigger={<button>{currentOpt}</button>}

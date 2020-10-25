@@ -82,6 +82,8 @@ export const OneImage = ({ setFun, id, imagesNum }) => {
   );
 };
 
+// validation inputs
+
 // Helper Components
 const imageIcon = (
   <svg
@@ -141,7 +143,6 @@ const CropPopup = ({
           onCropChange={setCrop}
           onCropComplete={onCropComplete}
           onZoomChange={setZoom}
-          className="w-48"
         />
       </div>
       <div className="flex my-3 justify-center items-center">
