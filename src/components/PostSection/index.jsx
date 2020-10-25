@@ -80,6 +80,7 @@ const PostSection = ({
         {images &&
           images.map(img => (
             <div
+              key={img._id}
               className={cn('w-full pb-16/9', {
                 'pb-full': images.length === 2
               })}
