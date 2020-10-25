@@ -81,9 +81,6 @@ export const OneImage = ({ setFun, id, imagesNum }) => {
     </div>
   );
 };
-
-// validation inputs
-
 // Helper Components
 const imageIcon = (
   <svg
@@ -130,8 +127,8 @@ const CropPopup = ({
     }
   }, [croppedAreaPixels, closeimgPopup, img, setCropedImage, setFun]);
 
-  const contentStyle = { width: '60%', height: '60%' };
-
+  // popup styles
+  const contentStyle = { width: '60%', height: '60%', backgroundColor: '#fff' };
   return (
     <Popup ref={imgPopupRef} className="my-20" {...{ contentStyle }}>
       <div className="relative w-full" style={{ height: '85%' }}>

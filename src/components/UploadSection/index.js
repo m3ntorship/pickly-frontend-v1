@@ -131,7 +131,7 @@ export const UploadSection = () => {
       {imageValidationErr && (
         <div className="text-c200 text-right">{imageValidationErr}</div>
       )}
-
+      {warningParagrapg}
       <hr className="w-full text-c800 h-1" />
       <PostButton postData={postData} />
     </div>
