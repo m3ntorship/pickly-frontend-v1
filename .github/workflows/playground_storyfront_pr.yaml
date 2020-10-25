@@ -9,13 +9,15 @@ on:
       - playground-deployment-frontend
 env:
   # COMMON deployment envs
+  M3_ORGANIZATION: ${{github.event.pull_request.repo.owner.login}}
+  M3_REPOSITORY: ${{github.event.repository.name}}
   M3_PROJECT: pickly
   M3_COMPONENET: frontstory
   M3_ENVIRONMENT: 'pr-${{ github.event.number }}'
   M3_VERSION: 'pr-${{ github.event.number }}-${{ github.run_number}}'
+  M3_NAMESPACE: '${{github.event.pull_request.repo.owner.login}}-${{github.event.repository.name}}-pr-${{ github.event.number }}'
   M3_DEPLOYMENT_PATH: deploy/dev/frontstory
-  TEMP_DIR: temp
-  M3_NAMESPACE: 'pr-${{ github.event.number }}'
+  M3_TEMP_DIR: temp
   M3_REPLICAS: '1'
 
   # FRONTEND
@@ -33,6 +35,12 @@ env:
   M3_CPU_STORYBOOK: '50m'
 
 jobs:
+
+  build_frontend:
+    if: ${{github.event.action != 'closed'}}
+    runs-on: ubuntu-latest
+    steps:
+      - run echo "${{toJson(github.event)}}"
   build_frontend:
     if: ${{github.event.action != 'closed'}}
     runs-on: ubuntu-latest
@@ -113,9 +121,9 @@ jobs:
       - name: deploy-pr
         run: |
           echo $M3_NAMESPACE
-          mkdir -p $TEMP_DIR
-          for f in $M3_DEPLOYMENT_PATH/apply/*; do mo -u "$f" > $TEMP_DIR/"$(basename $f)"; done
-          kubectl apply -f $TEMP_DIR
+          mkdir -p $M3_TEMP_DIR
+          for f in $M3_DEPLOYMENT_PATH/apply/*; do mo -u "$f" > $M3_TEMP_DIR/"$(basename $f)"; done
+          kubectl apply -f $M3_TEMP_DIR
 
       - name: comment PR with deployment links
         if: ${{github.event.action != 'closed'}}

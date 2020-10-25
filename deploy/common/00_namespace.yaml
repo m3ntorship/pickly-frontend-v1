@@ -3,6 +3,8 @@ kind: Namespace
 metadata:
   name: '{{{M3_NAMESPACE}}}'
   labels:
+    organization: '{{{M3_ORGANIZATION}}}'
+    repository: '{{{M3_REPOSITORY}}}'
     project: '{{{M3_PROJECT}}}'
     environment: '{{{M3_ENVIRONMENT}}}'
     componenet: '{{{M3_COMPONENET}}}'
