@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import { ReusableDiv } from '../DivWithCenterdChildren';
 import { InputField } from '../InputField';
 import { Heading } from '../Heading';
@@ -15,42 +15,29 @@ export const UploadSection = () => {
   const [postAnonymously, setPostAnonymously] = useState(false);
   const [caption, setCaption] = useState('');
   const history = useHistory();
-  const [imagesArr, setImagesArr] = useState([1, 1]); // will handle by user choice
-  // validataion states
-  const intialValues = { imagesToUpload, caption: '' };
-  const [formValues, setFormValues] = useState(intialValues);
-  const [formErrors, setFormErrors] = useState({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const submitForm = () => {
-    console.log(formValues);
-  };
-  const handleChange = e => {
-    const { name, value } = e.target;
-    setFormValues({ ...formValues, [name]: value });
-  };
+  const [imagesArr, setImagesArr] = useState([1, 1]);
+  const [imageValidationErr, setImageValidationErr] = useState();
+  const [captionValidationErr, setCaptionValidationErr] = useState();
+  const [isValid, setIsValid] = useState(false);
+  console.log(imagesToUpload);
+  const formValidation = () => {
+    if (imagesToUpload.length === 0) {
+      setImageValidationErr('Cannot be blank');
+      setIsValid(false);
+    } else {
+      setIsValid(true);
+      setImageValidationErr(null);
+    }
 
-  const validate = values => {
-    let errors = {};
-    const regex = /\.(jpe?g|png|gif|bmp)$/i;
-    if (!values.imagesToUpload) {
-      errors.imagesToUpload = 'Cannot be blank';
-    } else if (!regex.test(values.imagesToUpload)) {
-      errors.imagesToUpload = 'Invalid image format';
+    if (caption === '') {
+      setCaptionValidationErr('caption Cannot be blank');
+      setIsValid(false);
+    } else {
+      setIsValid(true);
+      setCaptionValidationErr(null);
+      setImageValidationErr(null);
     }
-    if (!values.caption) {
-      errors.caption = 'Cannot be blank';
-    } else if (values.caption.length > 8) {
-      errors.caption = 'Password must be more than 8 characters';
-    }
-    return errors;
-    console.log(errors);
   };
-
-  useEffect(() => {
-    if (Object.keys(formErrors).length === 0 && isSubmitting) {
-      submitForm();
-    }
-  }, [formErrors]);
 
   const setImagesArrFun = num => {
     const imagesArr = new Array(num).fill(num);
@@ -63,49 +50,50 @@ export const UploadSection = () => {
 
   const handleInputChange = e => {
     setCaption(e.target.value);
-    const { name, value } = e.target;
-    setFormValues({ ...formValues, [name]: value });
   };
 
   // Post Data to the database Function
   const postData = e => {
     e.preventDefault();
-    setFormErrors(validate(formValues));
-    setIsSubmitting(true);
-    const form = new FormData();
-    console.log(imagesToUpload);
-    for (let img of imagesToUpload) {
-      form.append('images', img);
+    formValidation();
+    if (isValid) {
+      const form = new FormData();
+      for (let img of imagesToUpload) {
+        form.append('images', img);
+      }
+      form.append('caption', caption);
+      form.append('isAnonymous', postAnonymously);
+      PICKLY.createPost(form)
+        .then(({ data }) => {
+          history.push('/');
+        })
+        .catch(console.error);
+    } else {
+      console.log('Fix the errors');
     }
-    form.append('caption', caption);
-    form.append('isAnonymous', postAnonymously);
-    console.log(postAnonymously);
-    PICKLY.createPost(form)
-      .then(({ data }) => {
-        history.push('/');
-      })
-      .catch(console.error);
   };
 
   const setFun = image => {
     setImagesToUpload([...imagesToUpload, image]);
   };
-
   return (
     <div className="container">
-      {PostSomethingHeading}
-      {Object.keys(formErrors).length === 0 && isSubmitting && (
-        <span className="success-msg">posted</span>
-      )}
-
       <hr className="w-full text-c800 h-1" />
       <div style={{ width: 'calc(100% - 2rem)' }} className="mx-auto mb-5">
         <InputField
           caption={caption}
           onChange={handleInputChange}
           imageURL="https://www.ludoviccareme.com/files/image_88_image_fr.jpg"
-          value={formValues.caption}
         />
+
+        {captionValidationErr && (
+          <div className="text-c200 text-right font-xxlg ">
+            {captionValidationErr}
+          </div>
+        )}
+
+        {PostSomethingHeading}
+
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
           <div style={{ width: 'fit-content' }}>
             <Button
@@ -135,21 +123,16 @@ export const UploadSection = () => {
         {imagesArr.length > 1 && or}
         {imagesArr.map((img, index) => (
           <div className="relative">
-            <OneImage
-              setFun={setFun}
-              id={index}
-              imagesNum={imagesArr.length}
-              value={formValues.cropedImage}
-              onChange={handleChange}
-            />
+            <OneImage setFun={setFun} id={index} imagesNum={imagesArr.length} />
           </div>
         ))}
       </div>
 
-      {warningParagrapg}
+      {imageValidationErr && (
+        <div className="text-c200 text-right">{imageValidationErr}</div>
+      )}
 
       <hr className="w-full text-c800 h-1" />
-
       <PostButton postData={postData} />
     </div>
   );
@@ -195,7 +178,7 @@ const OptionsPopup = ({ clickFun }) => {
     }
   ];
 
-  const contentStyle = { hieght: '50%' };
+  const contentStyle = { hieght: '50%', backgroundColor: '#fff' };
 
   return (
     <Popup
