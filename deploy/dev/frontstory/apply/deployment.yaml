@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: '{{{M3_PROJECT}}}-{{{M3_COMPONENET}}}-{{{M3_ENVIRONMENT}}}'
+  namespace: '{{{M3_NAMESPACE}}}'
+  labels:
+    project: '{{{M3_PROJECT}}}'
+    environment: '{{{M3_ENVIRONMENT}}}'
+    componenet: '{{{M3_COMPONENET}}}'
+    application: '{{{M3_PROJECT}}}-{{{M3_COMPONENET}}}-{{{M3_ENVIRONMENT}}}'
+    version: '{{{M3_VERSION}}}'
+spec:
+  replicas: {{{M3_REPLICAS}}}
+  selector:
+    matchLabels:
+      application: '{{{M3_PROJECT}}}-{{{M3_COMPONENET}}}-{{{M3_ENVIRONMENT}}}'
+  template:
+    metadata:
+      labels:
+        project: '{{{M3_PROJECT}}}'
+        environment: '{{{M3_ENVIRONMENT}}}'
+        componenet: '{{{M3_COMPONENET}}}'
+        application: '{{{M3_PROJECT}}}-{{{M3_COMPONENET}}}-{{{M3_ENVIRONMENT}}}'
+    spec:
+      containers:
+        - name: '{{{M3_PROJECT}}}-{{{M3_COMPONENET}}}-fe-{{{M3_ENVIRONMENT}}}'
+          image: '{{{M3_IMAGE_FRONTEND}}}:{{{M3_VERSION}}}'
+          ports:
+            - name: frontend
+              containerPort: {{{M3_PORT_FRONTEND}}}
+              protocol: TCP
+          resources:
+            requests:
+              memory: "{{{M3_MEMORY_FRONTEND}}}"
+              cpu: "{{{M3_CPU_FRONTEND}}}"
+            limits:
+              memory: "{{{M3_MEMORY_FRONTEND}}}"
+              cpu: "{{{M3_CPU_FRONTEND}}}"
+        - name: '{{{M3_PROJECT}}}-{{{M3_COMPONENET}}}-sb-{{{M3_ENVIRONMENT}}}'
+          image: '{{{M3_IMAGE_STORYBOOK}}}:{{{M3_VERSION}}}'
+          ports:
+            - name: storybook
+              containerPort: {{{M3_PORT_STORYBOOK}}}
+              protocol: TCP
+          resources:
+            requests:
+              memory: "{{{M3_MEMORY_STORYBOOK}}}"
+              cpu: "{{{M3_CPU_STORYBOOK}}}"
+            limits:
+              memory: "{{{M3_MEMORY_STORYBOOK}}}"
+              cpu: "{{{M3_CPU_STORYBOOK}}}"
