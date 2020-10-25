@@ -76,12 +76,12 @@ const PostSection = ({
       </p>
 
       <div className="grid grid-cols-2 gap-1 relative my-3">
-        {images.length == 2 && or}
+        {images.length === 2 && or}
         {images &&
           images.map(img => (
             <div
               className={cn('w-full pb-16/9', {
-                'pb-full': images.length == 2
+                'pb-full': images.length === 2
               })}
             >
               <img
