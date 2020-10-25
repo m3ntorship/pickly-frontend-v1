@@ -40,146 +40,146 @@ jobs:
     if: ${{github.event.action != 'closed'}}
     runs-on: ubuntu-latest
     steps:
-      - run echo "${{toJson(github.event)}}"
-  build_frontend:
-    if: ${{github.event.action != 'closed'}}
-    runs-on: ubuntu-latest
-    steps:
-      # checkout the code commit
-      - name: checkout the code
-        uses: actions/checkout@v2
+      - run: echo "${{ toJson(github.event) }}"
+  # build_frontend:
+  #   if: ${{github.event.action != 'closed'}}
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     # checkout the code commit
+  #     - name: checkout the code
+  #       uses: actions/checkout@v2
 
-      # Installing dependencies
-      - name: installing dependencies
-        run: yarn
+  #     # Installing dependencies
+  #     - name: installing dependencies
+  #       run: yarn
 
-      # building frontend
-      - name: building frontend
-        env:
-          REACT_APP_POSTS_SERVICE_URL: 'https://pickly-posts-dev.m3ntorship.net'
-        run: yarn build
+  #     # building frontend
+  #     - name: building frontend
+  #       env:
+  #         REACT_APP_POSTS_SERVICE_URL: 'https://pickly-posts-dev.m3ntorship.net'
+  #       run: yarn build
 
-      # login to docker
-      - uses: azure/docker-login@v1
-        with:
-          username: ${{ secrets.M3NTORSHIP_DOCKERHUB_USERNAME }}
-          password: ${{ secrets.M3NTORSHIP_DOCKERHUB_PASSWORD }}
+  #     # login to docker
+  #     - uses: azure/docker-login@v1
+  #       with:
+  #         username: ${{ secrets.M3NTORSHIP_DOCKERHUB_USERNAME }}
+  #         password: ${{ secrets.M3NTORSHIP_DOCKERHUB_PASSWORD }}
 
-      # build and push docker image
-      - name: build and push the app
-        run: |
-          echo $M3_VERSION
-          docker build -t $M3_IMAGE_FRONTEND:$M3_VERSION -f $M3_DOCKER_FILE_FRONTEND .
-          docker push $M3_IMAGE_FRONTEND:$M3_VERSION
-  build_storybook:
-    runs-on: ubuntu-latest
-    steps:
-      # checkout the code commit
-      - name: checkout the code
-        uses: actions/checkout@v2
+  #     # build and push docker image
+  #     - name: build and push the app
+  #       run: |
+  #         echo $M3_VERSION
+  #         docker build -t $M3_IMAGE_FRONTEND:$M3_VERSION -f $M3_DOCKER_FILE_FRONTEND .
+  #         docker push $M3_IMAGE_FRONTEND:$M3_VERSION
+  # build_storybook:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     # checkout the code commit
+  #     - name: checkout the code
+  #       uses: actions/checkout@v2
 
-      # Installing dependencies
-      - name: installing dependencies
-        run: yarn
+  #     # Installing dependencies
+  #     - name: installing dependencies
+  #       run: yarn
 
-      # building storybook
-      - name: building storybook
-        run: yarn build-storybook
+  #     # building storybook
+  #     - name: building storybook
+  #       run: yarn build-storybook
 
-      # login to docker
-      - uses: azure/docker-login@v1
-        with:
-          username: ${{ secrets.M3NTORSHIP_DOCKERHUB_USERNAME }}
-          password: ${{ secrets.M3NTORSHIP_DOCKERHUB_PASSWORD }}
+  #     # login to docker
+  #     - uses: azure/docker-login@v1
+  #       with:
+  #         username: ${{ secrets.M3NTORSHIP_DOCKERHUB_USERNAME }}
+  #         password: ${{ secrets.M3NTORSHIP_DOCKERHUB_PASSWORD }}
 
-      # build and push docker image
-      - name: build and push the app
-        run: |
-          echo $M3_VERSION
-          docker build -t $M3_IMAGE_STORYBOOK:$M3_VERSION -f $M3_DOCKER_FILE_STORYBOOK .
-          docker push $M3_IMAGE_STORYBOOK:$M3_VERSION
-  deploy_pr:
-    if: ${{github.event.action != 'closed'}}
-    needs:
-      - build_frontend
-      - build_storybook
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: azure/setup-kubectl@v1
-      - name: Kubectl configuration
-        run: |
-          mkdir -p ~/.kube
-          echo ${{ secrets.KUBE_CONFIG }} | base64 -d -i > ~/.kube/config
-      - name: install moustache
-        run: |
-          curl -sSL https://git.io/get-mo -o mo
-          chmod +x mo
-          sudo mv mo /usr/local/bin
-          echo "works" | mo
-      # deploy pr
-      - name: deploy-pr
-        run: |
-          echo $M3_NAMESPACE
-          mkdir -p $M3_TEMP_DIR
-          for f in $M3_DEPLOYMENT_PATH/apply/*; do mo -u "$f" > $M3_TEMP_DIR/"$(basename $f)"; done
-          kubectl apply -f $M3_TEMP_DIR
+  #     # build and push docker image
+  #     - name: build and push the app
+  #       run: |
+  #         echo $M3_VERSION
+  #         docker build -t $M3_IMAGE_STORYBOOK:$M3_VERSION -f $M3_DOCKER_FILE_STORYBOOK .
+  #         docker push $M3_IMAGE_STORYBOOK:$M3_VERSION
+  # deploy_pr:
+  #   if: ${{github.event.action != 'closed'}}
+  #   needs:
+  #     - build_frontend
+  #     - build_storybook
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: azure/setup-kubectl@v1
+  #     - name: Kubectl configuration
+  #       run: |
+  #         mkdir -p ~/.kube
+  #         echo ${{ secrets.KUBE_CONFIG }} | base64 -d -i > ~/.kube/config
+  #     - name: install moustache
+  #       run: |
+  #         curl -sSL https://git.io/get-mo -o mo
+  #         chmod +x mo
+  #         sudo mv mo /usr/local/bin
+  #         echo "works" | mo
+  #     # deploy pr
+  #     - name: deploy-pr
+  #       run: |
+  #         echo $M3_NAMESPACE
+  #         mkdir -p $M3_TEMP_DIR
+  #         for f in $M3_DEPLOYMENT_PATH/apply/*; do mo -u "$f" > $M3_TEMP_DIR/"$(basename $f)"; done
+  #         kubectl apply -f $M3_TEMP_DIR
 
-      - name: comment PR with deployment links
-        if: ${{github.event.action != 'closed'}}
-        uses: unsplash/comment-on-pr@master
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        with:
-          msg: >-
-            Start deploying your feature branch, visit
-            [frontend](https://pickly-frontstory-fe-pr-${{ github.event.number }}.m3ntorship.net)
-            and the
-            [storybook](https://pickly-frontstory-sb-pr-${{ github.event.number }}.m3ntorship.net)
-          check_for_duplicate_msg: true
+  #     - name: comment PR with deployment links
+  #       if: ${{github.event.action != 'closed'}}
+  #       uses: unsplash/comment-on-pr@master
+  #       env:
+  #         GITHUB_TOKEN: ${{ github.token }}
+  #       with:
+  #         msg: >-
+  #           Start deploying your feature branch, visit
+  #           [frontend](https://pickly-frontstory-fe-pr-${{ github.event.number }}.m3ntorship.net)
+  #           and the
+  #           [storybook](https://pickly-frontstory-sb-pr-${{ github.event.number }}.m3ntorship.net)
+  #         check_for_duplicate_msg: true
 
-  undeploy_pr:
-    if: ${{github.event.action == 'closed'}}
-    runs-on: ubuntu-latest
-    steps:
-      - uses: azure/setup-kubectl@v1
-      - name: Kubectl configuration
-        run: |
-          mkdir -p ~/.kube
-          echo ${{ secrets.KUBE_CONFIG }} | base64 -d -i > ~/.kube/config
+  # undeploy_pr:
+  #   if: ${{github.event.action == 'closed'}}
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: azure/setup-kubectl@v1
+  #     - name: Kubectl configuration
+  #       run: |
+  #         mkdir -p ~/.kube
+  #         echo ${{ secrets.KUBE_CONFIG }} | base64 -d -i > ~/.kube/config
 
-      # undeploy pr
-      - name: undeploy-pr
-        run: kubectl delete namespace $M3_NAMESPACE --ignore-not-found
-  cleanup_docker_tags:
-    if: ${{github.event.action == 'closed'}}
-    needs:
-      - undeploy_pr
-    runs-on: ubuntu-latest
-    steps:
-      - id: delete_old_tags
-        name: Delete old docker image tags
-        uses: m3ntorship/action-dockerhub-cleanup@1.2
-        with:
-          token: ${{secrets.DOCKER_HUB_M3NTORSHIPCI_TOKEN}}
-          user: 'm3ntorshipci'
+  #     # undeploy pr
+  #     - name: undeploy-pr
+  #       run: kubectl delete namespace $M3_NAMESPACE --ignore-not-found
+  # cleanup_docker_tags:
+  #   if: ${{github.event.action == 'closed'}}
+  #   needs:
+  #     - undeploy_pr
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - id: delete_old_tags
+  #       name: Delete old docker image tags
+  #       uses: m3ntorship/action-dockerhub-cleanup@1.2
+  #       with:
+  #         token: ${{secrets.DOCKER_HUB_M3NTORSHIPCI_TOKEN}}
+  #         user: 'm3ntorshipci'
 
-          # because we are building and pushing two docker images
-          # per workflow run, we also delete the tags from these two repos
-          repos: '["pickly-frontend","pickly-storybook"]'
+  #         # because we are building and pushing two docker images
+  #         # per workflow run, we also delete the tags from these two repos
+  #         repos: '["pickly-frontend","pickly-storybook"]'
 
-          # because in this workflow, we produce two temp docker images (frontend and storybook)
-          # to be deployed for the lifetime of a PR, when we clean up, we are deleting all tags
-          # produced by all pushes to that particular PR, so here we specify three arguments to the
-          # action (keep-last, force-full-cleanup, and substrings), the combination of these three
-          # paramaters makes it delete all the temporarly created images
-          keep-last: 0
-          force-full-cleanup: true
+  #         # because in this workflow, we produce two temp docker images (frontend and storybook)
+  #         # to be deployed for the lifetime of a PR, when we clean up, we are deleting all tags
+  #         # produced by all pushes to that particular PR, so here we specify three arguments to the
+  #         # action (keep-last, force-full-cleanup, and substrings), the combination of these three
+  #         # paramaters makes it delete all the temporarly created images
+  #         keep-last: 0
+  #         force-full-cleanup: true
 
-          # we are deleting all docker tags which start with the
-          # version prefix for example, the version above is constructed
-          # by concatinating the string `pr`, `pr_number` and `pr_run_number`
-          # 'pr-${{ github.event.number }}-${{ github.run_number}}'
-          # means the tags will be be `pr-82-1`, `pr-82-20` .. and so on
-          # so here we are deleting any tag that contains  `pr-82` in its name
-          substrings: '["pr-${{ github.event.number }}"]'
+  #         # we are deleting all docker tags which start with the
+  #         # version prefix for example, the version above is constructed
+  #         # by concatinating the string `pr`, `pr_number` and `pr_run_number`
+  #         # 'pr-${{ github.event.number }}-${{ github.run_number}}'
+  #         # means the tags will be be `pr-82-1`, `pr-82-20` .. and so on
+  #         # so here we are deleting any tag that contains  `pr-82` in its name
+  #         substrings: '["pr-${{ github.event.number }}"]'
