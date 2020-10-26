@@ -55,7 +55,7 @@ export const UploadSection = () => {
       setImageValidationErr(null);
       setCaptionValidationErr(null);
       const form = new FormData();
-      for (let img of imagesToUpload) {
+      for (let img of imagesToUpload.slice(0, imagesArr.length)) {
         form.append('images', img);
       }
       form.append('caption', caption);

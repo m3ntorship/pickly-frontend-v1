@@ -10,6 +10,14 @@ export const OneImage = ({ setFun, id, imagesNum }) => {
   const [img, setImg] = useState(null);
   const [cropedImage, setCropedImage] = useState(null);
   const imgPopupRef = useRef();
+  const inputRef = useRef();
+
+  console.log(img, cropedImage, inputRef, imgPopupRef);
+
+  const setCroppedImageFun = cropped => {
+    setCropedImage(cropped);
+    inputRef.current = undefined;
+  };
 
   const onSelectFile = e => {
     if (e.target.files && e.target.files.length > 0) {
@@ -17,8 +25,11 @@ export const OneImage = ({ setFun, id, imagesNum }) => {
       reader.addEventListener('load', () => {
         setImg(reader.result);
         openimgPopup();
+        inputRef.current = undefined;
       });
       reader.readAsDataURL(e.target.files[0]);
+    } else {
+      console.log('here');
     }
   };
 
@@ -38,6 +49,7 @@ export const OneImage = ({ setFun, id, imagesNum }) => {
           >
             <input
               id={`file-${id}`}
+              ref={inputRef}
               type="file"
               accept="image/*"
               onChange={onSelectFile}
@@ -71,11 +83,12 @@ export const OneImage = ({ setFun, id, imagesNum }) => {
       <div className="nav__container">
         <CropPopup
           img={img}
-          setCropedImage={setCropedImage}
+          setCropedImage={setCroppedImageFun}
           closeimgPopup={closeimgPopup}
           imgPopupRef={imgPopupRef}
           setFun={setFun}
           imagesNum={imagesNum}
+          inputRef={inputRef}
         />
       </div>
     </div>
@@ -106,7 +119,8 @@ const CropPopup = ({
   imgPopupRef,
   setFun,
   closeimgPopup,
-  imagesNum
+  imagesNum,
+  inputRef
 }) => {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
@@ -120,12 +134,13 @@ const CropPopup = ({
     try {
       const cropedImage = await getCroppedImg(img, croppedAreaPixels);
       setCropedImage(cropedImage);
+      inputRef.current = undefined;
       setFun(new File([cropedImage], 'nile', { type: 'image/jpeg' }));
       closeimgPopup();
     } catch (e) {
       console.error(e);
     }
-  }, [croppedAreaPixels, closeimgPopup, img, setCropedImage, setFun]);
+  }, [croppedAreaPixels, inputRef, closeimgPopup, img, setCropedImage, setFun]);
 
   // popup styles
   const contentStyle = { width: '60%', height: '60%', backgroundColor: '#fff' };
