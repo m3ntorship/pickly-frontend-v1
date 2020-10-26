@@ -75,27 +75,37 @@ const PostSection = ({
         {postCaption}
       </p>
 
-      <div className="grid grid-cols-2 gap-1 relative my-3">
+      <div
+        className={cn('grid grid-cols-1 gap-1 my-4', {
+          'sm:grid-cols-2': images.length > 1
+        })}
+      >
         {images.length === 2 && or}
         {images &&
-          images.map(img => (
-            <div
-              key={img._id}
-              className={cn('w-full pb-16/9', {
-                'pb-full': images.length === 2
-              })}
-            >
-              <img
-                src={img.url}
-                className="w-full h-full object-cover rounded-sm"
-                style={{ Height: '100%' }}
-                alt=""
-                onDoubleClick={() => {
-                  handleVote(img._id, voted, _id);
-                }}
-              />
-            </div>
-          ))}
+          images.map(img => {
+            return (
+              <div className="relative">
+                <div
+                  key={img._id}
+                  className={cn('w-full pb-16/9', {
+                    'pb-full': images.longth === 2
+                  })}
+                >
+                  <div className="absolute w-full h-full">
+                    <img
+                      src={img.url}
+                      className="w-full h-full object-cover rounded-sm"
+                      // style={{ Height: '100%' }}
+                      alt=""
+                      onDoubleClick={() => {
+                        handleVote(img._id, voted, _id);
+                      }}
+                    />
+                  </div>
+                </div>{' '}
+              </div>
+            );
+          })}
       </div>
 
       <div className="flex items-center justify-between w-11/12 mx-auto">
