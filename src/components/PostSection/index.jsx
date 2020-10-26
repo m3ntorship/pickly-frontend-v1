@@ -29,7 +29,7 @@ const PostSection = ({
   useEffect(() => {
     for (let img of images) {
       if (img.votes) {
-        setTotalVotes(totalVotes + img.votes.count);
+        setTotalVotes(t => t + img.votes.count);
       }
     }
   }, [images]);
