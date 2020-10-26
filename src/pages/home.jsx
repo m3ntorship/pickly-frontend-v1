@@ -40,13 +40,11 @@ export const Home = () => {
 
   // Just for test__ loop on the data and delete all the posts from the database
   const deleteAll = () => {
-    setData(null);
-    for (let el of data) {
-      PICKLY.deletePost(el._id).then(res => console.log('deleted'));
-    }
+    // setData(null);
+    // for (let el of data) {
+    //   PICKLY.deletePost(el._id).then(res => console.log('deleted'));
+    // }
   };
-
-  console.log(data);
 
   return (
     <div className="bg-c900 py-6">

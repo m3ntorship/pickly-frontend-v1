@@ -22,28 +22,6 @@ export const UploadSection = () => {
   const [isValid, setIsValid] = useState(false);
   const { user } = useContext(UserContext);
 
-  // check the form fields
-  const formValidation = async function () {
-    if (imagesToUpload.length === 0 && !caption) {
-      setIsValid(false);
-      setImageValidationErr('at least add one Image');
-      setCaptionValidationErr('Caption can not be empty');
-    } else if (imagesToUpload.length === 0 && caption) {
-      setIsValid(false);
-      setImageValidationErr('at least add one Image');
-      setCaptionValidationErr(null);
-    } else if (imagesToUpload.length !== 0 && !caption) {
-      setIsValid(false);
-      setCaptionValidationErr('Caption can not be empty');
-      setImageValidationErr(null);
-    } else {
-      setIsValid(true);
-      setImageValidationErr(null);
-      setCaptionValidationErr(null);
-    }
-    return isValid;
-  };
-
   const setImagesArrFun = num => {
     const imagesArr = new Array(num).fill(num);
     setImagesArr(imagesArr);
@@ -60,18 +38,35 @@ export const UploadSection = () => {
   // Post Data to the database Function
   const postData = e => {
     e.preventDefault();
-    const form = new FormData();
-    for (let img of imagesToUpload) {
-      form.append('images', img);
+    if (imagesToUpload.length === 0 && !caption) {
+      setIsValid(false);
+      setImageValidationErr('at least add one Image');
+      setCaptionValidationErr('Caption can not be empty');
+    } else if (imagesToUpload.length === 0 && caption) {
+      setIsValid(false);
+      setImageValidationErr('at least add one Image');
+      setCaptionValidationErr(null);
+    } else if (imagesToUpload.length !== 0 && !caption) {
+      setIsValid(false);
+      setCaptionValidationErr('Caption can not be empty');
+      setImageValidationErr(null);
+    } else {
+      setIsValid(true);
+      setImageValidationErr(null);
+      setCaptionValidationErr(null);
+      const form = new FormData();
+      for (let img of imagesToUpload) {
+        form.append('images', img);
+      }
+      form.append('caption', caption);
+      form.append('isAnonymous', postAnonymously);
+      PICKLY.createPost(form)
+        .then(({ data }) => {
+          console.log(data);
+          history.push('/');
+        })
+        .catch(console.error);
     }
-    form.append('caption', caption);
-    form.append('isAnonymous', postAnonymously);
-    PICKLY.createPost(form)
-      .then(({ data }) => {
-        console.log(data);
-        history.push('/');
-      })
-      .catch(console.error);
   };
 
   const setFun = image => {
