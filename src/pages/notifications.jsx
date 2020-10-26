@@ -43,6 +43,7 @@ export const Notifications = ({ postDate }) => {
         <div className="flex items-center">
           <figure>
             <img
+              alt="profile"
               src={imageSrc}
               className="w-12 h-12 rounded-full mr-4 max-w-none"
             />
