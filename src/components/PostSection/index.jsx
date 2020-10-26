@@ -83,7 +83,11 @@ const PostSection = ({
         {postCaption}
       </p>
 
-      <div className="relative grid grid-cols-2 gap-1 my-4">
+      <div
+        className={cn('relative grid grid-cols-1 gap-1 my-4', {
+          'grid-cols-2': images.length > 1
+        })}
+      >
         {images.length > 1 && or}
         {images &&
           images.map(img => {
