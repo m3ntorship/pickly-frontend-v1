@@ -28,6 +28,7 @@ export const Home = () => {
   // This useEffect for update the feed__when data value change
   useEffect(() => {
     console.log('Data changed');
+    console.log(data);
   }, [data]);
 
   // taje the post id and pass the updated data to it__ will use in postSection component

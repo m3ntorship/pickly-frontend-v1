@@ -76,19 +76,19 @@ const PostSection = ({
       </p>
 
       <div
-        className={cn('grid grid-cols-1 gap-1 my-4', {
+        className={cn('relative grid grid-cols-1 gap-1 my-4', {
           'sm:grid-cols-2': images.length > 1
         })}
       >
-        {images.length === 2 && or}
+        {images.length > 1 && or}
         {images &&
           images.map(img => {
             return (
-              <div className="relative">
+              <div className="relative" key={img._id}>
                 <div
                   key={img._id}
                   className={cn('w-full pb-16/9', {
-                    'pb-full': images.longth === 2
+                    'pb-full': images.length === 2
                   })}
                 >
                   <div className="absolute w-full h-full">
@@ -134,7 +134,7 @@ const PostSection = ({
 
 const or = (
   <div
-    className="absolute z-10"
+    className="absolute z-10 hidden sm:block"
     style={{
       left: 'calc(50% - 15px)',
       top: 'calc(50% - 15px)'
