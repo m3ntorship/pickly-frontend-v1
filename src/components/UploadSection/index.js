@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useContext } from 'react';
 import { ReusableDiv } from '../DivWithCenterdChildren';
 import { InputField } from '../InputField';
 import { Heading } from '../Heading';
@@ -9,6 +9,7 @@ import { useHistory } from 'react-router-dom';
 import { OneImage } from './OneImage';
 import Popup from 'reactjs-popup';
 import cn from 'classnames';
+import { UserContext } from '../../context/userContext';
 
 export const UploadSection = () => {
   const [imagesToUpload, setImagesToUpload] = useState([]);
@@ -19,24 +20,28 @@ export const UploadSection = () => {
   const [imageValidationErr, setImageValidationErr] = useState();
   const [captionValidationErr, setCaptionValidationErr] = useState();
   const [isValid, setIsValid] = useState(false);
-  console.log(imagesToUpload);
-  const formValidation = () => {
-    if (imagesToUpload.length === 0) {
-      setImageValidationErr('Cannot be blank');
-      setIsValid(false);
-    } else {
-      setIsValid(true);
-      setImageValidationErr(null);
-    }
+  const { user } = useContext(UserContext);
 
-    if (caption === '') {
-      setCaptionValidationErr('caption Cannot be blank');
+  // check the form fields
+  const formValidation = async function () {
+    if (imagesToUpload.length === 0 && !caption) {
       setIsValid(false);
+      setImageValidationErr('at least add one Image');
+      setCaptionValidationErr('Caption can not be empty');
+    } else if (imagesToUpload.length === 0 && caption) {
+      setIsValid(false);
+      setImageValidationErr('at least add one Image');
+      setCaptionValidationErr(null);
+    } else if (imagesToUpload.length !== 0 && !caption) {
+      setIsValid(false);
+      setCaptionValidationErr('Caption can not be empty');
+      setImageValidationErr(null);
     } else {
       setIsValid(true);
-      setCaptionValidationErr(null);
       setImageValidationErr(null);
+      setCaptionValidationErr(null);
     }
+    return isValid;
   };
 
   const setImagesArrFun = num => {
@@ -55,22 +60,18 @@ export const UploadSection = () => {
   // Post Data to the database Function
   const postData = e => {
     e.preventDefault();
-    formValidation();
-    if (isValid) {
-      const form = new FormData();
-      for (let img of imagesToUpload) {
-        form.append('images', img);
-      }
-      form.append('caption', caption);
-      form.append('isAnonymous', postAnonymously);
-      PICKLY.createPost(form)
-        .then(({ data }) => {
-          history.push('/');
-        })
-        .catch(console.error);
-    } else {
-      console.log('Fix the errors');
+    const form = new FormData();
+    for (let img of imagesToUpload) {
+      form.append('images', img);
     }
+    form.append('caption', caption);
+    form.append('isAnonymous', postAnonymously);
+    PICKLY.createPost(form)
+      .then(({ data }) => {
+        console.log(data);
+        history.push('/');
+      })
+      .catch(console.error);
   };
 
   const setFun = image => {
@@ -78,21 +79,15 @@ export const UploadSection = () => {
   };
   return (
     <div className="container">
+      {PostSomethingHeading}
+
       <hr className="w-full text-c800 h-1" />
       <div style={{ width: 'calc(100% - 2rem)' }} className="mx-auto mb-5">
         <InputField
           caption={caption}
           onChange={handleInputChange}
-          imageURL="https://www.ludoviccareme.com/files/image_88_image_fr.jpg"
+          imageURL={user.photoURL}
         />
-
-        {captionValidationErr && (
-          <div className="text-c200 text-right font-xxlg ">
-            {captionValidationErr}
-          </div>
-        )}
-
-        {PostSomethingHeading}
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
           <div style={{ width: 'fit-content' }}>
@@ -122,18 +117,22 @@ export const UploadSection = () => {
       >
         {imagesArr.length > 1 && or}
         {imagesArr.map((img, index) => (
-          <div className="relative">
+          <div key={index} className="relative">
             <OneImage setFun={setFun} id={index} imagesNum={imagesArr.length} />
           </div>
         ))}
       </div>
-
+      {warningParagrapg}
+      <hr className="w-full text-c800 h-1" />
+      {captionValidationErr && (
+        <div className="text-c200 text-right font-xxlg ">
+          {captionValidationErr}
+        </div>
+      )}
       {imageValidationErr && (
         <div className="text-c200 text-right">{imageValidationErr}</div>
       )}
-      {warningParagrapg}
-      <hr className="w-full text-c800 h-1" />
-      <PostButton postData={postData} />
+      <PostButton postData={postData} isValid={isValid} />
     </div>
   );
 };
@@ -178,13 +177,16 @@ const OptionsPopup = ({ clickFun }) => {
     }
   ];
 
-  const contentStyle = { hieght: '50%', backgroundColor: '#fff' };
+  const contentStyle = {
+    hieght: '50%',
+    backgroundColor: '#fff'
+  };
 
   return (
     <Popup
       ref={popupRef}
       trigger={
-        <button className="relative py-2 px-4">
+        <div className="relative py-2 px-4">
           <span>
             <svg
               width="22"
@@ -195,8 +197,8 @@ const OptionsPopup = ({ clickFun }) => {
               className="inline mr-2"
             >
               <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
+                fillRule="evenodd"
+                clipRule="evenodd"
                 d="M21.5 13.852V17.65C21.5 19.5061 19.9274 21 18 21H16.2403H16.2362H4C2.07258 21 0.5 19.5061 0.5 17.65V4.35C0.5 2.49395 2.07258 1 4 1H18C19.9274 1 21.5 2.49395 21.5 4.35V13.8483C21.5 13.8495 21.5 13.8508 21.5 13.852ZM20.5 14.0708L15.7866 9.77492L11.0725 14.0283L16.4604 20H18C19.3863 20 20.5 18.9419 20.5 17.65V14.0708ZM20.5 12.7178V4.35C20.5 3.05803 19.3863 2 18 2H4C2.61372 2 1.5 3.05803 1.5 4.35V16.445L7.31356 10.646C7.51602 10.444 7.84633 10.4527 8.0379 10.6651L10.4026 13.2859L15.4533 8.72878C15.6443 8.55643 15.9349 8.55716 16.125 8.73045L20.5 12.7178ZM15.1135 19.9999L7.64759 11.7251L1.50884 17.8485C1.61604 19.0486 2.68548 19.9999 4 19.9999H15.1135ZM7.19052 7.70007C6.12568 7.70007 5.26195 6.8385 5.26195 5.77507C5.26195 4.71164 6.12568 3.85007 7.19052 3.85007C8.25536 3.85007 9.11909 4.71164 9.11909 5.77507C9.11909 6.8385 8.25536 7.70007 7.19052 7.70007ZM7.19052 6.70007C7.70364 6.70007 8.11909 6.28565 8.11909 5.77507C8.11909 5.26449 7.70364 4.85007 7.19052 4.85007C6.67741 4.85007 6.26195 5.26449 6.26195 5.77507C6.26195 6.28565 6.67741 6.70007 7.19052 6.70007Z"
                 fill="#92929D"
               />
@@ -222,7 +224,7 @@ const OptionsPopup = ({ clickFun }) => {
               />
             </svg>
           </span>
-        </button>
+        </div>
       }
       position="bottom left"
       on="click"
@@ -233,7 +235,7 @@ const OptionsPopup = ({ clickFun }) => {
           return (
             <div
               key={num}
-              className="py-4 px-4 text-md hover:bg-c100 hover:text-white transition-all duration-100 cursor-pointer"
+              className="py-2 px-8 text-md hover:bg-c100 hover:text-white transition-all duration-100 cursor-pointer"
               onClick={() => {
                 clickFun(num);
                 setCurrentOpt(option);
@@ -285,13 +287,13 @@ const warningParagrapg = (
   </div>
 );
 
-const PostButton = ({ postData }) => {
+const PostButton = ({ postData, isValid }) => {
   return (
     <div style={{ width: 'calc(100% - 2rem)' }}>
       <form>
         <Button
           type="submit"
-          backgroundColor="PrimaryGrey"
+          backgroundColor={isValid ? 'blue' : 'PrimaryGrey'}
           color="White"
           isRounded
           padding="big"

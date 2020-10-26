@@ -38,10 +38,18 @@ const createVote = imageId => {
   });
 };
 
+// votes
+const deletePost = postId => {
+  return POSTS_CLIENT({
+    method: 'delete',
+    url: `${posts.resources.delete}/postId`
+  });
+};
+
 const createVoteAndRefetchPost = (imageId, postId) => {
   return createVote(imageId)
-  .then((response) => Promise.resolve(response)) //when notification feature is done
-  .then(() => getPostById(postId));
+    .then(response => Promise.resolve(response)) //when notification feature is done
+    .then(() => getPostById(postId));
 };
 
 export const PICKLY = {
@@ -49,5 +57,6 @@ export const PICKLY = {
   createPost,
   getPostById,
   createVote,
+  deletePost,
   createVoteAndRefetchPost
 };
