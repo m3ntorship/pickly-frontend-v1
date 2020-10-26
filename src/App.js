@@ -4,7 +4,7 @@ import { Navbar } from './components/NavbarSection';
 import { Home } from './pages/home.jsx';
 import { Profile } from './pages/profile.jsx';
 import { Notifications } from './pages/notifications.jsx';
-import { Friends } from './pages/friends.jsx';
+// import { Friends } from './pages/friends.jsx';
 import { UserContextProvider } from './context/userContext';
 import { LoginForm } from './components/LoginForm/index';
 import { ProtectedRoute } from './pages/protected-route';
@@ -17,7 +17,8 @@ function App() {
           <Navbar />
           <Switch>
             <ProtectedRoute exact path="/" component={Home} />
-            <ProtectedRoute path="/friends" component={Friends} />
+            {/* we don't need it righ now 26-10-2020 */}
+            {/* <ProtectedRoute path="/friends" component={Friends} /> */}
             <ProtectedRoute path="/notifications" component={Notifications} />
             <ProtectedRoute path="/profile" component={Profile} />
             <ProtectedRoute path="/post" component={Post} />
