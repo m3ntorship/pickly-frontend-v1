@@ -4,6 +4,7 @@ import { ReusableDiv } from '../DivWithCenterdChildren/index';
 import { ShareBtn } from '../ShareBtn';
 import { PICKLY } from '../../apis/clients';
 import { HeartIcon } from './HeartIcon/index';
+import cn from 'classnames';
 
 const PostSection = ({
   _id,
@@ -11,8 +12,7 @@ const PostSection = ({
   postDate,
   userImage,
   postCaption,
-  leftImage,
-  rightImage,
+  images,
   shareUrl,
   votesNumbers,
   savesNumbers,
@@ -75,53 +75,37 @@ const PostSection = ({
         {postCaption}
       </p>
 
-      <div className="grid grid-cols-2 gap-1 relative my-3">
-        <ReusableDiv smallRound={true} divHeight="100%">
-          <div>
-            <img
-              src={leftImage.url}
-              className="w-full h-full object-cover rounded-sm"
-              style={{ Height: '100%' }}
-              alt=""
-              onDoubleClick={() => {
-                handleVote(leftImage._id, voted, _id);
-              }}
-            />
-          </div>
-        </ReusableDiv>
-
-        <div
-          className="absolute z-10"
-          style={{
-            left: 'calc(50% - 15px)',
-            top: 'calc(50% - 15px)'
-          }}
-        >
-          <ReusableDiv
-            bgColor="white"
-            className="text-xs"
-            divHeight="30px"
-            divWidth="30px"
-            fullRound
-            withShadow
-          >
-            <div>OR</div>
-          </ReusableDiv>
-        </div>
-
-        <ReusableDiv divHeight="100%" smallRound={true}>
-          <div>
-            <img
-              src={rightImage.url}
-              className="w-full h-full object-cover rounded-sm"
-              style={{ Height: '100%' }}
-              alt=""
-              onDoubleClick={() => {
-                handleVote(rightImage._id, voted, _id);
-              }}
-            />
-          </div>
-        </ReusableDiv>
+      <div
+        className={cn('grid grid-cols-1 gap-1 my-4', {
+          'sm:grid-cols-2': images.length > 1
+        })}
+      >
+        {images.length === 2 && or}
+        {images &&
+          images.map(img => {
+            return (
+              <div className="relative">
+                <div
+                  key={img._id}
+                  className={cn('w-full pb-16/9', {
+                    'pb-full': images.longth === 2
+                  })}
+                >
+                  <div className="absolute w-full h-full">
+                    <img
+                      src={img.url}
+                      className="w-full h-full object-cover rounded-sm"
+                      // style={{ Height: '100%' }}
+                      alt=""
+                      onDoubleClick={() => {
+                        handleVote(img._id, voted, _id);
+                      }}
+                    />
+                  </div>
+                </div>{' '}
+              </div>
+            );
+          })}
       </div>
 
       <div className="flex items-center justify-between w-11/12 mx-auto">
@@ -147,5 +131,26 @@ const PostSection = ({
     </div>
   );
 };
+
+const or = (
+  <div
+    className="absolute z-10"
+    style={{
+      left: 'calc(50% - 15px)',
+      top: 'calc(50% - 15px)'
+    }}
+  >
+    <ReusableDiv
+      bgColor="white"
+      className="text-xs"
+      divHeight="30px"
+      divWidth="30px"
+      fullRound
+      withShadow
+    >
+      <div>OR</div>
+    </ReusableDiv>
+  </div>
+);
 
 export default PostSection;

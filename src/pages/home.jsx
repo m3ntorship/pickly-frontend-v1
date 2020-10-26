@@ -40,10 +40,10 @@ export const Home = () => {
 
   // Just for test__ loop on the data and delete all the posts from the database
   const deleteAll = () => {
-    setData(null);
-    for (let el of data) {
-      PICKLY.delete(`/posts/${el._id}`).then(res => console.log('deleted'));
-    }
+    // setData(null);
+    // for (let el of data) {
+    //   PICKLY.deletePost(el._id).then(res => console.log('deleted'));
+    // }
   };
 
   return (
@@ -74,8 +74,7 @@ export const Home = () => {
                   voted={Voted}
                   key={_id}
                   _id={_id}
-                  leftImage={images[0]}
-                  rightImage={images[1]}
+                  images={images}
                   popupActionOptions={[0]}
                   postCaption={caption}
                   postDate={createdAt}

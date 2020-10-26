@@ -40,8 +40,8 @@ const createVote = imageId => {
 
 const createVoteAndRefetchPost = (imageId, postId) => {
   return createVote(imageId)
-  .then((response) => Promise.resolve(response)) //when notification feature is done
-  .then(() => getPostById(postId));
+    .then(response => Promise.resolve(response)) //when notification feature is done
+    .then(() => getPostById(postId));
 };
 
 export const PICKLY = {

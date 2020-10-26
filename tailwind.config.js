@@ -70,6 +70,10 @@ module.exports = {
       },
       borderRadius: {
         xlg: '3.75rem'
+      },
+      spacing: {
+        '16/9': '56.25%',
+        full: '100%'
       }
     }
   },
