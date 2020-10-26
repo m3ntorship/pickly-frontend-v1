@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ImageWithSideTitle from '../ImageWithSideTitle/index';
 import { ReusableDiv } from '../DivWithCenterdChildren/index';
 import { ShareBtn } from '../ShareBtn';
@@ -14,7 +14,6 @@ const PostSection = ({
   postCaption,
   images,
   shareUrl,
-  votesNumbers,
   savesNumbers,
   isAnonymous,
   voted,
@@ -25,6 +24,15 @@ const PostSection = ({
     anonymousIcon: 'http://svgur.com/i/QH6.svg'
   };
   const { saveIcon, anonymousIcon } = postComponentFixedAssets;
+  const [totalVotes, setTotalVotes] = useState(0);
+
+  useEffect(() => {
+    for (let img of images) {
+      if (img.votes) {
+        setTotalVotes(t => t + img.votes.count);
+      }
+    }
+  }, [images]);
 
   const months = [
     'January',
@@ -76,19 +84,19 @@ const PostSection = ({
       </p>
 
       <div
-        className={cn('grid grid-cols-1 gap-1 my-4', {
-          'sm:grid-cols-2': images.length > 1
+        className={cn('relative grid grid-cols-1 gap-1 my-4', {
+          'grid-cols-2': images.length > 1
         })}
       >
-        {images.length === 2 && or}
+        {images.length > 1 && or}
         {images &&
           images.map(img => {
             return (
-              <div className="relative">
+              <div className="relative" key={img._id}>
                 <div
                   key={img._id}
                   className={cn('w-full pb-16/9', {
-                    'pb-full': images.longth === 2
+                    'pb-full': images.length === 2
                   })}
                 >
                   <div className="absolute w-full h-full">
@@ -113,7 +121,7 @@ const PostSection = ({
           <div className="flex  text-sm justify-around text-c300">
             <HeartIcon voted={voted} />
             <span className="ml-1 md:ml-3 text-xs md:text-base mt-1">
-              {votesNumbers} Votes
+              {totalVotes} Votes
             </span>
           </div>
 

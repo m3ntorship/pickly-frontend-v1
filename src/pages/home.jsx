@@ -10,7 +10,6 @@ export const Home = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-
   // This useEffect() for fetching data when the route load
   useEffect(() => {
     setLoading(true);
@@ -26,9 +25,7 @@ export const Home = () => {
   }, [token]);
 
   // This useEffect for update the feed__when data value change
-  useEffect(() => {
-    console.log('Data changed');
-  }, [data]);
+  useEffect(() => {}, [data]);
 
   // taje the post id and pass the updated data to it__ will use in postSection component
   const updatePostData = (postId, updatedData) => {
@@ -38,23 +35,9 @@ export const Home = () => {
     setData(newData);
   };
 
-  // Just for test__ loop on the data and delete all the posts from the database
-  const deleteAll = () => {
-    // setData(null);
-    // for (let el of data) {
-    //   PICKLY.deletePost(el._id).then(res => console.log('deleted'));
-    // }
-  };
-
   return (
     <div className="bg-c900 py-6">
       <div className="container">
-        <button
-          className="bg-c200 py-2 px-4 block text-white"
-          onClick={deleteAll}
-        >
-          Delete All Posts
-        </button>
         <CreatePostButton />
         {loading && <PostLoader />}
         {error && <ErrorComponent />}
@@ -82,7 +65,6 @@ export const Home = () => {
                   shareUrl="https://www.m3ntorship.com"
                   userImage="https://images.unsplash.com/photo-1602494518630-f51bfa4e8853?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
                   userName={author && author.name}
-                  votesNumbers="0"
                   isAnonymous={isAnonymous}
                   updatePostData={updatePostData}
                 />
