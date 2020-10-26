@@ -138,7 +138,7 @@ const PostSection = ({
 
 const or = (
   <div
-    className="absolute z-10 hidden sm:block"
+    className="absolute z-10"
     style={{
       left: 'calc(50% - 15px)',
       top: 'calc(50% - 15px)'
