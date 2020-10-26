@@ -62,7 +62,6 @@ export const UploadSection = () => {
       form.append('isAnonymous', postAnonymously);
       PICKLY.createPost(form)
         .then(({ data }) => {
-          console.log(data);
           history.push('/');
         })
         .catch(console.error);

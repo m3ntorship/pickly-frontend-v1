@@ -12,8 +12,6 @@ export const OneImage = ({ setFun, id, imagesNum }) => {
   const imgPopupRef = useRef();
   const inputRef = useRef();
 
-  console.log(img, cropedImage, inputRef, imgPopupRef);
-
   const setCroppedImageFun = cropped => {
     setCropedImage(cropped);
     inputRef.current = undefined;
@@ -28,8 +26,6 @@ export const OneImage = ({ setFun, id, imagesNum }) => {
         inputRef.current = undefined;
       });
       reader.readAsDataURL(e.target.files[0]);
-    } else {
-      console.log('here');
     }
   };
 
