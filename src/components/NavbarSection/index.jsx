@@ -1,23 +1,24 @@
 import React from 'react';
 import { Heading, HEADING_OPTIONS } from '../Heading';
 import { Icon } from '../Navbar-icons';
-import {Link} from "react-router-dom"
+import postIcon from './post-icon.svg';
+import { NavLink } from 'react-router-dom';
 const Navigation = () => {
   // Icons Links
   const navData = [
     {
       id: 1,
+      iconUrl: postIcon,
+      path: '/post'
+    },
+    {
+      id: 2,
       iconUrl:
         'https://res.cloudinary.com/dqmuowojl/image/upload/v1601849139/icons/vzrzfrgclizafzzzjwml.svg',
       path: '/',
       exact: true
     },
-    {
-      id: 2,
-      iconUrl:
-        'https://res.cloudinary.com/dqmuowojl/image/upload/v1601833247/icons/dqx6nlqzgq2htwakja7b.svg',
-      path: '/friends'
-    },
+
     {
       id: 3,
       iconUrl:
@@ -45,7 +46,7 @@ export const Navbar = () => {
       <div className="nav__container">
         <div className=" items-center grid grid-cols-1 md:grid-cols-3 justify-items-center md:justify-items-end gap-y-4">
           <div className="md:justify-self-start mt-4 sm:mt-0 justify-self-center">
-            <Link to="/">
+            <NavLink exact to="/">
               <Heading
                 as="h1"
                 children="Pickly"
@@ -55,7 +56,7 @@ export const Navbar = () => {
                 textAlign={HEADING_OPTIONS.TEXT_ALIGN.LEFT}
                 textColor={HEADING_OPTIONS.FONT_COLOR.DAWNBLACK}
               />
-            </Link>
+            </NavLink>
           </div>
 
           <Navigation />
