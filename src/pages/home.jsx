@@ -16,6 +16,7 @@ export const Home = () => {
     PICKLY.getAllPosts()
       .then(({ data }) => {
         setData(data.data);
+        console.log(data.data);
         setLoading(false);
       })
       .catch(err => {
@@ -62,7 +63,7 @@ export const Home = () => {
                   postCaption={caption}
                   postDate={createdAt}
                   savesNumbers="0"
-                  shareUrl="https://www.m3ntorship.com"
+                  shareUrl={`${window.location.href}posts/${_id}`}
                   userImage="https://images.unsplash.com/photo-1602494518630-f51bfa4e8853?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
                   userName={author && author.name}
                   isAnonymous={isAnonymous}

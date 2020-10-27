@@ -17,7 +17,8 @@ const PostSection = ({
   savesNumbers,
   isAnonymous,
   voted,
-  updatePostData
+  updatePostData,
+  updateSinglePostData
 }) => {
   const postComponentFixedAssets = {
     saveIcon: 'http://www.svgshare.com/i/QW7.svg',
@@ -62,7 +63,12 @@ const PostSection = ({
       console.log("It's voooooted before");
     } else {
       PICKLY.createVoteAndRefetchPost(imageId, postId).then(res => {
-        updatePostData(postId, res.data.data);
+        if (updatePostData) {
+          updatePostData(postId, res.data.data);
+        }
+        if (updateSinglePostData) {
+          updateSinglePostData(res.data.data);
+        }
       });
     }
   };
