@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from 'react';
 import { UserContext } from '../context/userContext';
 import { useHistory } from 'react-router-dom';
-
-export const Notifications = () => {
+import { NotificationSection } from '../components/Notifications/index';
+export const Notifications = ({ postDate }) => {
   const { user } = useContext(UserContext);
   const history = useHistory();
 
@@ -11,13 +11,10 @@ export const Notifications = () => {
       history.push('/login');
     }
   });
+
   return (
-    <div className="h-screen bg-c800">
-      <div className="container flex  justify-center ">
-        <h1 className="text-xxlg font-regular tracking-widest pt-12">
-          Notifications
-        </h1>
-      </div>{' '}
+    <div className=" h-screen ">
+      <NotificationSection />
     </div>
   );
 };
