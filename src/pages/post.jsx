@@ -2,7 +2,8 @@ import React, { useEffect, useContext } from 'react';
 import { UserContext } from '../context/userContext';
 import { useHistory } from 'react-router-dom';
 import { UploadSection } from '../components/UploadSection';
-export const Post = () => {
+
+export const Post = ({ postDate }) => {
   const { user } = useContext(UserContext);
   const history = useHistory();
 
