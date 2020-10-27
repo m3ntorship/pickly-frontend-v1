@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { LoginFormSection } from './LoginFormSection';
+import { LoginFormSection } from './';
 
 export default {
   title: 'pages/LoginFormSection',
