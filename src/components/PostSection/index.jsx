@@ -81,7 +81,7 @@ const PostSection = ({
           subTitle={`${dayIndex} ${monthName} at ${formatedHours}:${minutes} ${
             hours > 12 ? 'PM' : 'AM'
           }`}
-          imgURL={userImage && userImage}
+          imgURL={userImage && !isAnonymous && userImage}
           iconURL={isAnonymous && anonymousIcon}
         />
       </div>
@@ -109,7 +109,6 @@ const PostSection = ({
                     <img
                       src={img.url}
                       className="w-full h-full object-cover rounded-sm"
-                      // style={{ Height: '100%' }}
                       alt=""
                       onDoubleClick={() => {
                         handleVote(img._id, voted, _id);

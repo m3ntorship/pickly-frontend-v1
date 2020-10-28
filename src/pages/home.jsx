@@ -64,8 +64,13 @@ export const Home = () => {
                   postDate={createdAt}
                   savesNumbers="0"
                   shareUrl={`${window.location.href}posts/${_id}`}
-                  userImage="https://images.unsplash.com/photo-1602494518630-f51bfa4e8853?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
                   userName={author && author.name}
+                  // this will handle with a simple code when after clearing the users from backend
+                  userImage={
+                    author && author.userImage
+                      ? author.userImage
+                      : 'https://briansmith.com/wp-content/uploads/2013/01/celebrity-portrait-photography.jpg'
+                  }
                   isAnonymous={isAnonymous}
                   updatePostData={updatePostData}
                 />
