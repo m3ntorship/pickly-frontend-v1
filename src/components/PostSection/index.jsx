@@ -5,7 +5,6 @@ import { ShareBtn } from '../ShareBtn';
 import { PICKLY } from '../../apis/clients';
 import { HeartIcon } from './HeartIcon/index';
 import cn from 'classnames';
-import Popup from 'reactjs-popup';
 import OptionsBtn from '../OptionsBtn';
 
 const PostSection = ({
