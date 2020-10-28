@@ -6,30 +6,45 @@ export default {
   component: PostSection
 };
 
-const Template = args => <PostSection {...args} />;
-
-export const PostSectionCase = Template.bind({});
-PostSectionCase.args = {
-  userName: 'Someone Profile',
-  postDate: '2020-10-18T13:33:27.102Z',
-  userImage: '',
-  postCaption:
-    'One of the perks of working in an international company is sharing knowledge with your colleagues.',
-  leftImage: {
-    url:
-      'https://images.unsplash.com/photo-1602575910330-f9807b05f69d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80'
-  },
-  rightImage: {
-    url:
-      'https://images.unsplash.com/photo-1602575910330-f9807b05f69d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80'
-  },
-  popupActionOptions: [0],
-  shareUrl: 'https://www.m3ntorship.com',
-  votesNumbers: '120k',
-  savesNumbers: '20',
-  isAnonymous: true,
-  date: new Date(),
-  leftImageVotes=60,
-  rightImageVotes=40,
-  votedImage = 'right'
+export const Test = () => {
+  return (
+    <PostSection
+      _id="52563"
+      userName="Test"
+      postDate="2020-10-18T13:33:27.102Z"
+      userImage="https://images.unsplash.com/photo-1602524651876-b51552dc9929?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=768&q=80"
+      postCaption="Tset"
+      images="lol"
+      shareUrl="lol"
+      savesNumbers={20}
+      isAnonymous={true}
+      voted={true}
+      options={['Option 1', 'Option 2', 'Option 3']}
+      positions="bottom left"
+      appearOn="click"
+      updateSinglePostData={() => {
+        console.log('Test');
+      }}
+      images={[
+        {
+          name: 'nile',
+          url:
+            'https://res.cloudinary.com/elhaw/image/upload/v1603806693/temp/hl2sb2qtdhqh0qjge2yz.png',
+          _id: '5f9825e61e930cfdc8738683'
+        },
+        {
+          name: 'nile',
+          url:
+            'https://res.cloudinary.com/elhaw/image/upload/v1603806693/temp/cymzdl0fmja2i31kkoer.png',
+          votes: {
+            count: 1,
+            _id: '5f9826191e930cfdc8738687',
+            image: '5f9825e61e930cfdc8738684',
+            updatedAt: '2020-10-27T13:52:25.728Z'
+          },
+          _id: '5f9825e61e930cfdc8738684'
+        }
+      ]}
+    />
+  );
 };
