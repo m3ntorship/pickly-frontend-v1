@@ -24,7 +24,7 @@ const PostSection = ({
     saveIcon: 'http://www.svgshare.com/i/QW7.svg',
     anonymousIcon: 'http://svgur.com/i/QH6.svg'
   };
-  const { saveIcon, anonymousIcon } = postComponentFixedAssets;
+  const { anonymousIcon } = postComponentFixedAssets;
   const [totalVotes, setTotalVotes] = useState(0);
 
   useEffect(() => {
