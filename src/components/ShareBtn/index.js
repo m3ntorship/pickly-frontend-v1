@@ -21,8 +21,7 @@ export const ShareBtn = ({ url }) => {
     borderRaduis: '5px',
     border: '1px solid #eee',
     boxShadow: `0 2.8px 2.2px rgba(0, 0, 0, 0.034)`,
-    width: 'fit-content',
-    right: '0'
+    width: 'fit-content'
   };
 
   return (
