@@ -12,13 +12,15 @@ const Template = args => <Icon {...args} />;
 export const DashboardIcon = Template.bind({});
 DashboardIcon.args = {
   iconURL:
-    'https://res.cloudinary.com/dqmuowojl/image/upload/v1601849139/icons/vzrzfrgclizafzzzjwml.svg'
+    'https://res.cloudinary.com/dqmuowojl/image/upload/v1601849139/icons/vzrzfrgclizafzzzjwml.svg',
+  to: 'Test'
 };
 
 export const FriendsIcon = Template.bind({});
 FriendsIcon.args = {
   iconURL:
-    'https://res.cloudinary.com/dqmuowojl/image/upload/v1601833247/icons/dqx6nlqzgq2htwakja7b.svg'
+    'https://res.cloudinary.com/dqmuowojl/image/upload/v1601833247/icons/dqx6nlqzgq2htwakja7b.svg',
+  to: 'Test'
 };
 
 /**
