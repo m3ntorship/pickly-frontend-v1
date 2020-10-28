@@ -5,6 +5,7 @@ import { ShareBtn } from '../ShareBtn';
 import { PICKLY } from '../../apis/clients';
 import { HeartIcon } from './HeartIcon/index';
 import cn from 'classnames';
+import Popup from 'reactjs-popup';
 
 const PostSection = ({
   _id,
@@ -17,7 +18,11 @@ const PostSection = ({
   savesNumbers,
   isAnonymous,
   voted,
-  updatePostData
+  updatePostData,
+  updateSinglePostData,
+  options,
+  positions,
+  appearOn
 }) => {
   const postComponentFixedAssets = {
     saveIcon: 'http://www.svgshare.com/i/QW7.svg',
@@ -62,14 +67,36 @@ const PostSection = ({
       console.log("It's voooooted before");
     } else {
       PICKLY.createVoteAndRefetchPost(imageId, postId).then(res => {
-        updatePostData(postId, res.data.data);
+        if (updatePostData) {
+          updatePostData(postId, res.data.data);
+        }
+        if (updateSinglePostData) {
+          updateSinglePostData(res.data.data);
+        }
       });
     }
   };
 
+  const dotsSvg = (
+    <svg
+      width="18"
+      height="4"
+      viewBox="0 0 18 4"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M2 0C3.10457 0 4 0.895431 4 2C4 3.10457 3.10457 4 2 4C0.895431 4 0 3.10457 0 2C0 0.895431 0.895431 0 2 0ZM9 0C10.1046 0 11 0.895431 11 2C11 3.10457 10.1046 4 9 4C7.89543 4 7 3.10457 7 2C7 0.895431 7.89543 0 9 0ZM18 2C18 0.895431 17.1046 0 16 0C14.8954 0 14 0.895431 14 2C14 3.10457 14.8954 4 16 4C17.1046 4 18 3.10457 18 2Z"
+        fill="#92929D"
+      />
+    </svg>
+  );
+
   return (
     <div className="bg-white py-4 rounded-lg my-6">
-      <div className="w-11/12 mx-auto">
+      <div className="w-11/12 mx-auto flex justify-between items-center">
         <ImageWithSideTitle
           title={isAnonymous ? 'Anonymous' : userName}
           subTitle={`${dayIndex} ${monthName} at ${formatedHours}:${minutes} ${
@@ -78,9 +105,34 @@ const PostSection = ({
           imgURL={userImage && userImage}
           iconURL={isAnonymous && anonymousIcon}
         />
+        <Popup
+          trigger={
+            <button
+              style={{ minWidth: '34px', minHeight: '34px' }}
+              className="rounded-full shadow-2xl flex justify-center items-center"
+            >
+              {dotsSvg}
+            </button>
+          }
+          on={appearOn}
+          position={positions}
+          keepTooltipInside
+        >
+          {options.map((option, index) => {
+            return (
+              <div
+                key={index}
+                className="py-2 px-10 text-md hover:bg-c100 hover:text-white transition-all duration-100 cursor-pointer"
+                onClick={() => console.log('Clicked')}
+              >
+                {option}
+              </div>
+            );
+          })}
+        </Popup>
       </div>
       <p className=" w-11/12 mx-auto mt-5 text-sm font-regular">
-        {postCaption}
+        {postCaption && postCaption}
       </p>
 
       <div
@@ -88,7 +140,7 @@ const PostSection = ({
           'grid-cols-2': images.length > 1
         })}
       >
-        {images.length > 1 && or}
+        {images && images.length > 1 && or}
         {images &&
           images.map(img => {
             return (
@@ -121,19 +173,19 @@ const PostSection = ({
           <div className="flex  text-sm justify-around text-c300">
             <HeartIcon voted={voted} />
             <span className="ml-1 md:ml-3 text-xs md:text-base mt-1">
-              {totalVotes} Votes
+              {totalVotes && totalVotes} Votes
             </span>
           </div>
 
           <div className="flex text-sm justify-around text-c300 ml-4 lg:ml-6 ">
             <img src={saveIcon} alt="" className="w-3 md:w-4" />
             <span className="ml-1 md:ml-3 text-xs md:text-base mt-1">
-              {savesNumbers} Saved
+              {savesNumbers && savesNumbers} Saved
             </span>
           </div>
         </div>
         <div>
-          <ShareBtn url={shareUrl} />
+          <ShareBtn url={shareUrl && shareUrl} />
         </div>
       </div>
     </div>
