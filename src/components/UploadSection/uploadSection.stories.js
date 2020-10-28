@@ -1,5 +1,5 @@
 import React from 'react';
-import { UploadSection } from '.';
+import { UploadSection } from './';
 
 export default {
   title: 'sections/upload section',
@@ -7,5 +7,7 @@ export default {
 };
 
 export const CropImageSection = () => {
-  return <UploadSection />;
+  return (
+    <UploadSection userImage="https://prestigeportraits.com/wp-content/uploads/2015/06/PortraitGallery_2Block-350x200-1-273x200.jpg" />
+  );
 };

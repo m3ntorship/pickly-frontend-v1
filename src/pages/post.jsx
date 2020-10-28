@@ -16,7 +16,7 @@ export const Post = ({ postDate }) => {
   return (
     <div className="h-full container ">
       <div className="grid grid-cols-1 ">
-        <UploadSection />
+        <UploadSection userImage={user.photoURL} />
       </div>
     </div>
   );

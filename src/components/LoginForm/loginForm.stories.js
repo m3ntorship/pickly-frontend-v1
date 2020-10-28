@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { LoginForm } from './';
+import { LoginFormSection } from './';
 
 export default {
-  title: 'pages/LoginForm',
-  pages: LoginForm
+  title: 'pages/LoginFormSection',
+  pages: LoginFormSection
 };
 
-const Template = args => <LoginForm {...args} />;
+const Template = args => <LoginFormSection {...args} />;
 
 export const login = Template.bind({});
 login.args = {};

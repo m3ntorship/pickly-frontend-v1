@@ -5,6 +5,7 @@ import { ShareBtn } from '../ShareBtn';
 import { PICKLY } from '../../apis/clients';
 import { HeartIcon } from './HeartIcon/index';
 import cn from 'classnames';
+import OptionsBtn from '../OptionsBtn';
 
 const PostSection = ({
   _id,
@@ -73,9 +74,18 @@ const PostSection = ({
     }
   };
 
+  const options = [
+    {
+      text: 'Test Text',
+      fun: () => {
+        console.log('Test');
+      }
+    }
+  ];
+
   return (
     <div className="bg-white py-4 rounded-lg my-6">
-      <div className="w-11/12 mx-auto">
+      <div className="w-11/12 mx-auto flex justify-between items-center">
         <ImageWithSideTitle
           title={isAnonymous ? 'Anonymous' : userName}
           subTitle={`${dayIndex} ${monthName} at ${formatedHours}:${minutes} ${
@@ -84,9 +94,10 @@ const PostSection = ({
           imgURL={userImage && !isAnonymous && userImage}
           iconURL={isAnonymous && anonymousIcon}
         />
+        <OptionsBtn options={options} position="bottom center" />
       </div>
       <p className=" w-11/12 mx-auto mt-5 text-sm font-regular">
-        {postCaption}
+        {postCaption && postCaption}
       </p>
 
       <div
@@ -94,7 +105,7 @@ const PostSection = ({
           'grid-cols-2': images.length > 1
         })}
       >
-        {images.length > 1 && or}
+        {images && images.length > 1 && or}
         {images &&
           images.map(img => {
             return (
@@ -126,19 +137,19 @@ const PostSection = ({
           <div className="flex  text-sm justify-around text-c300">
             <HeartIcon voted={voted} />
             <span className="ml-1 md:ml-3 text-xs md:text-base mt-1">
-              {totalVotes} Votes
+              {totalVotes && totalVotes} Votes
             </span>
           </div>
 
           <div className="flex text-sm justify-around text-c300 ml-4 lg:ml-6 ">
             <img src={saveIcon} alt="" className="w-3 md:w-4" />
             <span className="ml-1 md:ml-3 text-xs md:text-base mt-1">
-              {savesNumbers} Saved
+              {savesNumbers && savesNumbers} Saved
             </span>
           </div>
         </div>
         <div>
-          <ShareBtn url={shareUrl} />
+          <ShareBtn url={shareUrl && shareUrl} />
         </div>
       </div>
     </div>

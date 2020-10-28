@@ -1,4 +1,4 @@
-import React, { useRef, useState, useContext } from 'react';
+import React, { useRef, useState } from 'react';
 import { ReusableDiv } from '../DivWithCenterdChildren';
 import { InputField } from '../InputField';
 import { Heading } from '../Heading';
@@ -9,9 +9,8 @@ import { useHistory } from 'react-router-dom';
 import { OneImage } from './OneImage';
 import Popup from 'reactjs-popup';
 import cn from 'classnames';
-import { UserContext } from '../../context/userContext';
 
-export const UploadSection = () => {
+export const UploadSection = ({ userImage }) => {
   const [imagesToUpload, setImagesToUpload] = useState([]);
   const [postAnonymously, setPostAnonymously] = useState(false);
   const [caption, setCaption] = useState('');
@@ -20,7 +19,6 @@ export const UploadSection = () => {
   const [imageValidationErr, setImageValidationErr] = useState();
   const [captionValidationErr, setCaptionValidationErr] = useState();
   const [isValid, setIsValid] = useState(false);
-  const { user } = useContext(UserContext);
 
   const setImagesArrFun = num => {
     const imagesArr = new Array(num).fill(num);
@@ -80,7 +78,7 @@ export const UploadSection = () => {
         <InputField
           caption={caption}
           onChange={handleInputChange}
-          imageURL={user.photoURL}
+          imageURL={userImage}
         />
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
