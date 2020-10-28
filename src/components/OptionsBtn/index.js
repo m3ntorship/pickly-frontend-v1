@@ -19,6 +19,10 @@ const dotsSvg = (
   </svg>
 );
 
+const contectStyle = {
+  width: 'fit-content'
+};
+
 export default ({ options, position = 'left bottom', appearOn = 'click' }) => (
   <Popup
     trigger={
@@ -32,11 +36,12 @@ export default ({ options, position = 'left bottom', appearOn = 'click' }) => (
     on={appearOn}
     position={position}
     keepTooltipInside
+    contentStyle={contectStyle}
   >
     {options.map((option, index) => (
       <div
         key={index}
-        className="md:py-2 md:px-10 text-md md:text-md hover:bg-c100 hover:text-white transition-all duration-100 cursor-pointer"
+        className="py-1 px-6 md:px-10 text-md md:text-md hover:bg-c800 transition-all duration-100 cursor-pointer"
         onClick={option.fun}
       >
         {option.text}

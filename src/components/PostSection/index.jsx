@@ -15,7 +15,6 @@ const PostSection = ({
   postCaption,
   images,
   shareUrl,
-  savesNumbers,
   isAnonymous,
   voted,
   updatePostData,
@@ -96,8 +95,8 @@ const PostSection = ({
   ];
 
   return (
-    <div className="bg-white py-4 rounded-lg my-6">
-      <div className="w-11/12 mx-auto flex justify-between items-center">
+    <div className="bg-white py-4 rounded-lg my-6 p-1">
+      <div className="px-4 mx-auto flex justify-between items-center">
         <ImageWithSideTitle
           title={isAnonymous ? 'Anonymous' : userName}
           subTitle={`${dayIndex} ${monthName} at ${formatedHours}:${minutes} ${
@@ -106,9 +105,9 @@ const PostSection = ({
           imgURL={userImage && !isAnonymous && userImage}
           iconURL={isAnonymous && anonymousIcon}
         />
-        <OptionsBtn options={options} position="bottom center" />
+        <OptionsBtn options={options} position="left top" />
       </div>
-      <p className=" w-11/12 mx-auto mt-5 text-sm font-regular">
+      <p className="px-4 mx-auto mt-5 text-sm font-regular">
         {postCaption && postCaption}
       </p>
 
@@ -144,21 +143,21 @@ const PostSection = ({
           })}
       </div>
 
-      <div className="flex items-center justify-between w-11/12 mx-auto">
+      <div className="flex items-center justify-between px-4 mx-auto">
         <div className="flex items-center">
           <div className="flex  text-sm justify-around text-c300">
             <HeartIcon voted={voted} />
-            <span className="ml-1 md:ml-3 text-xs md:text-base mt-1">
+            <span className="ml-1 md:ml-2 text-xs md:text-base">
               {totalVotes && totalVotes} Votes
             </span>
           </div>
-
+          {/* 
           <div className="flex text-sm justify-around text-c300 ml-4 lg:ml-6 ">
             <img src={saveIcon} alt="" className="w-3 md:w-4" />
             <span className="ml-1 md:ml-3 text-xs md:text-base mt-1">
               {savesNumbers && savesNumbers} Saved
             </span>
-          </div>
+          </div> */}
         </div>
         <div>
           <ShareBtn url={shareUrl && shareUrl} />
