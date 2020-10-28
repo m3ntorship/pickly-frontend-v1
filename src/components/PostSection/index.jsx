@@ -76,9 +76,21 @@ const PostSection = ({
 
   const options = [
     {
-      text: 'Test Text',
+      text: 'Text one',
       fun: () => {
-        console.log('Test');
+        console.log('Test One');
+      }
+    },
+    {
+      text: 'Text Two',
+      fun: () => {
+        console.log('Test Two');
+      }
+    },
+    {
+      text: 'Text Three',
+      fun: () => {
+        console.log('Test Three');
       }
     }
   ];
@@ -126,7 +138,7 @@ const PostSection = ({
                       }}
                     />
                   </div>
-                </div>{' '}
+                </div>
               </div>
             );
           })}

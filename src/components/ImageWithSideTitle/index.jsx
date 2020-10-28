@@ -9,6 +9,7 @@ const ImageWithSideTitle = ({ imgURL, iconURL, title, subTitle }) => {
             className={` ${imgURL ? 'rounded-full h-full w-full' : 'h-4 w-4'}`}
             src={imgURL || iconURL}
             alt=""
+            style={imgURL ? { objectFit: 'cover' } : null}
           />
         </div>
       </div>
