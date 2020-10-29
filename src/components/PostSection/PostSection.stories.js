@@ -29,7 +29,7 @@ PostSectionCase.args = {
   savesNumbers: '20',
   isAnonymous: true,
   date: new Date(),
-  leftImageVotes=60,
-  rightImageVotes=40,
-  votedImage = 'right'
+  leftImageVotes:60,
+  rightImageVotes:40,
+  votedImage:'right'
 };

@@ -79,6 +79,7 @@ module.exports = {
   },
   variants: {
     opacity: ['responsive', 'hover', 'focus', 'group-hover'], // adding opacity to group-hover
+    display: ['responsive', 'hover', 'focus', 'group-hover'], // adding opacity to group-hover
     backgroundColor: ['responsive', 'hover', 'focus', 'group-hover'], // adding bg to group-hover
     textColor: ['responsive', 'hover', 'focus', 'active', 'group-hover'] // adding textColor to group-hover
   },

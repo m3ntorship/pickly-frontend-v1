@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState} from 'react';
 import ImageWithSideTitle from '../ImageWithSideTitle/index';
 import { ReusableDiv } from '../DivWithCenterdChildren/index';
 import { ShareBtn } from '../ShareBtn';
@@ -17,6 +17,8 @@ const PostSection = ({
   savesNumbers,
   isAnonymous,
   voted,
+  color,
+  classs,
   updatePostData
 }) => {
   const postComponentFixedAssets = {
@@ -25,7 +27,7 @@ const PostSection = ({
   };
   const { saveIcon, anonymousIcon } = postComponentFixedAssets;
   const [totalVotes, setTotalVotes] = useState(0);
-
+  const [votedImage,setVotedImage]=useState(null)
   useEffect(() => {
     for (let img of images) {
       if (img.votes) {
@@ -67,6 +69,18 @@ const PostSection = ({
     }
   };
 
+
+
+  const handleVotePost=(id)=>{
+    if(!votedImage){
+    setVotedImage(id)}
+  }
+
+
+
+
+
+
   return (
     <div className="bg-white py-4 rounded-lg my-6">
       <div className="w-11/12 mx-auto">
@@ -99,6 +113,7 @@ const PostSection = ({
                     'pb-full': images.length === 2
                   })}
                 >
+                  
                   <div className="absolute w-full h-full">
                     <img
                       src={img.url}
@@ -110,6 +125,11 @@ const PostSection = ({
                       }}
                     />
                   </div>
+                  <div onClick={(id)=>handleVotePost(img._id)} className="group absolute w-full h-full shadow-outline	 md:flex md:justify-center md:items-center hover:bg-red-900 md:block sm:hidden">
+                    <div className={`hidden bg-white rounded-full h-16 w-16 justify-center items-center ease-in-out group-hover:flex `}>
+                      <HeartIcon color="red" voted={img._id===votedImage?true:false}/>
+                    </div>
+                  </div>
                 </div>{' '}
               </div>
             );
@@ -119,7 +139,7 @@ const PostSection = ({
       <div className="flex items-center justify-between w-11/12 mx-auto">
         <div className="flex items-center">
           <div className="flex  text-sm justify-around text-c300">
-            <HeartIcon voted={voted} />
+            <HeartIcon voted={voted} color="gray" />
             <span className="ml-1 md:ml-3 text-xs md:text-base mt-1">
               {totalVotes} Votes
             </span>
