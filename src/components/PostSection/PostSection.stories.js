@@ -3,7 +3,10 @@ import PostSection from './index';
 
 export default {
   title: 'Components/PostSection',
-  component: PostSection
+  component: PostSection,
+  argTypes: {
+    voted: { control: 'boolean' },
+  },
 };
 
 export const Test = () => {

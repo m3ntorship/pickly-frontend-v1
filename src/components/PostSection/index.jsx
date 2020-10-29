@@ -130,6 +130,7 @@ const PostSection = ({
         {images && images.length > 1 && or}
         {images &&
           images.map(img => {
+            console.log(img)
             return (
               <div className="relative" key={img._id}>
                 <div
@@ -144,14 +145,13 @@ const PostSection = ({
                       src={img.url}
                       className="w-full h-full object-cover rounded-sm"
                       alt=""
-                      onDoubleClick={() => {
-                        handleVote(img._id, voted, _id);
-                      }}
                     />
                   </div>
-                  <div onClick={(id)=>handleVotePost(img._id)} className="group absolute w-full h-full shadow-outline	 md:flex md:justify-center md:items-center hover:bg-red-900 md:block sm:hidden">
-                    <div className={`hidden bg-white rounded-full h-16 w-16 justify-center items-center ease-in-out group-hover:flex `}>
-                      <HeartIcon color="red" voted={img._id===votedImage?true:false}/>
+                  <div onClick={(id)=>handleVotePost(img._id)} onDoubleClick={() => {
+                        handleVote(img._id, voted, _id);
+                      }} className="group absolute w-full h-full 	 md:flex md:justify-center md:items-center hover:bg-red-900 md:block sm:hidden">
+                    <div className={`hidden bg-white rounded-full h-16 w-16 flex justify-center items-center group-hover:flex`}>
+                      <HeartIcon color={img._id===votedImage?"red":"gray"} voted={img._id===votedImage?true:false}/>
                     </div>
                   </div>
                 </div>

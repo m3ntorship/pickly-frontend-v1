@@ -5,7 +5,7 @@ export default {
   title: 'Components/HeartBtn',
   component: HeartIcon,
   argTypes: {
-    backgroundColor: { control: 'color' },
+    color: { control: 'color' },
   },
 };
 
