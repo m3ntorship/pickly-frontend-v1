@@ -17,7 +17,6 @@ export const OneImage = ({ setFun, id, imagesNum }) => {
   };
 
   const onSelectFile = e => {
-    e.persist();
     if (e.target.files && e.target.files.length > 0) {
       const reader = new FileReader();
       reader.addEventListener('load', () => {
