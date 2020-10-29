@@ -14,7 +14,6 @@ export const OneImage = ({ setFun, id, imagesNum }) => {
 
   const setCroppedImageFun = cropped => {
     setCropedImage(cropped);
-    inputRef.current = undefined;
   };
 
   const onSelectFile = e => {
@@ -23,7 +22,7 @@ export const OneImage = ({ setFun, id, imagesNum }) => {
       reader.addEventListener('load', () => {
         setImg(reader.result);
         openimgPopup();
-        inputRef.current = undefined;
+        e.target.value = null;
       });
       reader.readAsDataURL(e.target.files[0]);
     }
@@ -130,13 +129,12 @@ const CropPopup = ({
     try {
       const cropedImage = await getCroppedImg(img, croppedAreaPixels);
       setCropedImage(cropedImage);
-      inputRef.current = undefined;
       setFun(new File([cropedImage], 'nile', { type: 'image/jpeg' }));
       closeimgPopup();
     } catch (e) {
       console.error(e);
     }
-  }, [croppedAreaPixels, inputRef, closeimgPopup, img, setCropedImage, setFun]);
+  }, [croppedAreaPixels, closeimgPopup, img, setCropedImage, setFun]);
 
   // popup styles
   const contentStyle = { width: '60%', height: '60%', backgroundColor: '#fff' };
