@@ -4,6 +4,7 @@ import { ReusableDiv } from '../DivWithCenterdChildren/index';
 import { ShareBtn } from '../ShareBtn';
 import { PICKLY } from '../../apis/clients';
 import { HeartIcon } from './HeartIcon/index';
+import {VotedImage} from "./VotedImage/index"
 import cn from 'classnames';
 import OptionsBtn from '../OptionsBtn';
 
@@ -74,10 +75,11 @@ const PostSection = ({
   };
 
 
-
+  console.log(images)
   const handleVotePost=(id)=>{
     if(!votedImage){
-    setVotedImage(id)}
+    setVotedImage(id)
+  }
   }
 
 
@@ -130,7 +132,6 @@ const PostSection = ({
         {images && images.length > 1 && or}
         {images &&
           images.map(img => {
-            console.log(img)
             return (
               <div className="relative" key={img._id}>
                 <div
@@ -150,7 +151,7 @@ const PostSection = ({
                   <div onClick={(id)=>handleVotePost(img._id)} onDoubleClick={() => {
                         handleVote(img._id, voted, _id);
                       }} className="group absolute w-full h-full 	 md:flex md:justify-center md:items-center hover:bg-red-900 md:block sm:hidden">
-                    <div className={`hidden bg-white rounded-full h-16 w-16 flex justify-center items-center group-hover:flex`}>
+                    <div className={img._id===votedImage?`bg-white rounded-full h-16 w-16 flex justify-center items-center flex`:`hidden bg-white rounded-full h-16 w-16 flex justify-center items-center group-hover:flex`}>
                       <HeartIcon color={img._id===votedImage?"red":"gray"} voted={img._id===votedImage?true:false}/>
                     </div>
                   </div>
