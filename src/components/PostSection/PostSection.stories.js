@@ -5,8 +5,8 @@ export default {
   title: 'Components/PostSection',
   component: PostSection,
   argTypes: {
-    voted: { control: 'boolean' },
-  },
+    voted: { control: 'boolean' }
+  }
 };
 
 export const Test = () => {
@@ -35,6 +35,10 @@ export const Test = () => {
               name: 'nile',
               url:
                 'https://res.cloudinary.com/elhaw/image/upload/v1603806693/temp/hl2sb2qtdhqh0qjge2yz.png',
+              votes: {
+                count: 5
+              },
+              votedByUser: true,
               _id: '5f9825e61e930cfdc8738683'
             },
             {
@@ -42,10 +46,7 @@ export const Test = () => {
               url:
                 'https://res.cloudinary.com/elhaw/image/upload/v1603806693/temp/cymzdl0fmja2i31kkoer.png',
               votes: {
-                count: 1,
-                _id: '5f9826191e930cfdc8738687',
-                image: '5f9825e61e930cfdc8738684',
-                updatedAt: '2020-10-27T13:52:25.728Z'
+                count: 13
               },
               _id: '5f9825e61e930cfdc8738684'
             }

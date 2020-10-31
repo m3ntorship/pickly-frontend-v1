@@ -1,10 +1,9 @@
-import React, { useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import ImageWithSideTitle from '../ImageWithSideTitle/index';
 import { ReusableDiv } from '../DivWithCenterdChildren/index';
 import { ShareBtn } from '../ShareBtn';
 import { PICKLY } from '../../apis/clients';
 import { HeartIcon } from './HeartIcon/index';
-import {VotedImage} from "./VotedImage/index"
 import cn from 'classnames';
 import OptionsBtn from '../OptionsBtn';
 
@@ -27,7 +26,7 @@ const PostSection = ({
   };
   const { anonymousIcon } = postComponentFixedAssets;
   const [totalVotes, setTotalVotes] = useState(0);
-  const [votedImage,setVotedImage]=useState(null)
+
   useEffect(() => {
     for (let img of images) {
       if (img.votes) {
@@ -73,18 +72,6 @@ const PostSection = ({
       });
     }
   };
-
-
-  console.log(images)
-  const handleVotePost=(id)=>{
-    if(!votedImage){
-    setVotedImage(id)
-  }
-  }
-
-
-
-
 
   const options = [
     {
@@ -132,6 +119,7 @@ const PostSection = ({
         {images && images.length > 1 && or}
         {images &&
           images.map(img => {
+            console.log(img);
             return (
               <div className="relative" key={img._id}>
                 <div
@@ -140,19 +128,39 @@ const PostSection = ({
                     'pb-full': images.length === 2
                   })}
                 >
-                  
-                  <div className="absolute w-full h-full">
+                  <div className="group absolute w-full h-full">
                     <img
                       src={img.url}
                       className="w-full h-full object-cover rounded-sm"
                       alt=""
-                    />
-                  </div>
-                  <div onClick={(id)=>handleVotePost(img._id)} onDoubleClick={() => {
+                      onDoubleClick={() => {
                         handleVote(img._id, voted, _id);
-                      }} className="group absolute w-full h-full 	 md:flex md:justify-center md:items-center hover:bg-red-900 md:block sm:hidden">
-                    <div className={img._id===votedImage?`bg-white rounded-full h-16 w-16 flex justify-center items-center flex`:`hidden bg-white rounded-full h-16 w-16 flex justify-center items-center group-hover:flex`}>
-                      <HeartIcon color={img._id===votedImage?"red":"gray"} voted={img._id===votedImage?true:false}/>
+                      }}
+                    />
+                    <div
+                      className={cn(
+                        'absolute w-24 h-24 bg-c200  cursor-pointer rounded-full grid grid-cols-1 justify-items-center',
+                        { 'hidden md:group-hover:grid': !voted },
+                        { 'bg-c500': !img.votedByUser }
+                      )}
+                      style={{
+                        left: 'calc(50% - 48px)',
+                        top: 'calc(50% - 48px)'
+                      }}
+                      onClick={() => {
+                        handleVote(img._id, voted, _id);
+                      }}
+                    >
+                      <HeartIcon voted={voted} />
+                      {voted && (
+                        <span className="text-white font-bold text-xs">
+                          {img.votes
+                            ? totalVotes &&
+                              Math.round((img.votes.count / totalVotes) * 100)
+                            : '0'}
+                          %
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -164,20 +172,11 @@ const PostSection = ({
       <div className="flex items-center justify-between px-4 mx-auto">
         <div className="flex items-center">
           <div className="flex  text-sm justify-around text-c300">
-            <HeartIcon voted={voted} color="gray"/>
             <span className="ml-1 md:ml-2 text-xs md:text-base">
               {totalVotes && totalVotes} Votes
             </span>
           </div>
-          {/* 
-          <div className="flex text-sm justify-around text-c300 ml-4 lg:ml-6 ">
-            <img src={saveIcon} alt="" className="w-3 md:w-4" />
-            <span className="ml-1 md:ml-3 text-xs md:text-base mt-1">
-              {savesNumbers && savesNumbers} Saved
-            </span>
-          </div> */}
         </div>
-        
         <div>
           <ShareBtn url={shareUrl && shareUrl} />
         </div>
