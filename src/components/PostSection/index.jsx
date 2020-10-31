@@ -128,24 +128,28 @@ const PostSection = ({
                     'pb-full': images.length === 2
                   })}
                 >
-                  <div className="group absolute w-full h-full">
+                  <div className="absolute w-full h-full">
                     <img
                       src={img.url}
-                      className="w-full h-full object-cover rounded-sm"
+                      className="absolute w-full h-full object-cover rounded-sm"
                       alt=""
                       onDoubleClick={() => {
                         handleVote(img._id, voted, _id);
                       }}
                     />
+                    <div onDoubleClick={() => {
+                        handleVote(img._id, voted, _id);
+                      }}
+                      className="absolute bg-black group grid grid-cols-1 justify-items-center items-center w-full h-full">
                     <div
                       className={cn(
-                        'absolute w-24 h-24 bg-c200  cursor-pointer rounded-full grid grid-cols-1 justify-items-center',
+                        'w-1/4 h-24 bg-c200  cursor-pointer rounded-full grid grid-cols-1 justify-items-center',
                         { 'hidden md:group-hover:grid': !voted },
                         { 'bg-c500': !img.votedByUser }
                       )}
                       style={{
-                        left: 'calc(50% - 48px)',
-                        top: 'calc(50% - 48px)'
+                        
+                        height:"25%"
                       }}
                       onClick={() => {
                         handleVote(img._id, voted, _id);
@@ -153,7 +157,7 @@ const PostSection = ({
                     >
                       <HeartIcon voted={voted} />
                       {voted && (
-                        <span className="text-white font-bold text-xs">
+                        <span className="text-white font-bold text-xxs sm:text-xs">
                           {img.votes
                             ? totalVotes &&
                               Math.round((img.votes.count / totalVotes) * 100)
@@ -161,6 +165,7 @@ const PostSection = ({
                           %
                         </span>
                       )}
+                    </div>
                     </div>
                   </div>
                 </div>
