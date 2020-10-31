@@ -26,6 +26,7 @@ module.exports = {
       xbold: 900
     },
     fontSize: {
+      xxs:`0.5rem`,
       xs: '0.75rem', // 12px
       sm: '0.875rem', // 14px
       base: '1rem', // 16px
@@ -70,7 +71,7 @@ module.exports = {
       },
       borderRadius: {
         xlg: '3.75rem'
-      },
+      }, 
       spacing: {
         '16/9': '56.25%',
         full: '100%'
@@ -79,6 +80,7 @@ module.exports = {
   },
   variants: {
     opacity: ['responsive', 'hover', 'focus', 'group-hover'], // adding opacity to group-hover
+    display: ['responsive', 'hover', 'focus', 'group-hover'], // adding opacity to group-hover
     backgroundColor: ['responsive', 'hover', 'focus', 'group-hover'], // adding bg to group-hover
     textColor: ['responsive', 'hover', 'focus', 'active', 'group-hover'] // adding textColor to group-hover
   },
