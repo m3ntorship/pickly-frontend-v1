@@ -144,12 +144,12 @@ const PostSection = ({
                       )}>
                     <div
                       className={cn(
-                        'w-1/4  bg-c200  cursor-pointer rounded-full grid grid-cols-1 justify-items-center',
+                        'w-12 h-12 md:w-24 md:h-24  bg-c200  cursor-pointer rounded-full grid grid-cols-1 justify-items-center',
                         { 'bg-c500': !img.votedByUser }
                       )}
-                      style={{
-                        height:"25%"
-                      }}
+                      // style={{
+                      //   height:"25%"
+                      // }}
                       
                       onClick={() => {
                         handleVote(img._id, voted, _id);
