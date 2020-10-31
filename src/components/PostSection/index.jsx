@@ -119,6 +119,7 @@ const PostSection = ({
         {images && images.length > 1 && or}
         {images &&
           images.map(img => {
+            console.log(img);
             return (
               <div className="relative" key={img._id}>
                 <div
@@ -127,15 +128,45 @@ const PostSection = ({
                     'pb-full': images.length === 2
                   })}
                 >
-                  <div className="absolute w-full h-full">
+                  <div className="group absolute w-full h-full">
                     <img
                       src={img.url}
-                      className="w-full h-full object-cover rounded-sm"
+                      className="absolute w-full h-full object-cover rounded-sm"
                       alt=""
-                      onDoubleClick={() => {
+                    />
+                    <div 
+                        onDoubleClick={() => {
                         handleVote(img._id, voted, _id);
                       }}
-                    />
+                      className={cn(
+                        "absolute grid grid-cols-1 justify-items-center items-center w-full h-full",
+                        { 'hidden md:group-hover:grid': !voted },
+                      )}>
+                    <div
+                      className={cn(
+                        'w-12 h-12 md:w-24 md:h-24  bg-c200  cursor-pointer rounded-full grid grid-cols-1 justify-items-center',
+                        { 'bg-c500': !img.votedByUser }
+                      )}
+                      // style={{
+                      //   height:"25%"
+                      // }}
+                      
+                      onClick={() => {
+                        handleVote(img._id, voted, _id);
+                      }}
+                    >
+                      <HeartIcon voted={voted} />
+                      {voted && (
+                        <span className="text-white font-bold text-xxs sm:text-xs">
+                          {img.votes
+                            ? totalVotes &&
+                              Math.round((img.votes.count / totalVotes) * 100)
+                            : '0'}
+                          %
+                        </span>
+                      )}
+                    </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -146,18 +177,10 @@ const PostSection = ({
       <div className="flex items-center justify-between px-4 mx-auto">
         <div className="flex items-center">
           <div className="flex  text-sm justify-around text-c300">
-            <HeartIcon voted={voted} />
             <span className="ml-1 md:ml-2 text-xs md:text-base">
               {totalVotes && totalVotes} Votes
             </span>
           </div>
-          {/* 
-          <div className="flex text-sm justify-around text-c300 ml-4 lg:ml-6 ">
-            <img src={saveIcon} alt="" className="w-3 md:w-4" />
-            <span className="ml-1 md:ml-3 text-xs md:text-base mt-1">
-              {savesNumbers && savesNumbers} Saved
-            </span>
-          </div> */}
         </div>
         <div>
           <ShareBtn url={shareUrl && shareUrl} />
