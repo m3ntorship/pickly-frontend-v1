@@ -4,7 +4,7 @@ import cn from 'classnames';
 export const HeartIcon = ({ voted, color = '#fff' }) => {
   return (
     <button
-      className={cn({ 'flex justify-center self-end': voted })}
+      className={cn("flex justify-center items-center",{ ' self-end': voted })}
       style={{ width: 'fit-content' }}
     >
       <svg

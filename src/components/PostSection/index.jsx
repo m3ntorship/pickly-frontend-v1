@@ -128,29 +128,29 @@ const PostSection = ({
                     'pb-full': images.length === 2
                   })}
                 >
-                  <div className="absolute w-full h-full">
+                  <div className="group absolute w-full h-full">
                     <img
                       src={img.url}
                       className="absolute w-full h-full object-cover rounded-sm"
                       alt=""
-                      onDoubleClick={() => {
-                        handleVote(img._id, voted, _id);
-                      }}
                     />
-                    <div onDoubleClick={() => {
+                    <div 
+                        onDoubleClick={() => {
                         handleVote(img._id, voted, _id);
                       }}
-                      className="absolute bg-black group grid grid-cols-1 justify-items-center items-center w-full h-full">
+                      className={cn(
+                        "absolute grid grid-cols-1 justify-items-center items-center w-full h-full",
+                        { 'hidden md:group-hover:grid': !voted },
+                      )}>
                     <div
                       className={cn(
-                        'w-1/4 h-24 bg-c200  cursor-pointer rounded-full grid grid-cols-1 justify-items-center',
-                        { 'hidden md:group-hover:grid': !voted },
+                        'w-1/4  bg-c200  cursor-pointer rounded-full grid grid-cols-1 justify-items-center',
                         { 'bg-c500': !img.votedByUser }
                       )}
                       style={{
-                        
                         height:"25%"
                       }}
+                      
                       onClick={() => {
                         handleVote(img._id, voted, _id);
                       }}
