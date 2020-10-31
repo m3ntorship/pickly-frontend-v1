@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { ReusableDiv } from '../DivWithCenterdChildren';
 import { InputField } from '../InputField';
-import { Heading } from '../Heading';
 import { ToggleButton } from '../ToggleButton';
 import { Button } from '../Button';
 import { PICKLY } from '../../apis/clients';
@@ -70,10 +69,7 @@ export const UploadSection = ({ userImage }) => {
     setImagesToUpload([...imagesToUpload, image]);
   };
   return (
-    <div className="container">
-      {PostSomethingHeading}
-
-      <hr className="w-full text-c800 h-1" />
+    <div className="bg-white my-4 pt-4 rounded-lg shadow-lg">
       <div style={{ width: 'calc(100% - 2rem)' }} className="mx-auto mb-5">
         <InputField
           caption={caption}
@@ -129,24 +125,6 @@ export const UploadSection = ({ userImage }) => {
   );
 };
 
-// Helper components
-
-const PostSomethingHeading = (
-  <div>
-    <Heading
-      as="p"
-      fontSize="sm"
-      fontWeight="medium"
-      lineHeight="normal"
-      textAlign="left"
-      textColor="lightblack"
-      className="my-2 inline-block"
-    >
-      Post Something
-    </Heading>
-  </div>
-);
-
 const OptionsPopup = ({ clickFun }) => {
   const [currentOpt, setCurrentOpt] = useState('2 Images');
   const popupRef = useRef();
@@ -168,11 +146,6 @@ const OptionsPopup = ({ clickFun }) => {
       num: 4
     }
   ];
-
-  const contentStyle = {
-    hieght: '50%',
-    backgroundColor: '#fff'
-  };
 
   return (
     <Popup
@@ -220,7 +193,6 @@ const OptionsPopup = ({ clickFun }) => {
       }
       position="bottom left"
       on="click"
-      {...{ contentStyle }}
     >
       <div>
         {optionsList.map(({ option, num }) => {
@@ -281,7 +253,7 @@ const warningParagrapg = (
 
 const PostButton = ({ postData, isValid }) => {
   return (
-    <div style={{ width: 'calc(100% - 2rem)' }}>
+    <div className="inline-block" style={{ width: 'calc(100% - 2rem)' }}>
       <form>
         <Button
           type="submit"

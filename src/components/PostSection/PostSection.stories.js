@@ -19,7 +19,7 @@ export const Test = () => {
           images="lol"
           shareUrl="lol"
           savesNumbers={20}
-          isAnonymous={true}
+          isAnonymous={false}
           voted={true}
           options={['Option 1', 'Option 2', 'Option 3']}
           positions="bottom left"

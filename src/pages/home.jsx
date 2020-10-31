@@ -69,7 +69,7 @@ export const Home = () => {
                   userImage={
                     author && author.userImage
                       ? author.userImage
-                      : 'https://briansmith.com/wp-content/uploads/2013/01/celebrity-portrait-photography.jpg'
+                      : 'https://img.freepik.com/free-photo/portrait-white-man-isolated_53876-40306.jpg?size=626&ext=jpg'
                   }
                   isAnonymous={isAnonymous}
                   updatePostData={updatePostData}

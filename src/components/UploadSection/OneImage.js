@@ -75,7 +75,7 @@ export const OneImage = ({ setFun, id, imagesNum }) => {
           </ReusableDiv>
         </label>
       </div>
-      <div className="nav__container">
+      <div className="">
         <CropPopup
           img={img}
           setCropedImage={setCroppedImageFun}
@@ -137,7 +137,12 @@ const CropPopup = ({
   }, [croppedAreaPixels, closeimgPopup, img, setCropedImage, setFun]);
 
   // popup styles
-  const contentStyle = { width: '60%', height: '60%', backgroundColor: '#fff' };
+  const contentStyle = {
+    width: '90%',
+    height: '80%',
+    backgroundColor: '#fff',
+    borderRadius: '5px'
+  };
   return (
     <Popup ref={imgPopupRef} className="my-20" {...{ contentStyle }}>
       <div className="relative w-full" style={{ height: '85%' }}>
