@@ -157,12 +157,12 @@ const PostSection = ({
       )}
 
       {isMobile && (
-        <div style={viewportCss} ref={emblaRef} key={_id}>
+        <div style={viewportCss} ref={emblaRef}>
           <div style={containerCss}>
             {images &&
               images.map(img => {
                 return (
-                  <div style={slideCss}>
+                  <div style={slideCss} key={img._id}>
                     <PostImage
                       images={images}
                       img={img}
@@ -203,16 +203,18 @@ const PostImage = ({ images, img, voted, handleVote, _id, totalVotes }) => {
           'pb-full': images.length === 2
         })}
       >
-        <div className="group absolute w-full h-full">
+        <div
+          className="group absolute w-full h-full"
+          onDoubleClick={() => {
+            handleVote(img._id, voted, _id);
+          }}
+        >
           <img
             src={img.url}
             className="absolute w-full h-full object-cover rounded-sm"
             alt=""
           />
           <div
-            onDoubleClick={() => {
-              handleVote(img._id, voted, _id);
-            }}
             className={cn(
               'absolute grid grid-cols-1 justify-items-center items-center w-full h-full',
               { 'hidden md:group-hover:grid': !voted }
