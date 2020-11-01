@@ -7,16 +7,18 @@ import { HeartIcon } from './HeartIcon/index';
 import cn from 'classnames';
 import OptionsBtn from '../OptionsBtn';
 import { useEmblaCarousel } from 'embla-carousel/react';
+import useMedia from '../../helpers/useMedia';
 
 const viewportCss = {
-  overflow: 'hidden'
+  overflow: 'visible'
 };
 const containerCss = {
   display: 'flex'
 };
 const slideCss = {
   position: 'relative',
-  minWidth: '100%'
+  minWidth: '100%',
+  margin: '10px 1px'
 };
 
 const PostSection = ({
@@ -38,8 +40,13 @@ const PostSection = ({
   };
   const { anonymousIcon } = postComponentFixedAssets;
   const [totalVotes, setTotalVotes] = useState(0);
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    loop: false,
+    slidesInView: true
+  });
 
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false });
+  // return true if it's mobile view
+  const isMobile = useMedia(['(max-width: 776px)'], [true], false);
 
   useEffect(() => {
     for (let img of images) {
@@ -125,26 +132,50 @@ const PostSection = ({
         {postCaption && postCaption}
       </p>
 
-      <div
-        className={cn('relative grid grid-cols-1 gap-1 my-4', {
-          'grid-cols-2': images.length > 1
-        })}
-      >
-        {images && images.length > 1 && or}
-        {images &&
-          images.map(img => {
-            return (
-              <PostImage
-                images={images}
-                img={img}
-                voted={voted}
-                handleVote={handleVote}
-                _id={_id}
-                totalVotes={totalVotes}
-              />
-            );
+      {!isMobile && (
+        <div
+          className={cn('relative grid grid-cols-1 gap-1 my-4', {
+            'grid-cols-2': images.length > 1
           })}
-      </div>
+        >
+          {images && images.length > 1 && or}
+          {images &&
+            images.map(img => {
+              return (
+                <PostImage
+                  images={images}
+                  img={img}
+                  voted={voted}
+                  handleVote={handleVote}
+                  _id={_id}
+                  totalVotes={totalVotes}
+                />
+              );
+            })}
+        </div>
+      )}
+
+      {isMobile && (
+        <div style={viewportCss} ref={emblaRef}>
+          <div style={containerCss}>
+            {images &&
+              images.map(img => {
+                return (
+                  <div style={slideCss}>
+                    <PostImage
+                      images={images}
+                      img={img}
+                      voted={voted}
+                      handleVote={handleVote}
+                      _id={_id}
+                      totalVotes={totalVotes}
+                    />
+                  </div>
+                );
+              })}
+          </div>
+        </div>
+      )}
 
       <div className="flex items-center justify-between px-4 mx-auto">
         <div className="flex items-center">
