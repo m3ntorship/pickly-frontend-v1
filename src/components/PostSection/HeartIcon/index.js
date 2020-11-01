@@ -4,13 +4,13 @@ import cn from 'classnames';
 export const HeartIcon = ({ voted, color = '#fff' }) => {
   return (
     <button
-      className={cn("flex justify-center items-center",{ ' self-end': voted })}
+      className={cn('flex justify-center items-center', { ' self-end': voted })}
       style={{ width: 'fit-content' }}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="50%"
-        height="50%"
+        width="45%"
+        height="45%"
         viewBox="0 0 24 24"
         fill={color}
       >

@@ -40,13 +40,13 @@ const PostSection = ({
   };
   const { anonymousIcon } = postComponentFixedAssets;
   const [totalVotes, setTotalVotes] = useState(0);
-  const [emblaRef, emblaApi] = useEmblaCarousel({
+  const [emblaRef] = useEmblaCarousel({
     loop: false,
     slidesInView: true
   });
 
   // return true if it's mobile view
-  const isMobile = useMedia(['(max-width: 776px)'], [true], false);
+  const isMobile = useMedia(['(max-width: 600px)'], [true], false);
 
   useEffect(() => {
     for (let img of images) {
