@@ -11,7 +11,7 @@ export const InputField = ({ imageURL, caption, onChange }) => {
 
   return (
     <div className="my-5 mx-auto">
-      <div className=" mb-3 h-20 rounded-lg border border-solid border-c700 flex items-center p-4 z-10 ">
+      <div className="mb-3 h-20 rounded-lg border border-solid border-c700 flex items-center p-4 z-10 ">
         <img src={imageURL} alt="" className="w-8 h-8 rounded-full " />
         <textarea
           onBlur={() => {
