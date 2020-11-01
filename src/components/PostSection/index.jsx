@@ -143,6 +143,7 @@ const PostSection = ({
             images.map(img => {
               return (
                 <PostImage
+                  key={img._id}
                   images={images}
                   img={img}
                   voted={voted}
@@ -156,7 +157,7 @@ const PostSection = ({
       )}
 
       {isMobile && (
-        <div style={viewportCss} ref={emblaRef}>
+        <div style={viewportCss} ref={emblaRef} key={_id}>
           <div style={containerCss}>
             {images &&
               images.map(img => {
