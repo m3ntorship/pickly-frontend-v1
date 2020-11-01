@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { ReusableDiv } from '../DivWithCenterdChildren';
 import { InputField } from '../InputField';
 import { Heading } from '../Heading';
@@ -17,8 +17,32 @@ export const UploadSection = ({ userImage }) => {
   const history = useHistory();
   const [imagesArr, setImagesArr] = useState([1, 1]);
   const [imageValidationErr, setImageValidationErr] = useState();
-  const [captionValidationErr, setCaptionValidationErr] = useState();
   const [isValid, setIsValid] = useState(false);
+  const [captionValid, setCaptionValid] = useState(false);
+
+  useEffect(() => {
+    if (
+      imagesToUpload.length !== 0 &&
+      imagesToUpload.length < imagesArr.length
+    ) {
+      setIsValid(false);
+      setImageValidationErr(`At least add ${imagesArr.length} Image`);
+    } else {
+      if (
+        imagesToUpload.length !== 0 &&
+        imagesToUpload.length === imagesArr.length
+      ) {
+        setIsValid(true);
+        setImageValidationErr(null);
+      }
+    }
+
+    if (caption) {
+      setCaptionValid(true);
+    } else {
+      setCaptionValid(false);
+    }
+  }, [imagesToUpload, imagesArr, caption]);
 
   const setImagesArrFun = num => {
     const imagesArr = new Array(num).fill(num);
@@ -36,22 +60,8 @@ export const UploadSection = ({ userImage }) => {
   // Post Data to the database Function
   const postData = e => {
     e.preventDefault();
-    if (imagesToUpload.length === 0 && !caption) {
-      setIsValid(false);
-      setImageValidationErr('at least add one Image');
-      setCaptionValidationErr('Caption can not be empty');
-    } else if (imagesToUpload.length === 0 && caption) {
-      setIsValid(false);
-      setImageValidationErr('at least add one Image');
-      setCaptionValidationErr(null);
-    } else if (imagesToUpload.length !== 0 && !caption) {
-      setIsValid(false);
-      setCaptionValidationErr('Caption can not be empty');
-      setImageValidationErr(null);
-    } else {
-      setIsValid(true);
-      setImageValidationErr(null);
-      setCaptionValidationErr(null);
+
+    if (captionValid && isValid) {
       const form = new FormData();
       for (let img of imagesToUpload.slice(0, imagesArr.length)) {
         form.append('images', img);
@@ -101,9 +111,11 @@ export const UploadSection = ({ userImage }) => {
           </div>
         </div>
       </div>
-
+      {imageValidationErr && (
+        <div className="text-c200 text-xs mb-2">{imageValidationErr}</div>
+      )}
       <div
-        className={cn('relative grid grid-cols-1   gap-1', {
+        className={cn('relative grid grid-cols-1 gap-1', {
           'sm:grid-cols-2': imagesArr.length > 1
         })}
       >
@@ -116,15 +128,11 @@ export const UploadSection = ({ userImage }) => {
       </div>
       {warningParagrapg}
       <hr className="w-full text-c800 h-1" />
-      {captionValidationErr && (
-        <div className="text-c200 text-right font-xxlg ">
-          {captionValidationErr}
-        </div>
-      )}
-      {imageValidationErr && (
-        <div className="text-c200 text-right">{imageValidationErr}</div>
-      )}
-      <PostButton postData={postData} isValid={isValid} />
+      <PostButton
+        postData={postData}
+        isValid={isValid}
+        captionValid={captionValid}
+      />
     </div>
   );
 };
@@ -279,13 +287,13 @@ const warningParagrapg = (
   </div>
 );
 
-const PostButton = ({ postData, isValid }) => {
+const PostButton = ({ postData, isValid, captionValid }) => {
   return (
     <div style={{ width: 'calc(100% - 2rem)' }}>
       <form>
         <Button
           type="submit"
-          backgroundColor={isValid ? 'blue' : 'PrimaryGrey'}
+          backgroundColor={isValid && captionValid ? 'blue' : 'PrimaryGrey'}
           color="White"
           isRounded
           padding="big"
