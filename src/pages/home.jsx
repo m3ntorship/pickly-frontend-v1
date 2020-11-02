@@ -37,7 +37,7 @@ export const Home = () => {
   };
 
   return (
-    <div className="bg-c900 py-6">
+    <div className="bg-c900 py-6 overflow-hidden">
       <div className="container">
         <CreatePostButton />
         {loading && <PostLoader />}

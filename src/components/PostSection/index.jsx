@@ -6,6 +6,20 @@ import { PICKLY } from '../../apis/clients';
 import { HeartIcon } from './HeartIcon/index';
 import cn from 'classnames';
 import OptionsBtn from '../OptionsBtn';
+import { useEmblaCarousel } from 'embla-carousel/react';
+import useMedia from '../../helpers/useMedia';
+
+const viewportCss = {
+  overflow: 'visible'
+};
+const containerCss = {
+  display: 'flex'
+};
+const slideCss = {
+  position: 'relative',
+  minWidth: '100%',
+  margin: '10px 1px'
+};
 
 const PostSection = ({
   _id,
@@ -26,6 +40,13 @@ const PostSection = ({
   };
   const { anonymousIcon } = postComponentFixedAssets;
   const [totalVotes, setTotalVotes] = useState(0);
+  const [emblaRef] = useEmblaCarousel({
+    loop: false,
+    slidesInView: true
+  });
+
+  // return true if it's mobile view
+  const isMobile = useMedia(['(max-width: 600px)'], [true], false);
 
   useEffect(() => {
     for (let img of images) {
@@ -111,68 +132,51 @@ const PostSection = ({
         {postCaption && postCaption}
       </p>
 
-      <div
-        className={cn('relative grid grid-cols-1 gap-1 my-4', {
-          'grid-cols-2': images.length > 1
-        })}
-      >
-        {images && images.length > 1 && or}
-        {images &&
-          images.map(img => {
-            console.log(img);
-            return (
-              <div className="relative" key={img._id}>
-                <div
-                  key={img._id}
-                  className={cn('w-full pb-16/9', {
-                    'pb-full': images.length === 2
-                  })}
-                >
-                  <div className="group absolute w-full h-full">
-                    <img
-                      src={img.url}
-                      className="absolute w-full h-full object-cover rounded-sm"
-                      alt=""
-                    />
-                    <div 
-                        onDoubleClick={() => {
-                        handleVote(img._id, voted, _id);
-                      }}
-                      className={cn(
-                        "absolute grid grid-cols-1 justify-items-center items-center w-full h-full",
-                        { 'hidden md:group-hover:grid': !voted },
-                      )}>
-                    <div
-                      className={cn(
-                        'w-12 h-12 md:w-24 md:h-24  bg-c200  cursor-pointer rounded-full grid grid-cols-1 justify-items-center',
-                        { 'bg-c500': !img.votedByUser }
-                      )}
-                      // style={{
-                      //   height:"25%"
-                      // }}
-                      
-                      onClick={() => {
-                        handleVote(img._id, voted, _id);
-                      }}
-                    >
-                      <HeartIcon voted={voted} />
-                      {voted && (
-                        <span className="text-white font-bold text-xxs sm:text-xs">
-                          {img.votes
-                            ? totalVotes &&
-                              Math.round((img.votes.count / totalVotes) * 100)
-                            : '0'}
-                          %
-                        </span>
-                      )}
-                    </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
+      {!isMobile && (
+        <div
+          className={cn('relative grid grid-cols-1 gap-1 my-4', {
+            'grid-cols-2': images.length > 1
           })}
-      </div>
+        >
+          {images && images.length > 1 && or}
+          {images &&
+            images.map(img => {
+              return (
+                <PostImage
+                  key={img._id}
+                  images={images}
+                  img={img}
+                  voted={voted}
+                  handleVote={handleVote}
+                  _id={_id}
+                  totalVotes={totalVotes}
+                />
+              );
+            })}
+        </div>
+      )}
+
+      {isMobile && (
+        <div style={viewportCss} ref={emblaRef}>
+          <div style={containerCss}>
+            {images &&
+              images.map(img => {
+                return (
+                  <div style={slideCss} key={img._id}>
+                    <PostImage
+                      images={images}
+                      img={img}
+                      voted={voted}
+                      handleVote={handleVote}
+                      _id={_id}
+                      totalVotes={totalVotes}
+                    />
+                  </div>
+                );
+              })}
+          </div>
+        </div>
+      )}
 
       <div className="flex items-center justify-between px-4 mx-auto">
         <div className="flex items-center">
@@ -184,6 +188,59 @@ const PostSection = ({
         </div>
         <div>
           <ShareBtn url={shareUrl && shareUrl} />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const PostImage = ({ images, img, voted, handleVote, _id, totalVotes }) => {
+  return (
+    <div className="relative" key={img._id}>
+      <div
+        key={img._id}
+        className={cn('w-full pb-16/9', {
+          'pb-full': images.length === 2
+        })}
+      >
+        <div
+          className="group absolute w-full h-full"
+          onDoubleClick={() => {
+            handleVote(img._id, voted, _id);
+          }}
+        >
+          <img
+            src={img.url}
+            className="absolute w-full h-full object-cover rounded-sm"
+            alt=""
+          />
+          <div
+            className={cn(
+              'absolute grid grid-cols-1 justify-items-center items-center w-full h-full',
+              { 'hidden md:group-hover:grid': !voted }
+            )}
+          >
+            <div
+              className={cn(
+                'w-12 h-12 md:w-24 md:h-24  bg-c200  cursor-pointer rounded-full grid grid-cols-1 justify-items-center',
+                { 'bg-c500': !img.votedByUser }
+              )}
+              onClick={() => {
+                handleVote(img._id, voted, _id);
+              }}
+            >
+              <HeartIcon voted={voted} />
+              {voted && (
+                <span className="text-white font-bold text-xxs sm:text-xs">
+                  {img.votes
+                    ? totalVotes &&
+                      Math.round((img.votes.count / totalVotes) * 100)
+                    : '0'}
+                  %
+                </span>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>
