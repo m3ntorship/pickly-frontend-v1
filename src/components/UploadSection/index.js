@@ -2,7 +2,6 @@ import React, { useRef, useState, useEffect } from 'react';
 import { ReusableDiv } from '../DivWithCenterdChildren';
 import { InputField } from '../InputField';
 import { ToggleButton } from '../ToggleButton';
-import { Heading } from '../Heading';
 import { Button } from '../Button';
 import { PICKLY } from '../../apis/clients';
 import { useHistory } from 'react-router-dom';
@@ -81,86 +80,71 @@ export const UploadSection = ({ userImage }) => {
   };
 
   return (
-    <div className="bg-white my-4 pt-4 rounded-lg shadow-lg">
-      {PostSomethingHeading}
+    <div className="container">
+      <div className="bg-white my-4 pt-3 rounded-lg shadow-lg">
+        <div style={{ width: 'calc(100% - 2rem)' }} className="mx-auto mb-5">
+          <InputField
+            caption={caption}
+            onChange={handleInputChange}
+            imageURL={userImage}
+          />
 
-      <hr className="w-full text-c800 h-1" />
-      <div style={{ width: 'calc(100% - 2rem)' }} className="mx-auto mb-5">
-        <InputField
-          caption={caption}
-          onChange={handleInputChange}
-          imageURL={userImage}
-        />
-
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-          <div style={{ width: 'fit-content' }}>
-            <Button
-              isRounded
-              backgroundColor="White"
-              color="SecondaryGrey"
-              className="border-2 border-c800 relative"
-            >
-              <OptionsPopup clickFun={setImagesArrFun} />
-            </Button>
-          </div>
-          <div>
-            <ToggleButton
-              selected={postAnonymously}
-              toggleSelected={toggleSelected}
-              title="Post anonymoslly"
-            />
-          </div>
-        </div>
-      </div>
-      {imageValidationErr && (
-        <div className="text-c200 text-xs mb-2 ml-2">{imageValidationErr}</div>
-      )}
-      <div className="container">
-        <div
-          className={cn('relative grid grid-cols-1 gap-1', {
-            'sm:grid-cols-2': imagesArr.length > 1
-          })}
-        >
-          {imagesArr.length > 1 && or}
-          {imagesArr.map((img, index) => (
-            <div key={index} className="relative">
-              <OneImage
-                setFun={setFun}
-                id={index}
-                imagesNum={imagesArr.length}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <div style={{ width: 'fit-content' }}>
+              <Button
+                isRounded
+                backgroundColor="White"
+                color="SecondaryGrey"
+                className="border-2 border-c800 relative"
+              >
+                <OptionsPopup clickFun={setImagesArrFun} />
+              </Button>
+            </div>
+            <div>
+              <ToggleButton
+                selected={postAnonymously}
+                toggleSelected={toggleSelected}
+                title="Post anonymoslly"
               />
             </div>
-          ))}
+          </div>
         </div>
+        {imageValidationErr && (
+          <div className="text-c200 text-xs mb-2 ml-2">
+            {imageValidationErr}
+          </div>
+        )}
+        <div className="container">
+          <div
+            className={cn('relative grid grid-cols-1 gap-1', {
+              'sm:grid-cols-2': imagesArr.length > 1
+            })}
+          >
+            {imagesArr.length > 1 && or}
+            {imagesArr.map((img, index) => (
+              <div key={index} className="relative">
+                <OneImage
+                  setFun={setFun}
+                  id={index}
+                  imagesNum={imagesArr.length}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+        {warningParagrapg}
+        <hr className="w-full text-c800 h-1" />
+        <PostButton
+          postData={postData}
+          isValid={isValid}
+          captionValid={captionValid}
+        />
       </div>
-      {warningParagrapg}
-      <hr className="w-full text-c800 h-1" />
-      <PostButton
-        postData={postData}
-        isValid={isValid}
-        captionValid={captionValid}
-      />
     </div>
   );
 };
 
 // Helper components
-
-const PostSomethingHeading = (
-  <div>
-    <Heading
-      as="p"
-      fontSize="sm"
-      fontWeight="medium"
-      lineHeight="normal"
-      textAlign="left"
-      textColor="lightblack"
-      className="my-2 inline-block"
-    >
-      Post Something
-    </Heading>
-  </div>
-);
 
 const OptionsPopup = ({ clickFun }) => {
   const [currentOpt, setCurrentOpt] = useState('2 Images');
