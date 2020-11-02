@@ -3,14 +3,16 @@ import { UserContext } from '../context/userContext';
 import PostSection from '../components/PostSection';
 import { PICKLY } from '../apis/clients/pickly';
 import PostLoader from '../components/LoadingComponents/PostLoader';
-// import CreatePostButton from '../components/CreatePostButon';
 import Carousel from 're-carousel';
+import useMedia from '../helpers/useMedia';
 
 export const Home = () => {
   const { token } = useContext(UserContext);
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const isMobile = useMedia(['(max-width: 600px)'], [true], false);
+
   // This useEffect() for fetching data when the route load
   useEffect(() => {
     setLoading(true);
@@ -40,50 +42,89 @@ export const Home = () => {
   return (
     <div className="bg-c900 py-6 overflow-hidden">
       <div className="container">
-        {/* <CreatePostButton /> */}
         {loading && <PostLoader />}
         {error && <ErrorComponent />}
-        <div className="h-screen">
-          <Carousel auto axis="y">
-            {data &&
-              data.map(
-                ({
-                  _id,
-                  author,
-                  caption,
-                  createdAt,
-                  isAnonymous,
-                  resources: { images },
-                  Voted
-                }) => {
-                  return (
-                    <div>
-                      <PostSection
-                        voted={Voted}
-                        key={_id}
-                        _id={_id}
-                        images={images}
-                        popupActionOptions={[0]}
-                        postCaption={caption}
-                        postDate={createdAt}
-                        savesNumbers="0"
-                        shareUrl={`${window.location.href}posts/${_id}`}
-                        userName={author && author.name}
-                        // this will handle with a simple code when after clearing the users from backend
-                        userImage={
-                          author && author.userImage
-                            ? author.userImage
-                            : 'https://img.freepik.com/free-photo/portrait-white-man-isolated_53876-40306.jpg?size=626&ext=jpg'
-                        }
-                        isAnonymous={isAnonymous}
-                        updatePostData={updatePostData}
-                      />
-                    </div>
-                  );
-                }
-              )}
-          </Carousel>
-        </div>
+        {!isMobile &&
+          data &&
+          data.map(
+            ({
+              _id,
+              author,
+              caption,
+              createdAt,
+              isAnonymous,
+              resources: { images },
+              Voted
+            }) => {
+              return (
+                <div>
+                  <PostSection
+                    voted={Voted}
+                    key={_id}
+                    _id={_id}
+                    images={images}
+                    popupActionOptions={[0]}
+                    postCaption={caption}
+                    postDate={createdAt}
+                    savesNumbers="0"
+                    shareUrl={`${window.location.href}posts/${_id}`}
+                    userName={author && author.name}
+                    // this will handle with a simple code when after clearing the users from backend
+                    userImage={
+                      author && author.userImage
+                        ? author.userImage
+                        : 'https://img.freepik.com/free-photo/portrait-white-man-isolated_53876-40306.jpg?size=626&ext=jpg'
+                    }
+                    isAnonymous={isAnonymous}
+                    updatePostData={updatePostData}
+                  />
+                </div>
+              );
+            }
+          )}
+        {isMobile && (
+          <div className="h-screen">
+            <Carousel auto axis="y">
+              {data &&
+                data.map(
+                  ({
+                    _id,
+                    author,
+                    caption,
+                    createdAt,
+                    isAnonymous,
+                    resources: { images },
+                    Voted
+                  }) => {
+                    return (
+                      <div>
+                        <PostSection
+                          voted={Voted}
+                          key={_id}
+                          _id={_id}
+                          images={images}
+                          popupActionOptions={[0]}
+                          postCaption={caption}
+                          postDate={createdAt}
+                          savesNumbers="0"
+                          shareUrl={`${window.location.href}posts/${_id}`}
+                          userName={author && author.name}
+                          // this will handle with a simple code when after clearing the users from backend
+                          userImage={
+                            author && author.userImage
+                              ? author.userImage
+                              : 'https://img.freepik.com/free-photo/portrait-white-man-isolated_53876-40306.jpg?size=626&ext=jpg'
+                          }
+                          isAnonymous={isAnonymous}
+                          updatePostData={updatePostData}
+                        />
+                      </div>
+                    );
+                  }
+                )}
+            </Carousel>
+          </div>
+        )}
       </div>
     </div>
   );
