@@ -10,6 +10,7 @@ import { LoginForm } from './pages/login';
 import { ProtectedRoute } from './pages/protected-route';
 import { Post } from './pages/post';
 import { SinglePost } from './pages/singlePost';
+import {Feedback} from "./pages/feedback"
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <ProtectedRoute path="/profile" component={Profile} />
             <ProtectedRoute path="/post" component={Post} />
             <ProtectedRoute path="/posts/:id" component={SinglePost} />
+            <ProtectedRoute path="/feedback" component={Feedback} />
             <Route path="/login" component={LoginForm} />
           </Switch>
         </UserContextProvider>

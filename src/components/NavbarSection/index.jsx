@@ -33,7 +33,7 @@ const Navigation = () => {
     }
   ];
   return (
-    <div className="text-center md:text-right md:col-start-2 md:col-end-4 ">
+    <div className="text-center md:text-right md:grid md:grid-cols-4 ">
       {navData.map(({ id, iconUrl, path, exact }) => (
         <Icon key={id} iconURL={iconUrl} to={path} exact={exact} />
       ))}
@@ -58,8 +58,12 @@ export const Navbar = () => {
               />
             </NavLink>
           </div>
-
           <Navigation />
+          <div className="mr-4 text-white bg-c1100 w-32 h-10 flex justify-center items-center rounded-lg font-bold">
+            <NavLink exact to="/feedback">
+              <button>Feedback?</button>
+            </NavLink>
+          </div>
         </div>
       </div>
     </header>

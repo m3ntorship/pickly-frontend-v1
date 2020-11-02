@@ -46,6 +46,7 @@ module.exports = {
       c800: '#EEEEEE', // Grey 4
       c900: '#FAFAFB', // Off Wgight
       c1000: '#78F1CD', // Green
+      c1100:"#7048E7", //purple
       white: '#FFF',
       black: '#000',
       c100_op: {
