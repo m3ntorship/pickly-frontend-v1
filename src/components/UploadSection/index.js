@@ -1,8 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { ReusableDiv } from '../DivWithCenterdChildren';
 import { InputField } from '../InputField';
-import { Heading } from '../Heading';
 import { ToggleButton } from '../ToggleButton';
+import { Heading } from '../Heading';
 import { Button } from '../Button';
 import { PICKLY } from '../../apis/clients';
 import { useHistory } from 'react-router-dom';
@@ -79,8 +79,9 @@ export const UploadSection = ({ userImage }) => {
   const setFun = image => {
     setImagesToUpload([...imagesToUpload, image]);
   };
+
   return (
-    <div className="container">
+    <div className="bg-white my-4 pt-4 rounded-lg shadow-lg">
       {PostSomethingHeading}
 
       <hr className="w-full text-c800 h-1" />
@@ -112,19 +113,25 @@ export const UploadSection = ({ userImage }) => {
         </div>
       </div>
       {imageValidationErr && (
-        <div className="text-c200 text-xs mb-2">{imageValidationErr}</div>
+        <div className="text-c200 text-xs mb-2 ml-2">{imageValidationErr}</div>
       )}
-      <div
-        className={cn('relative grid grid-cols-1 gap-1', {
-          'sm:grid-cols-2': imagesArr.length > 1
-        })}
-      >
-        {imagesArr.length > 1 && or}
-        {imagesArr.map((img, index) => (
-          <div key={index} className="relative">
-            <OneImage setFun={setFun} id={index} imagesNum={imagesArr.length} />
-          </div>
-        ))}
+      <div className="container">
+        <div
+          className={cn('relative grid grid-cols-1 gap-1', {
+            'sm:grid-cols-2': imagesArr.length > 1
+          })}
+        >
+          {imagesArr.length > 1 && or}
+          {imagesArr.map((img, index) => (
+            <div key={index} className="relative">
+              <OneImage
+                setFun={setFun}
+                id={index}
+                imagesNum={imagesArr.length}
+              />
+            </div>
+          ))}
+        </div>
       </div>
       {warningParagrapg}
       <hr className="w-full text-c800 h-1" />
@@ -289,7 +296,7 @@ const warningParagrapg = (
 
 const PostButton = ({ postData, isValid, captionValid }) => {
   return (
-    <div style={{ width: 'calc(100% - 2rem)' }}>
+    <div className="inline-block" style={{ width: 'calc(100% - 2rem)' }}>
       <form>
         <Button
           type="submit"
