@@ -3,7 +3,7 @@ import { UserContext } from '../context/userContext';
 import PostSection from '../components/PostSection';
 import { PICKLY } from '../apis/clients/pickly';
 import PostLoader from '../components/LoadingComponents/PostLoader';
-import CreatePostButton from '../components/CreatePostButon';
+// import CreatePostButton from '../components/CreatePostButon';
 import Carousel from 're-carousel';
 
 export const Home = () => {
@@ -98,15 +98,5 @@ const ErrorComponent = () => {
       <strong className="font-bold">Sorry!</strong>
       <span className="block sm:inline ml-2">Can't find your data.</span>
     </div>
-  );
-};
-
-const Crousel = () => {
-  return (
-    <Carousel auto>
-      <div style={{ backgroundColor: 'tomato', height: '100%' }}>Frame 1</div>
-      <div style={{ backgroundColor: 'orange', height: '100%' }}>Frame 2</div>
-      <div style={{ backgroundColor: 'orchid', height: '100%' }}>Frame 3</div>
-    </Carousel>
   );
 };
