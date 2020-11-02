@@ -14,8 +14,8 @@ export const Feedback = () => {
     setValue(e.target.value);
   };
   return (
-    <div className="bg-white pt-4 lg:pt-16 pb-2 flex">
-      <div className="ml-8 hidden lg:block">
+    <div className="relative w-screen bg-white pt-4 lg:pt-16 pb-2 flex">
+      <div className="absolute ml-8 hidden lg:block">
         <svg
           width="111"
           height="222"
@@ -45,7 +45,8 @@ export const Feedback = () => {
           />
         </svg>
       </div>
-      <div className="nav__container capitalize lg:grid lg:grid-cols-2 inline-block">
+      <div className="w-screen absolute">
+      <div className="  nav__container capitalize lg:grid lg:grid-cols-2 inline-block">
         <div className="mt-16 lg:mt-2">
           <h1 className="text-xxlg font-xbold">
             Help us with
@@ -55,9 +56,9 @@ export const Feedback = () => {
           <p className="text-c500 mt-4">
             At elit leo dignissim volutpat sit.et amet enim, porttitor felis
           </p>
-          <form className="mt-12">
-            <select className="w-full h-16 shadow-background text-c500 rounded-lg pl-4 pr-4 text-md block">
-              <option value="category" defaultValue>
+          <form className="mt-12" method="post">
+            <select className="w-full h-16 shadow-background text-c500 rounded-lg pl-4 text-md block">
+              <option value="category"  defaultValue>
                 Category
               </option>
               <option value="problem1">Problem.1</option>
@@ -67,7 +68,7 @@ export const Feedback = () => {
             <textarea
               onChange={handleValidationInput}
               defaultValue={value}
-              className="mt-4 w-full h-16 shadow-background text-c500 rounded-lg p-4 resize-none block"
+              className="mt-4 w-full h-16 shadow-background text-c500 rounded-lg pl-4 pt-4 resize-none block"
               type="text"
               placeholder="Problem"
               required
@@ -76,7 +77,7 @@ export const Feedback = () => {
               you should put your problem
             </p>
             <button
-              className={`mt-6 w-full h-12 lg:w-1/2 rounded-full ${
+              className={`mt-6 w-full h-12 lg:w-1/2 rounded-lg ${
                 !value ? 'bg-c500' : 'bg-c1100'
               } text-white font-bold`}
             >
@@ -586,6 +587,7 @@ export const Feedback = () => {
             />
           </svg>
         </div>
+      </div>
       </div>
     </div>
   );

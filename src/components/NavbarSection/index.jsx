@@ -59,7 +59,7 @@ export const Navbar = () => {
             </NavLink>
           </div>
           <Navigation />
-          <div className="mr-4 text-white bg-c1100 w-32 h-10 flex justify-center items-center rounded-lg font-bold">
+          <div className=" text-white bg-c1100 w-32 h-10 flex justify-center items-center rounded-lg font-bold">
             <NavLink exact to="/feedback">
               <button>Feedback?</button>
             </NavLink>
