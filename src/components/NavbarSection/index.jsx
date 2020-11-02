@@ -14,19 +14,26 @@ const Navigation = () => {
     {
       id: 2,
       iconUrl:
-        'https://res.cloudinary.com/dqmuowojl/image/upload/v1601849139/icons/vzrzfrgclizafzzzjwml.svg',
+        'https://res.cloudinary.com/dhwuqox2w/image/upload/v1604339521/home_tswzsz.svg',
       path: '/',
       exact: true
     },
-
     {
       id: 3,
       iconUrl:
-        'https://res.cloudinary.com/dqmuowojl/image/upload/v1601849139/icons/uxm0ry0c9xwkz3zmooxv.svg',
-      path: '/notifications'
+        'https://res.cloudinary.com/dhwuqox2w/image/upload/v1604339677/friends_cdr2tq.svg',
+      path: '/friends'
     },
+
     {
       id: 4,
+      iconUrl:
+        'https://res.cloudinary.com/dhwuqox2w/image/upload/v1604339677/notifications_tw8i0k.svg',
+      path: '/notifications'
+    },
+
+    {
+      id: 5,
       iconUrl:
         'https://res.cloudinary.com/dqmuowojl/image/upload/v1601849139/icons/cgafox7opgi6le1eomg4.svg',
       path: '/profile'
