@@ -96,9 +96,9 @@ const PostSection = ({
 
   const options = [
     {
-      text: 'Text one',
+      text: 'delete',
       fun: () => {
-        console.log('Test One');
+        PICKLY.deletePost(_id).then(res => console.log(res));
       }
     },
     {
