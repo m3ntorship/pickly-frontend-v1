@@ -41,10 +41,16 @@ export default ({ options, position = 'left bottom', appearOn = 'click' }) => (
     {options.map((option, index) => (
       <div
         key={index}
-        className="py-1 px-6 md:px-10 text-md md:text-md hover:bg-c800 transition-all duration-100 cursor-pointer"
+        className="py-1 px-6 text-left md:px-10 text-md md:text-md hover:bg-c800 transition-all duration-100 cursor-pointer"
         onClick={option.fun}
       >
-        {option.text}
+        <div
+          className="flex justify-between"
+          style={{ color: option.textColor }}
+        >
+          <div className="mr-2">{option.svg}</div>
+          {option.text}
+        </div>
       </div>
     ))}
   </Popup>
