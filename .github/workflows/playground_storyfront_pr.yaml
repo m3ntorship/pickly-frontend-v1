@@ -50,7 +50,7 @@ jobs:
       # building frontend
       - name: building frontend
         env:
-          REACT_APP_POSTS_SERVICE_URL: 'https://pickly-posts-dev.m3ntorship.net'
+          REACT_APP_POSTS_SERVICE_URL: 'https://pickly-posts-be-dev.m3ntorship.net'
         run: yarn build
 
       # login to docker
