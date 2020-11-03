@@ -88,7 +88,7 @@ const PostSection = ({
     } else {
       PICKLY.createVoteAndRefetchPost(imageId, postId).then(res => {
         if (updatePostData) {
-          updatePostData(postId, res.data.data);
+          updatePostData(postId, res.data.post); // instead of res.data.dae
         }
         if (updateSinglePostData) {
           updateSinglePostData(res.data.data);
