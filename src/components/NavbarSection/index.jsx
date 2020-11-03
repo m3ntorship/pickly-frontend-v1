@@ -30,7 +30,7 @@ export const Navigation = () => {
     {
       id: 4,
       iconUrl:
-        'https://res.cloudinary.com/dqmuowojl/image/upload/v1601849139/icons/cgafox7opgi6le1eomg4.svg',
+        'https://res.cloudinary.com/dhwuqox2w/image/upload/v1604434745/profile_j7qf7i.svg',
       path: '/profile'
     }
   ];
