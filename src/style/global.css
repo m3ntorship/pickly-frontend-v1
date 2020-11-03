@@ -1,47 +1,50 @@
 * {
-  box-sizing: border-box
+  box-sizing: border-box;
 }
 
 body {
   @apply font-primary;
   padding: 0 !important;
   margin: 0 !important;
+  background-color: #fafafb;
 }
 
-button:focus, input:focus, textarea:focus, select:focus{
-  outline:none !important;
+button:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none !important;
 }
 
-  .container {
-    max-width: 85%;
-    margin: auto;
-    @apply mx-auto;
-  }
+.container {
+  max-width: 85%;
+  margin: auto;
+  @apply mx-auto;
+}
 
-  .nav__container {
-    max-width: 85%;
-    margin: auto;
-    @apply mx-auto;
-  }
-  
+.nav__container {
+  max-width: 85%;
+  margin: auto;
+  @apply mx-auto;
+}
 
-  /* Style for the popup */
+/* Style for the popup */
 @media (max-width: 776px) {
-.popup-content {
-  width: 95%   
+  .popup-content {
+    width: 95%;
   }
 }
 
-  /* from tablet screens to the largest */
-  @media (min-width: 776px) {
-    .container {
-      max-width: 690px;
-    }
+/* from tablet screens to the largest */
+@media (min-width: 776px) {
+  .container {
+    max-width: 690px;
   }
+}
 
-  /* from small labtops screen to the largest screen */
-  @media (min-width: 1200px) {
-    .nav__container {
-      max-width: 60%;
-    }
+/* from small labtops screen to the largest screen */
+@media (min-width: 1200px) {
+  .nav__container {
+    max-width: 60%;
   }
+}

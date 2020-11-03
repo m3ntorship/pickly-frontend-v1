@@ -3,7 +3,6 @@ import { UserContext } from '../context/userContext';
 import PostSection from '../components/PostSection';
 import { PICKLY } from '../apis/clients/pickly';
 import PostLoader from '../components/LoadingComponents/PostLoader';
-import CreatePostButton from '../components/CreatePostButon';
 
 export const Home = () => {
   const { token } = useContext(UserContext);
@@ -39,7 +38,6 @@ export const Home = () => {
   return (
     <div className="bg-c900 py-6 overflow-hidden">
       <div className="container">
-        <CreatePostButton />
         {loading && <PostLoader />}
         {error && <ErrorComponent />}
         {data &&
