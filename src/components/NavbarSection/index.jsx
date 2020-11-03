@@ -44,10 +44,10 @@ export const Navigation = () => {
 };
 export const Navbar = () => {
   return (
-    <header className="bg-none pt-4 lg:pt-8 pb-2">
+    <header className="pt-4 lg:pt-8 pb-2 md:bg-white">
       <div className="nav__container">
-        <div className=" items-center grid grid-cols-2 md:grid-cols-4 justify-items-center md:justify-items-end gap-y-4">
-          <div className="md:justify-self-start mt-4 sm:mt-0 justify-self-center col-start-1 col-end-2">
+        <div className=" items-center grid grid-cols-2 md:grid-cols-4 justify-items-center md:justify-items-end">
+          <div className="mt-1 sm:mt-0 md:justify-self-center justify-self-start col-start-1 col-end-2">
             <NavLink exact to="/">
               <Heading
                 as="h1"
@@ -60,8 +60,13 @@ export const Navbar = () => {
               />
             </NavLink>
           </div>
-          <div className="col-start-2 md:col-end-4 hidden md:block">
+          <div className="col-start-2 md:col-end-4 hidden md:block md:justify-self-center">
             <Navigation />
+          </div>
+          <div className="md:justify-self-center justify-self-end">
+            <button className="w-24 h-8 bg-blue text-xs font-bold border bg-c100 text-white py-2 px-4 rounded-lg">
+              Feedback
+            </button>
           </div>
         </div>
       </div>
