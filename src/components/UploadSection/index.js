@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { ReusableDiv } from '../DivWithCenterdChildren';
 import { InputField } from '../InputField';
 import { ToggleButton } from '../ToggleButton';
@@ -16,8 +16,32 @@ export const UploadSection = ({ userImage }) => {
   const history = useHistory();
   const [imagesArr, setImagesArr] = useState([1, 1]);
   const [imageValidationErr, setImageValidationErr] = useState();
-  const [captionValidationErr, setCaptionValidationErr] = useState();
   const [isValid, setIsValid] = useState(false);
+  const [captionValid, setCaptionValid] = useState(false);
+
+  useEffect(() => {
+    if (
+      imagesToUpload.length !== 0 &&
+      imagesToUpload.length < imagesArr.length
+    ) {
+      setIsValid(false);
+      setImageValidationErr(`At least add ${imagesArr.length} Image`);
+    } else {
+      if (
+        imagesToUpload.length !== 0 &&
+        imagesToUpload.length === imagesArr.length
+      ) {
+        setIsValid(true);
+        setImageValidationErr(null);
+      }
+    }
+
+    if (caption) {
+      setCaptionValid(true);
+    } else {
+      setCaptionValid(false);
+    }
+  }, [imagesToUpload, imagesArr, caption]);
 
   const setImagesArrFun = num => {
     const imagesArr = new Array(num).fill(num);
@@ -35,22 +59,8 @@ export const UploadSection = ({ userImage }) => {
   // Post Data to the database Function
   const postData = e => {
     e.preventDefault();
-    if (imagesToUpload.length === 0 && !caption) {
-      setIsValid(false);
-      setImageValidationErr('at least add one Image');
-      setCaptionValidationErr('Caption can not be empty');
-    } else if (imagesToUpload.length === 0 && caption) {
-      setIsValid(false);
-      setImageValidationErr('at least add one Image');
-      setCaptionValidationErr(null);
-    } else if (imagesToUpload.length !== 0 && !caption) {
-      setIsValid(false);
-      setCaptionValidationErr('Caption can not be empty');
-      setImageValidationErr(null);
-    } else {
-      setIsValid(true);
-      setImageValidationErr(null);
-      setCaptionValidationErr(null);
+
+    if (captionValid && isValid) {
       const form = new FormData();
       for (let img of imagesToUpload.slice(0, imagesArr.length)) {
         form.append('images', img);
@@ -68,62 +78,73 @@ export const UploadSection = ({ userImage }) => {
   const setFun = image => {
     setImagesToUpload([...imagesToUpload, image]);
   };
+
   return (
-    <div className="bg-white my-4 pt-4 rounded-lg shadow-lg">
-      <div style={{ width: 'calc(100% - 2rem)' }} className="mx-auto mb-5">
-        <InputField
-          caption={caption}
-          onChange={handleInputChange}
-          imageURL={userImage}
+    <div className="container">
+      <div className="bg-white my-4 pt-3 rounded-lg shadow-lg">
+        <div style={{ width: 'calc(100% - 2rem)' }} className="mx-auto mb-5">
+          <InputField
+            caption={caption}
+            onChange={handleInputChange}
+            imageURL={userImage}
+          />
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <div style={{ width: 'fit-content' }}>
+              <Button
+                isRounded
+                backgroundColor="White"
+                color="SecondaryGrey"
+                className="border-2 border-c800 relative"
+              >
+                <OptionsPopup clickFun={setImagesArrFun} />
+              </Button>
+            </div>
+            <div>
+              <ToggleButton
+                selected={postAnonymously}
+                toggleSelected={toggleSelected}
+                title="Post anonymoslly"
+              />
+            </div>
+          </div>
+        </div>
+        {imageValidationErr && (
+          <div className="text-c200 text-xs mb-2 ml-2">
+            {imageValidationErr}
+          </div>
+        )}
+        <div className="container">
+          <div
+            className={cn('relative grid grid-cols-1 gap-1', {
+              'sm:grid-cols-2': imagesArr.length > 1
+            })}
+          >
+            {imagesArr.length > 1 && or}
+            {imagesArr.map((img, index) => (
+              <div key={index} className="relative">
+                <OneImage
+                  setFun={setFun}
+                  id={index}
+                  imagesNum={imagesArr.length}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+        {warningParagrapg}
+        <hr className="w-full text-c800 h-1" />
+        <PostButton
+          postData={postData}
+          isValid={isValid}
+          captionValid={captionValid}
         />
-
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-          <div style={{ width: 'fit-content' }}>
-            <Button
-              isRounded
-              backgroundColor="White"
-              color="SecondaryGrey"
-              className="border-2 border-c800 relative"
-            >
-              <OptionsPopup clickFun={setImagesArrFun} />
-            </Button>
-          </div>
-          <div>
-            <ToggleButton
-              selected={postAnonymously}
-              toggleSelected={toggleSelected}
-              title="Post anonymoslly"
-            />
-          </div>
-        </div>
       </div>
-
-      <div
-        className={cn('relative grid grid-cols-1   gap-1', {
-          'sm:grid-cols-2': imagesArr.length > 1
-        })}
-      >
-        {imagesArr.length > 1 && or}
-        {imagesArr.map((img, index) => (
-          <div key={index} className="relative">
-            <OneImage setFun={setFun} id={index} imagesNum={imagesArr.length} />
-          </div>
-        ))}
-      </div>
-      {warningParagrapg}
-      <hr className="w-full text-c800 h-1" />
-      {captionValidationErr && (
-        <div className="text-c200 text-right font-xxlg ">
-          {captionValidationErr}
-        </div>
-      )}
-      {imageValidationErr && (
-        <div className="text-c200 text-right">{imageValidationErr}</div>
-      )}
-      <PostButton postData={postData} isValid={isValid} />
     </div>
   );
 };
+
+// Helper components
 
 const OptionsPopup = ({ clickFun }) => {
   const [currentOpt, setCurrentOpt] = useState('2 Images');
@@ -146,6 +167,11 @@ const OptionsPopup = ({ clickFun }) => {
       num: 4
     }
   ];
+
+  const contentStyle = {
+    hieght: '50%',
+    backgroundColor: '#fff'
+  };
 
   return (
     <Popup
@@ -193,6 +219,7 @@ const OptionsPopup = ({ clickFun }) => {
       }
       position="bottom left"
       on="click"
+      {...{ contentStyle }}
     >
       <div>
         {optionsList.map(({ option, num }) => {
@@ -251,13 +278,13 @@ const warningParagrapg = (
   </div>
 );
 
-const PostButton = ({ postData, isValid }) => {
+const PostButton = ({ postData, isValid, captionValid }) => {
   return (
     <div className="inline-block" style={{ width: 'calc(100% - 2rem)' }}>
       <form>
         <Button
           type="submit"
-          backgroundColor={isValid ? 'blue' : 'PrimaryGrey'}
+          backgroundColor={isValid && captionValid ? 'blue' : 'PrimaryGrey'}
           color="White"
           isRounded
           padding="big"
