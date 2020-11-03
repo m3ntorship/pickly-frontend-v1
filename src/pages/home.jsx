@@ -51,10 +51,14 @@ export const Home = () => {
               createdAt,
               isAnonymous,
               resources: { images },
-              Voted
+              Voted,
+              ownedByCurrentUser
             }) => {
               return (
                 <PostSection
+                  ownedByCurrentUser={ownedByCurrentUser}
+                  data={data}
+                  setData={setData}
                   voted={Voted}
                   key={_id}
                   _id={_id}

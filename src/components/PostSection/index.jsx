@@ -23,15 +23,18 @@ const slideCss = {
 
 const PostSection = ({
   _id,
-  userName,
+  data,
+  voted,
+  images,
+  setData,
   postDate,
+  userName,
+  shareUrl,
   userImage,
   postCaption,
-  images,
-  shareUrl,
   isAnonymous,
-  voted,
   updatePostData,
+  ownedByCurrentUser,
   updateSinglePostData
 }) => {
   const postComponentFixedAssets = {
@@ -99,7 +102,9 @@ const PostSection = ({
       svg: deleteIcon,
       text: 'Delete Post',
       fun: () => {
-        PICKLY.deletePost(_id).then(res => console.log(res));
+        PICKLY.deletePost(_id)
+          .then(res => setData(data.filter(post => post._id !== _id)))
+          .catch(err => console.log(err.message));
       },
       textColor: '#e03131'
     }
@@ -116,7 +121,9 @@ const PostSection = ({
           imgURL={userImage && !isAnonymous && userImage}
           iconURL={isAnonymous && anonymousIcon}
         />
-        <OptionsBtn options={options} position="left top" />
+        {ownedByCurrentUser && (
+          <OptionsBtn options={options} position="left top" />
+        )}
       </div>
       <p className="px-4 mx-auto mt-5 text-sm font-regular">
         {postCaption && postCaption}
@@ -267,8 +274,8 @@ const deleteIcon = (
     xmlns="http://www.w3.org/2000/svg"
   >
     <path
-      fill-rule="evenodd"
-      clip-rule="evenodd"
+      fillRule="evenodd"
+      clipRule="evenodd"
       d="M13 6C13.5523 6 14 6.44772 14 7V17C14 18.6569 12.6569 20 11 20H5C3.34315 20 2 18.6569 2 17V7C2 6.44772 2.44772 6 3 6H13ZM12 8H4V17C4 17.5523 4.44772 18 5 18H11C11.5523 18 12 17.5523 12 17V8ZM5 1C5 0.447715 5.44772 0 6 0H10C10.5523 0 11 0.447715 11 1V2H15C15.5523 2 16 2.44772 16 3C16 3.55228 15.5523 4 15 4H1C0.447715 4 0 3.55228 0 3C0 2.44772 0.447715 2 1 2H5V1Z"
       fill="#E03131"
     />

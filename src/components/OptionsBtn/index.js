@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 
@@ -23,35 +23,42 @@ const contectStyle = {
   width: 'fit-content'
 };
 
-export default ({ options, position = 'left bottom', appearOn = 'click' }) => (
-  <Popup
-    trigger={
-      <button
-        style={{ minWidth: '34px', minHeight: '34px' }}
-        className="rounded-full shadow-2xl flex justify-center items-center"
-      >
-        {dotsSvg}
-      </button>
-    }
-    on={appearOn}
-    position={position}
-    keepTooltipInside
-    contentStyle={contectStyle}
-  >
-    {options.map((option, index) => (
-      <div
-        key={index}
-        className="py-1 px-6 text-left md:px-10 text-md md:text-md hover:bg-c800 transition-all duration-100 cursor-pointer"
-        onClick={option.fun}
-      >
-        <div
-          className="flex justify-between"
-          style={{ color: option.textColor }}
+export default ({ options, position = 'left bottom', appearOn = 'click' }) => {
+  const popupRef = useRef();
+  return (
+    <Popup
+      ref={popupRef}
+      trigger={
+        <button
+          style={{ minWidth: '34px', minHeight: '34px' }}
+          className="rounded-full shadow-2xl flex justify-center items-center"
         >
-          <div className="mr-2">{option.svg}</div>
-          {option.text}
+          {dotsSvg}
+        </button>
+      }
+      on={appearOn}
+      position={position}
+      keepTooltipInside
+      contentStyle={contectStyle}
+    >
+      {options.map((option, index) => (
+        <div
+          key={index}
+          className="py-1 px-6 text-left md:px-10 text-md md:text-md hover:bg-c800 transition-all duration-100 cursor-pointer"
+          onClick={() => {
+            popupRef.current.close();
+            option.fun();
+          }}
+        >
+          <div
+            className="flex justify-between"
+            style={{ color: option.textColor }}
+          >
+            <div className="mr-2">{option.svg}</div>
+            {option.text}
+          </div>
         </div>
-      </div>
-    ))}
-  </Popup>
-);
+      ))}
+    </Popup>
+  );
+};
