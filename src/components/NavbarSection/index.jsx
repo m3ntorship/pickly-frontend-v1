@@ -3,7 +3,8 @@ import { Heading, HEADING_OPTIONS } from '../Heading';
 import { Icon } from '../Navbar-icons';
 import postIcon from './post-icon.svg';
 import { NavLink } from 'react-router-dom';
-const Navigation = () => {
+
+export const Navigation = () => {
   // Icons Links
   const navData = [
     {
@@ -18,29 +19,23 @@ const Navigation = () => {
       path: '/',
       exact: true
     },
-    {
-      id: 3,
-      iconUrl:
-        'https://res.cloudinary.com/dhwuqox2w/image/upload/v1604339677/friends_cdr2tq.svg',
-      path: '/friends'
-    },
 
     {
-      id: 4,
+      id: 3,
       iconUrl:
         'https://res.cloudinary.com/dhwuqox2w/image/upload/v1604339677/notifications_tw8i0k.svg',
       path: '/notifications'
     },
 
     {
-      id: 5,
+      id: 4,
       iconUrl:
         'https://res.cloudinary.com/dqmuowojl/image/upload/v1601849139/icons/cgafox7opgi6le1eomg4.svg',
       path: '/profile'
     }
   ];
   return (
-    <div className="text-center md:text-right md:col-start-2 md:col-end-4 ">
+    <div className="text-center lg:text-right flex justify-around px-4 md:px-0">
       {navData.map(({ id, iconUrl, path, exact }) => (
         <Icon key={id} iconURL={iconUrl} to={path} exact={exact} />
       ))}
@@ -49,10 +44,10 @@ const Navigation = () => {
 };
 export const Navbar = () => {
   return (
-    <header className="bg-white pt-4 lg:pt-8 pb-2">
+    <header className="bg-none pt-4 lg:pt-8 pb-2">
       <div className="nav__container">
-        <div className=" items-center grid grid-cols-1 md:grid-cols-3 justify-items-center md:justify-items-end gap-y-4">
-          <div className="md:justify-self-start mt-4 sm:mt-0 justify-self-center">
+        <div className=" items-center grid grid-cols-2 md:grid-cols-4 justify-items-center md:justify-items-end gap-y-4">
+          <div className="md:justify-self-start mt-4 sm:mt-0 justify-self-center col-start-1 col-end-2">
             <NavLink exact to="/">
               <Heading
                 as="h1"
@@ -65,8 +60,9 @@ export const Navbar = () => {
               />
             </NavLink>
           </div>
-
-          <Navigation />
+          <div className="col-start-2 md:col-end-4 hidden md:block">
+            <Navigation />
+          </div>
         </div>
       </div>
     </header>
