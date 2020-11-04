@@ -35,9 +35,8 @@ export const UploadSection = ({ userImage }) => {
 
   // Post Data to the database Function
   const postData = e => {
-    setShowResults(true);
-    setProgress(10);
     e.preventDefault();
+
     if (imagesToUpload.length === 0 && !caption) {
       setIsValid(false);
       setImageValidationErr('at least add one Image');
@@ -52,6 +51,8 @@ export const UploadSection = ({ userImage }) => {
       setImageValidationErr(null);
     } else {
       setIsValid(true);
+      setShowResults(true);
+
       setImageValidationErr(null);
       setCaptionValidationErr(null);
       const form = new FormData();
@@ -61,11 +62,15 @@ export const UploadSection = ({ userImage }) => {
       }
       form.append('caption', caption);
       form.append('isAnonymous', postAnonymously);
+      const onUploadProgress = ProgressEvent => {
+        const { loaded, total } = ProgressEvent;
+        let precent = Math.floor((loaded * 100) / total);
+        setProgress(precent);
+      };
 
-      PICKLY.createPost(form)
-        .then(res => {
-          console.log(res);
-
+      PICKLY.createPost(form, onUploadProgress)
+        .then(data => {
+          console.log(data);
           history.push('/');
         })
         .catch(console.error);
@@ -83,7 +88,7 @@ export const UploadSection = ({ userImage }) => {
           style={{
             left: 0,
             right: 0,
-            backgroundColor: 'rgba(255, 255, 255, 0.32)'
+            backgroundColor: 'rgba(255, 255, 255, 0.40)'
           }}
         >
           <ProgressBar

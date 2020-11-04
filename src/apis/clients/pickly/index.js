@@ -13,14 +13,15 @@ const getAllPosts = () => {
   });
 };
 
-const createPost = data => {
+const createPost = (data, onUploadProgress) => {
   return POSTS_CLIENT({
     method: 'post',
     url: posts.resources.posts,
     headers: {
       'Content-Type': 'multipart/form-data'
     },
-    data
+    data,
+    onUploadProgress: onUploadProgress
   });
 };
 
