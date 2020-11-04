@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Navbar } from './components/NavbarSection';
+import { Navigation } from '../src/components/NavbarSection';
 import { Home } from './pages/home.jsx';
 import { Profile } from './pages/profile.jsx';
 import { Notifications } from './pages/notifications.jsx';
@@ -29,6 +30,9 @@ function App() {
             <ProtectedRoute path="/feedback" component={Feedback} />
             <Route path="/login" component={LoginForm} />
           </Switch>
+          <div className="block md:hidden fixed bg-white md:bg-none z-50 bottom-0 w-full py-3">
+            <Navigation />
+          </div>
         </UserContextProvider>
       </div>
     </Router>

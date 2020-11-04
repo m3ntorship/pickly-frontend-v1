@@ -1,16 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { UserContext } from '../context/userContext';
 import { useHistory } from 'react-router-dom';
 import { FeedbackForm } from "../components/FeedbackForm/index"
-import { Button, BUTTON_OPTIONS } from "../components/Button/index";
 
 export const Feedback = () => {
   const { user } = useContext(UserContext);
   const history = useHistory();
-  const [value, setValue] = useState({
-    val: '',
-    msgError: ''
-  });
+
   useEffect(() => {
     if (!user) {
       history.push('/login');

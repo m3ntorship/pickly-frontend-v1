@@ -3,7 +3,8 @@ import { Heading, HEADING_OPTIONS } from '../Heading';
 import { Icon } from '../Navbar-icons';
 import postIcon from './post-icon.svg';
 import { NavLink } from 'react-router-dom';
-const Navigation = () => {
+
+export const Navigation = () => {
   // Icons Links
   const navData = [
     {
@@ -14,7 +15,7 @@ const Navigation = () => {
     {
       id: 2,
       iconUrl:
-        'https://res.cloudinary.com/dqmuowojl/image/upload/v1601849139/icons/vzrzfrgclizafzzzjwml.svg',
+        'https://res.cloudinary.com/dhwuqox2w/image/upload/v1604339521/home_tswzsz.svg',
       path: '/',
       exact: true
     },
@@ -22,18 +23,19 @@ const Navigation = () => {
     {
       id: 3,
       iconUrl:
-        'https://res.cloudinary.com/dqmuowojl/image/upload/v1601849139/icons/uxm0ry0c9xwkz3zmooxv.svg',
+        'https://res.cloudinary.com/dhwuqox2w/image/upload/v1604339677/notifications_tw8i0k.svg',
       path: '/notifications'
     },
+
     {
       id: 4,
       iconUrl:
-        'https://res.cloudinary.com/dqmuowojl/image/upload/v1601849139/icons/cgafox7opgi6le1eomg4.svg',
+        'https://res.cloudinary.com/dhwuqox2w/image/upload/v1604434745/profile_j7qf7i.svg',
       path: '/profile'
     }
   ];
   return (
-    <div className="text-center md:text-right md:grid md:grid-cols-4 ">
+    <div className="text-center lg:text-right flex justify-around px-4 md:px-0">
       {navData.map(({ id, iconUrl, path, exact }) => (
         <Icon key={id} iconURL={iconUrl} to={path} exact={exact} />
       ))}
@@ -42,10 +44,10 @@ const Navigation = () => {
 };
 export const Navbar = () => {
   return (
-    <header className="bg-white pt-4 lg:pt-8 pb-2">
+    <header className="pt-4 lg:pt-8 pb-2 md:bg-white">
       <div className="nav__container">
-        <div className=" items-center grid grid-cols-1 md:grid-cols-3 justify-items-center md:justify-items-end gap-y-4">
-          <div className="md:justify-self-start mt-4 sm:mt-0 justify-self-center">
+        <div className=" items-center grid grid-cols-2 md:grid-cols-4 justify-items-center md:justify-items-end">
+          <div className="mt-1 sm:mt-0 md:justify-self-center justify-self-start col-start-1 col-end-2">
             <NavLink exact to="/">
               <Heading
                 as="h1"
@@ -58,10 +60,12 @@ export const Navbar = () => {
               />
             </NavLink>
           </div>
-          <Navigation />
-          <div className=" text-white bg-c1100 w-32 h-10 flex justify-center items-center rounded-lg font-bold">
-            <NavLink exact to="/feedback">
-              <button>Feedback?</button>
+          <div className="col-start-2 md:col-end-4 hidden md:block md:justify-self-center">
+            <Navigation />
+          </div>
+          <div className="md:justify-self-center justify-self-end">
+          <NavLink exact to="/feedback">
+              <button className="text-white bg-c1100 w-32 h-10  rounded-lg font-bold">Feedback?</button>
             </NavLink>
           </div>
         </div>
