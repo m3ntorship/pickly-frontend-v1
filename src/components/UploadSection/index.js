@@ -63,8 +63,8 @@ export const UploadSection = ({ userImage }) => {
     e.preventDefault();
 
     if (captionValid && isValid) {
-      const form = new FormData();
       setShowResults(true);
+      const form = new FormData();
       for (let img of imagesToUpload.slice(0, imagesArr.length)) {
         form.append('images', img);
       }

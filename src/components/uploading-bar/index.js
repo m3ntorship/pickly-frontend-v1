@@ -8,18 +8,15 @@ export const ProgressBar = ({
   circleOneStroke,
   circleTwoStroke
 }) => {
-  const [offset, setOffset] = useState(null);
-  const circleRef = useRef(null);
+  const [offset, setOffset] = useState(0);
   const center = size / 2;
   const radius = (size - strokeWidth) / 2;
-  const circumference = radius * Math.PI * 2;
-  useEffect(() => {
-    // prettier-ignore
-    const progressOffset = ((100 - progress) / 100) * circumference;
+  const circumference = 2 * Math.PI * radius;
 
+  useEffect(() => {
+    const progressOffset = ((100 - progress) / 100) * circumference;
     setOffset(progressOffset);
-    circleRef.current.style = 'transition: 1100ms ease-in-out;';
-  }, [setOffset, circumference, progress, offset]);
+  }, [progress, circumference]);
 
   return (
     <>
@@ -39,17 +36,20 @@ export const ProgressBar = ({
           cx={center}
           cy={center}
           r={radius}
-          ref={circleRef}
           strokeWidth={strokeWidth}
           strokeDashoffset={offset}
           strokeDasharray={`${circumference} ${circumference}`}
           transform={`rotate(-180 ${size / 2} ${size / 2})`}
         />
         <text
-          fill="6741D9"
-          className="font-bold text-3xl "
-          x={center}
-          y={center}
+          fill="#6741D9"
+          style={{
+            fontWeight: 'bold',
+            fontSize: '1.5rem'
+          }}
+          textAnchor="middle"
+          x="50%"
+          y="50%"
         >
           {progress}%
         </text>
