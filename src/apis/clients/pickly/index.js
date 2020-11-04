@@ -45,10 +45,18 @@ const createVoteAndRefetchPost = (imageId, postId) => {
     .then(() => getPostById(postId));
 };
 
+const deletePost = postId => {
+  return POSTS_CLIENT({
+    method: 'delete',
+    url: `${posts.resources.posts}/${postId}`
+  });
+};
+
 export const PICKLY = {
   getAllPosts,
   createPost,
   getPostById,
   createVote,
+  deletePost,
   createVoteAndRefetchPost
 };

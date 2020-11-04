@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { ReusableDiv } from '../DivWithCenterdChildren';
 import { InputField } from '../InputField';
 import { ToggleButton } from '../ToggleButton';
@@ -16,10 +16,35 @@ export const UploadSection = ({ userImage }) => {
   const history = useHistory();
   const [imagesArr, setImagesArr] = useState([1, 1]);
   const [imageValidationErr, setImageValidationErr] = useState();
-  const [captionValidationErr, setCaptionValidationErr] = useState();
   const [isValid, setIsValid] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [captionValid, setCaptionValid] = useState(false);
+
+  useEffect(() => {
+    if (
+      imagesToUpload.length !== 0 &&
+      imagesToUpload.length < imagesArr.length
+    ) {
+      setIsValid(false);
+      setImageValidationErr(`At least add ${imagesArr.length} Image`);
+    } else {
+      if (
+        imagesToUpload.length !== 0 &&
+        imagesToUpload.length === imagesArr.length
+      ) {
+        setIsValid(true);
+        setImageValidationErr(null);
+      }
+    }
+
+    if (caption) {
+      setCaptionValid(true);
+    } else {
+      setCaptionValid(false);
+    }
+  }, [imagesToUpload, imagesArr, caption]);
+
   const setImagesArrFun = num => {
     const imagesArr = new Array(num).fill(num);
     setImagesArr(imagesArr);
@@ -37,26 +62,9 @@ export const UploadSection = ({ userImage }) => {
   const postData = e => {
     e.preventDefault();
 
-    if (imagesToUpload.length === 0 && !caption) {
-      setIsValid(false);
-      setImageValidationErr('at least add one Image');
-      setCaptionValidationErr('Caption can not be empty');
-    } else if (imagesToUpload.length === 0 && caption) {
-      setIsValid(false);
-      setImageValidationErr('at least add one Image');
-      setCaptionValidationErr(null);
-    } else if (imagesToUpload.length !== 0 && !caption) {
-      setIsValid(false);
-      setCaptionValidationErr('Caption can not be empty');
-      setImageValidationErr(null);
-    } else {
-      setIsValid(true);
-      setShowResults(true);
-
-      setImageValidationErr(null);
-      setCaptionValidationErr(null);
+    if (captionValid && isValid) {
       const form = new FormData();
-
+      setShowResults(true);
       for (let img of imagesToUpload.slice(0, imagesArr.length)) {
         form.append('images', img);
       }
@@ -80,6 +88,7 @@ export const UploadSection = ({ userImage }) => {
   const setFun = image => {
     setImagesToUpload([...imagesToUpload, image]);
   };
+
   return (
     <div className="bg-white my-4 pt-4 rounded-lg shadow-lg relative">
       {showResults ? (
@@ -130,33 +139,39 @@ export const UploadSection = ({ userImage }) => {
           </div>
         </div>
       </div>
-
-      <div
-        className={cn('relative grid grid-cols-1   gap-1', {
-          'sm:grid-cols-2': imagesArr.length > 1
-        })}
-      >
-        {imagesArr.length > 1 && or}
-        {imagesArr.map((img, index) => (
-          <div key={index} className="relative">
-            <OneImage setFun={setFun} id={index} imagesNum={imagesArr.length} />
-          </div>
-        ))}
+      {imageValidationErr && (
+        <div className="text-c200 text-xs mb-2 ml-2">{imageValidationErr}</div>
+      )}
+      <div className="container">
+        <div
+          className={cn('relative grid grid-cols-1 gap-1', {
+            'sm:grid-cols-2': imagesArr.length > 1
+          })}
+        >
+          {imagesArr.length > 1 && or}
+          {imagesArr.map((img, index) => (
+            <div key={index} className="relative">
+              <OneImage
+                setFun={setFun}
+                id={index}
+                imagesNum={imagesArr.length}
+              />
+            </div>
+          ))}
+        </div>
       </div>
       {warningParagrapg}
       <hr className="w-full text-c800 h-1" />
-      {captionValidationErr && (
-        <div className="text-c200 text-right font-xxlg ">
-          {captionValidationErr}
-        </div>
-      )}
-      {imageValidationErr && (
-        <div className="text-c200 text-right">{imageValidationErr}</div>
-      )}
-      <PostButton postData={postData} isValid={isValid} />
+      <PostButton
+        postData={postData}
+        isValid={isValid}
+        captionValid={captionValid}
+      />
     </div>
   );
 };
+
+// Helper components
 
 const OptionsPopup = ({ clickFun }) => {
   const [currentOpt, setCurrentOpt] = useState('2 Images');
@@ -179,6 +194,11 @@ const OptionsPopup = ({ clickFun }) => {
       num: 4
     }
   ];
+
+  const contentStyle = {
+    hieght: '50%',
+    backgroundColor: '#fff'
+  };
 
   return (
     <Popup
@@ -226,6 +246,7 @@ const OptionsPopup = ({ clickFun }) => {
       }
       position="bottom left"
       on="click"
+      {...{ contentStyle }}
     >
       <div>
         {optionsList.map(({ option, num }) => {
@@ -284,13 +305,13 @@ const warningParagrapg = (
   </div>
 );
 
-const PostButton = ({ postData, isValid }) => {
+const PostButton = ({ postData, isValid, captionValid }) => {
   return (
     <div className="inline-block" style={{ width: 'calc(100% - 2rem)' }}>
       <form>
         <Button
           type="submit"
-          backgroundColor={isValid ? 'blue' : 'PrimaryGrey'}
+          backgroundColor={isValid && captionValid ? 'blue' : 'PrimaryGrey'}
           color="White"
           isRounded
           padding="big"
