@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from 'react';
-import './loading-bar.css';
 import PropTypes from 'prop-types';
 
 export const ProgressBar = ({
@@ -9,24 +8,25 @@ export const ProgressBar = ({
   circleOneStroke,
   circleTwoStroke
 }) => {
-  const [offset, setOffset] = useState(0);
+  const [offset, setOffset] = useState(null);
   const circleRef = useRef(null);
   const center = size / 2;
-  const radius = size / 2 - strokeWidth / 2;
-  const circumference = 2 * Math.PI * radius;
+  const radius = (size - strokeWidth) / 2;
+  const circumference = radius * Math.PI * 2;
   useEffect(() => {
     // prettier-ignore
     const progressOffset = ((100 - progress) / 100) * circumference;
+
     setOffset(progressOffset);
-    circleRef.current.style =
-      'transition: stroke-dashoffset 850ms ease-in-out;';
+    circleRef.current.style = 'transition: 1100ms ease-in-out;';
   }, [setOffset, circumference, progress, offset]);
 
   return (
     <>
-      <svg className="upload-bar" width={size} height={size}>
+      <svg width={size} height={size}>
         <circle
-          className="svg-circle-bg"
+          fill="none"
+          style={{ opacity: '20%' }}
           stroke={circleOneStroke}
           cx={center}
           cy={center}
@@ -34,21 +34,22 @@ export const ProgressBar = ({
           strokeWidth={strokeWidth}
         />
         <circle
-          className="svg-circle"
+          fill="none"
           stroke={circleTwoStroke}
           cx={center}
           cy={center}
           r={radius}
           ref={circleRef}
           strokeWidth={strokeWidth}
-          strokeDasharray={circumference}
           strokeDashoffset={offset}
+          strokeDasharray={`${circumference} ${circumference}`}
+          transform={`rotate(-180 ${size / 2} ${size / 2})`}
         />
         <text
-          className="upload-bar-text text-c100"
+          fill="6741D9"
+          className="font-bold text-3xl "
           x={center}
           y={center}
-          style={{ color: '#6741D9' }}
         >
           {progress}%
         </text>
