@@ -39,7 +39,10 @@ export const FeedbackForm=()=>{
                 </ul>
               </div>:null}
               <textarea
-              onChange={(e)=>setVal({val:e.target.value,errorMsg:value.errorMsg})}
+              onChange={(e)=>{
+                setVal({val:e.target.value,errorMsg:value.errorMsg})
+                if(value.val===""){setVal({...value,errorMsg:"Problem field needed"})}
+              }}
                 defaultValue={value.val}
                 className="absolute w-full h-16 shadow-background text-c500 rounded-lg pl-4 pt-4 resize-none block top-50 z-10"
                 type="text"
@@ -48,8 +51,8 @@ export const FeedbackForm=()=>{
                 
               ></textarea>
             {/* <p className="text-c200">{value.errorMsg}</p> */}
+            <p className="text-c200" style={{padding:"12rem 0 0 0"}}>{value.errorMsg}</p>
             <div className="flex w-full h-full justify-center lg:justify-start">
-            <p className="text-c200">{value.errorMsg}</p>
 
               <Button handleClick={validationHandling} shadow={true} isRounded={true} backgroundColor={BUTTON_OPTIONS.BACKGROUND_COLOR.Blue} color={BUTTON_OPTIONS.COLOR.White} padding={BUTTON_OPTIONS.PADDING.BIG}>
                 Send Your Feedback
