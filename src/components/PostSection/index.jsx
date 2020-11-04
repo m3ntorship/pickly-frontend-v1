@@ -8,6 +8,9 @@ import cn from 'classnames';
 import OptionsBtn from '../OptionsBtn';
 import { useEmblaCarousel } from 'embla-carousel/react';
 import useMedia from '../../helpers/useMedia';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+dayjs.extend(relativeTime);
 
 const viewportCss = {
   overflow: 'visible'
@@ -48,6 +51,9 @@ const PostSection = ({
     slidesInView: true
   });
 
+  // for date formate
+  const targetPostDate = dayjs(postDate);
+
   // return true if it's mobile view
   const isMobile = useMedia(['(max-width: 600px)'], [true], false);
 
@@ -58,27 +64,6 @@ const PostSection = ({
       }
     }
   }, [images]);
-
-  const months = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December'
-  ];
-  const date = new Date(postDate);
-  const monthName = months[date.getMonth()];
-  const dayIndex = date.getDate();
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
-  const formatedHours = ((hours + 11) % 12) + 1;
 
   // handle double Ckick event on the image
   const handleVote = (imageId, voted, postId) => {
@@ -115,9 +100,7 @@ const PostSection = ({
       <div className="px-4 mx-auto flex justify-between items-center">
         <ImageWithSideTitle
           title={isAnonymous ? 'Anonymous' : userName}
-          subTitle={`${dayIndex} ${monthName} at ${formatedHours}:${minutes} ${
-            hours > 12 ? 'PM' : 'AM'
-          }`}
+          subTitle={targetPostDate.fromNow(true)}
           imgURL={userImage && !isAnonymous && userImage}
           iconURL={isAnonymous && anonymousIcon}
         />
