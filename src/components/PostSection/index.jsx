@@ -119,7 +119,6 @@ const PostSection = ({
         {images && images.length > 1 && or}
         {images &&
           images.map(img => {
-            console.log(img);
             return (
               <div className="relative" key={img._id}>
                 <div
@@ -134,38 +133,39 @@ const PostSection = ({
                       className="absolute w-full h-full object-cover rounded-sm"
                       alt=""
                     />
-                    <div 
-                        onDoubleClick={() => {
-                        handleVote(img._id, voted, _id);
-                      }}
-                      className={cn(
-                        "absolute grid grid-cols-1 justify-items-center items-center w-full h-full",
-                        { 'hidden md:group-hover:grid': !voted },
-                      )}>
                     <div
-                      className={cn(
-                        'w-12 h-12 md:w-24 md:h-24  bg-c200  cursor-pointer rounded-full grid grid-cols-1 justify-items-center',
-                        { 'bg-c500': !img.votedByUser }
-                      )}
-                      // style={{
-                      //   height:"25%"
-                      // }}
-                      
-                      onClick={() => {
+                      onDoubleClick={() => {
                         handleVote(img._id, voted, _id);
                       }}
-                    >
-                      <HeartIcon voted={voted} />
-                      {voted && (
-                        <span className="text-white font-bold text-xxs sm:text-xs">
-                          {img.votes
-                            ? totalVotes &&
-                              Math.round((img.votes.count / totalVotes) * 100)
-                            : '0'}
-                          %
-                        </span>
+                      className={cn(
+                        'absolute grid grid-cols-1 justify-items-center items-center w-full h-full',
+                        { 'hidden md:group-hover:grid': !voted }
                       )}
-                    </div>
+                    >
+                      <div
+                        className={cn(
+                          'w-12 h-12 md:w-24 md:h-24  bg-c200  cursor-pointer rounded-full grid grid-cols-1 justify-items-center',
+                          { 'bg-c500': !img.votedByUser }
+                        )}
+                        // style={{
+                        //   height:"25%"
+                        // }}
+
+                        onClick={() => {
+                          handleVote(img._id, voted, _id);
+                        }}
+                      >
+                        <HeartIcon voted={voted} />
+                        {voted && (
+                          <span className="text-white font-bold text-xxs sm:text-xs">
+                            {img.votes
+                              ? totalVotes &&
+                                Math.round((img.votes.count / totalVotes) * 100)
+                              : '0'}
+                            %
+                          </span>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>

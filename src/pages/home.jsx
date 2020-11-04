@@ -16,7 +16,6 @@ export const Home = () => {
     PICKLY.getAllPosts()
       .then(({ data }) => {
         setData(data.data);
-        console.log(data.data);
         setLoading(false);
       })
       .catch(err => {
