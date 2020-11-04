@@ -24,7 +24,7 @@ export const FeedbackForm=()=>{
              
               <div className="absolute w-full h-16 flex justify-end mt-4">
                   <input type="text" value={value.dropDownValue} placeholder="Category" className="z-40 absolute w-full h-16 shadow-background text-c500 rounded-lg pl-4"/>
-                  <div onClick={handleDropDown} className="absolute w-16 h-16 shadow-background text-c500 flex justify-center items-center z-40">
+                  <div onClick={handleDropDown} className="absolute w-16 h-16 text-c500 flex justify-center items-center z-40">
              
                 <img src={icon} alt=""/>
               </div>
