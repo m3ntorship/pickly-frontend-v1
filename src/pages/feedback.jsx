@@ -25,7 +25,7 @@ export const Feedback = () => {
               <br />
               your feedback
             </h1>
-            <p className="text-c500 mt-4">
+            <p className="text-c500 mt-4 mb-4">
               At elit leo dignissim volutpat sit.et amet enim, porttitor felis
             </p>
             <FeedbackForm />

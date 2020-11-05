@@ -9,6 +9,7 @@ export const FeedbackForm=()=>{
       setVal({val:value.val,errorMsg:"",status:!value.status})
     }
     const validationHandling=()=>{
+      
       console.log(value.val)
       console.log(value.dropDownValue)
       if(value.val===""||value.dropDownValue===""){
@@ -22,7 +23,7 @@ export const FeedbackForm=()=>{
     return(
         <form className="relative mb-12 bg-c900" onSubmit={(e)=>e.preventDefault()}>
              
-              <div className="absolute w-full h-16 flex justify-end mt-4">
+              <div className="absolute w-full h-16 flex justify-end">
                   <input type="text" value={value.dropDownValue} placeholder="Category" className="z-40 absolute w-full h-16 shadow-background text-c500 rounded-lg pl-4"/>
                   <div onClick={handleDropDown} className="absolute w-16 h-16 text-c500 flex justify-center items-center z-40">
              
@@ -41,12 +42,7 @@ export const FeedbackForm=()=>{
               </div>:null}
               <textarea
                 onChange={(e)=>{
-                  setVal({val:e.target.value,errorMsg:value.errorMsg})
-                  if(e.target.value===""){
-                    setVal({...value,errorMsg:"Problem field needed"})
-                  }else{
-                    setVal({...value,errorMsg:""})
-                  }
+                  setVal({...value,val:e.target.value,errorMsg:"Problem field needed"})
                 }}
               
                 defaultValue={value.val}
@@ -57,10 +53,10 @@ export const FeedbackForm=()=>{
                 
               ></textarea>
             {/* <p className="text-c200">{value.errorMsg}</p> */}
-            <p className="text-c200" style={{padding:"12rem 0 0 0"}}>{value.errorMsg}</p>
+              <p className={`text-c200 ${value.val?"invisible":"visible"}`} style={{padding:"12rem 0 0 0"}}>{value.errorMsg}</p>
             <div className="flex w-full h-full justify-center lg:justify-start">
 
-              <Button handleClick={validationHandling} shadow={true} isRounded={true} backgroundColor={!value.errorMsg?BUTTON_OPTIONS.BACKGROUND_COLOR.Blue:BUTTON_OPTIONS.BACKGROUND_COLOR.SecondaryGrey} color={BUTTON_OPTIONS.COLOR.White} padding={BUTTON_OPTIONS.PADDING.BIG}>
+              <Button handleClick={validationHandling} shadow={true} isRounded={true} backgroundColor={value.val?BUTTON_OPTIONS.BACKGROUND_COLOR.Blue:BUTTON_OPTIONS.BACKGROUND_COLOR.SecondaryGrey} color={BUTTON_OPTIONS.COLOR.White} padding={BUTTON_OPTIONS.PADDING.BIG}>
                 Send Your Feedback
               </Button>
               </div>
