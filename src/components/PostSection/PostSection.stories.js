@@ -23,7 +23,7 @@ export const Test = () => {
           shareUrl="lol"
           savesNumbers={20}
           isAnonymous={true}
-          voted={false}
+          voted={true}
           options={['Option 1', 'Option 2', 'Option 3']}
           positions="bottom left"
           appearOn="click"
@@ -38,7 +38,7 @@ export const Test = () => {
               votes: {
                 count: 5
               },
-              // votedByUser: true,
+              votedByUser: true,
               _id: '5f9825e61e930cfdc8738683'
             },
             {

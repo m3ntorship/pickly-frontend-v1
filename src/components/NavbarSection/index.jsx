@@ -64,9 +64,9 @@ export const Navbar = () => {
             <Navigation />
           </div>
           <div className="md:justify-self-center justify-self-end">
-            <button className="w-24 h-8 bg-blue text-xs font-bold border bg-c100 text-white py-2 px-4 rounded-lg">
-              Feedback
-            </button>
+          <NavLink exact to="/feedback">
+              <button className="text-white bg-c1100 w-32 h-10  rounded-lg font-bold">Feedback?</button>
+            </NavLink>
           </div>
         </div>
       </div>
