@@ -46,12 +46,12 @@ export const Button = ({
   isOpacity,
   className,
   handleClick,
-  disabled
+  disabled=false
 }) => {
   return (
     <button
       onClick={handleClick}
-      
+      disabled={disabled}
       className={cn(
         'flex items-center justify-center outline-none focus:outline-none',
         { 'shadow-background': shadow },

@@ -9,7 +9,7 @@ export const FeedbackForm=()=>{
       setVal({val:value.val,errorMsg:"",status:!value.status})
     }
     const validationHandling=()=>{
-      
+      alert("done")
       console.log(value.val)
       console.log(value.dropDownValue)
       if(value.val===""||value.dropDownValue===""){
@@ -56,7 +56,7 @@ export const FeedbackForm=()=>{
               <p className={`text-c200 ${value.val?"invisible":"visible"}`} style={{padding:"12rem 0 0 0"}}>{value.errorMsg}</p>
             <div className="flex w-full h-full justify-center lg:justify-start">
 
-              <Button handleClick={validationHandling} shadow={true} isRounded={true} backgroundColor={value.val?BUTTON_OPTIONS.BACKGROUND_COLOR.Blue:BUTTON_OPTIONS.BACKGROUND_COLOR.SecondaryGrey} color={BUTTON_OPTIONS.COLOR.White} padding={BUTTON_OPTIONS.PADDING.BIG}>
+              <Button handleClick={validationHandling} shadow={true} disabled={value.val?false:true} isRounded={true} backgroundColor={value.val?BUTTON_OPTIONS.BACKGROUND_COLOR.Blue:BUTTON_OPTIONS.BACKGROUND_COLOR.SecondaryGrey} color={BUTTON_OPTIONS.COLOR.White} padding={BUTTON_OPTIONS.PADDING.BIG}>
                 Send Your Feedback
               </Button>
               </div>
