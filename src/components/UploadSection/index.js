@@ -97,7 +97,7 @@ export const UploadSection = ({ userImage }) => {
           style={{
             left: 0,
             right: 0,
-            backgroundColor: 'rgba(255, 255, 255, 0.40)'
+            backgroundColor: 'rgba(255, 255, 255, 0.6)'
           }}
         >
           <ProgressBar
