@@ -19,7 +19,6 @@ export const ProgressCircle = ({ progress }) => {
     <div>
       <svg className="svg z-0 w-10 h-10 ">
         <circle
-          className="svg-circle-bg"
           stroke="#EEE"
           fill="#EE0000"
           cx={center}
@@ -28,7 +27,6 @@ export const ProgressCircle = ({ progress }) => {
         />
         strokeWidth={1}
         <circle
-          className="svg-circle z-0"
           stroke="#78F1CD"
           cx={center}
           cy={center}

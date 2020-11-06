@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom';
 import { OneImage } from './OneImage';
 import Popup from 'reactjs-popup';
 import cn from 'classnames';
-
+import { ProgressBar } from '../uploading-bar';
 export const UploadSection = ({ userImage }) => {
   const [imagesToUpload, setImagesToUpload] = useState([]);
   const [postAnonymously, setPostAnonymously] = useState(false);
@@ -17,6 +17,8 @@ export const UploadSection = ({ userImage }) => {
   const [imagesArr, setImagesArr] = useState([1, 1]);
   const [imageValidationErr, setImageValidationErr] = useState();
   const [isValid, setIsValid] = useState(false);
+  const [showResults, setShowResults] = useState(false);
+  const [progress, setProgress] = useState(0);
   const [captionValid, setCaptionValid] = useState(false);
 
   useEffect(() => {
@@ -61,14 +63,22 @@ export const UploadSection = ({ userImage }) => {
     e.preventDefault();
 
     if (captionValid && isValid) {
+      setShowResults(true);
       const form = new FormData();
       for (let img of imagesToUpload.slice(0, imagesArr.length)) {
         form.append('images', img);
       }
       form.append('caption', caption);
       form.append('isAnonymous', postAnonymously);
-      PICKLY.createPost(form)
-        .then(({ data }) => {
+      const onUploadProgress = ProgressEvent => {
+        const { loaded, total } = ProgressEvent;
+        let precent = Math.floor((loaded * 100) / total);
+        setProgress(precent);
+      };
+
+      PICKLY.createPost(form, onUploadProgress)
+        .then(data => {
+          console.log(data);
           history.push('/');
         })
         .catch(console.error);
@@ -80,66 +90,83 @@ export const UploadSection = ({ userImage }) => {
   };
 
   return (
-    <div className="container">
-      <div className="bg-white my-4 pt-3 rounded-lg shadow-lg">
-        <div style={{ width: 'calc(100% - 2rem)' }} className="mx-auto mb-5">
-          <InputField
-            caption={caption}
-            onChange={handleInputChange}
-            imageURL={userImage}
+    <div className="bg-white my-4 pt-4 rounded-lg shadow-lg relative">
+      {showResults ? (
+        <div
+          className="absolute z-20 h-full w-full  flex justify-center items-center"
+          style={{
+            left: 0,
+            right: 0,
+            backgroundColor: 'rgba(255, 255, 255, 0.6)'
+          }}
+        >
+          <ProgressBar
+            progress={progress}
+            size={200}
+            strokeWidth={25}
+            circleOneStroke="#6741D9"
+            circleTwoStroke="#6741D9"
           />
+        </div>
+      ) : null}
+      <div
+        style={{ width: 'calc(100% - 2rem)' }}
+        className="mx-auto mb-5 relative"
+      >
+        <InputField
+          caption={caption}
+          onChange={handleInputChange}
+          imageURL={userImage}
+        />
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-            <div style={{ width: 'fit-content' }}>
-              <Button
-                isRounded
-                backgroundColor="White"
-                color="SecondaryGrey"
-                className="border-2 border-c800 relative"
-              >
-                <OptionsPopup clickFun={setImagesArrFun} />
-              </Button>
-            </div>
-            <div>
-              <ToggleButton
-                selected={postAnonymously}
-                toggleSelected={toggleSelected}
-                title="Post anonymoslly"
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+          <div style={{ width: 'fit-content' }}>
+            <Button
+              isRounded
+              backgroundColor="White"
+              color="SecondaryGrey"
+              className="border-2 border-c800 relative"
+            >
+              <OptionsPopup clickFun={setImagesArrFun} />
+            </Button>
+          </div>
+          <div>
+            <ToggleButton
+              selected={postAnonymously}
+              toggleSelected={toggleSelected}
+              title="Post anonymoslly"
+            />
+          </div>
+        </div>
+      </div>
+      {imageValidationErr && (
+        <div className="text-c200 text-xs mb-2 ml-2">{imageValidationErr}</div>
+      )}
+      <div className="container">
+        <div
+          className={cn('relative grid grid-cols-1 gap-1', {
+            'sm:grid-cols-2': imagesArr.length > 1
+          })}
+        >
+          {imagesArr.length > 1 && or}
+          {imagesArr.map((img, index) => (
+            <div key={index} className="relative">
+              <OneImage
+                setFun={setFun}
+                id={index}
+                imagesNum={imagesArr.length}
               />
             </div>
-          </div>
+          ))}
         </div>
-        {imageValidationErr && (
-          <div className="text-c200 text-xs mb-2 ml-2">
-            {imageValidationErr}
-          </div>
-        )}
-        <div className="container">
-          <div
-            className={cn('relative grid grid-cols-1 gap-1', {
-              'sm:grid-cols-2': imagesArr.length > 1
-            })}
-          >
-            {imagesArr.length > 1 && or}
-            {imagesArr.map((img, index) => (
-              <div key={index} className="relative">
-                <OneImage
-                  setFun={setFun}
-                  id={index}
-                  imagesNum={imagesArr.length}
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-        {warningParagrapg}
-        <hr className="w-full text-c800 h-1" />
-        <PostButton
-          postData={postData}
-          isValid={isValid}
-          captionValid={captionValid}
-        />
       </div>
+      {warningParagrapg}
+      <hr className="w-full text-c800 h-1" />
+      <PostButton
+        postData={postData}
+        isValid={isValid}
+        captionValid={captionValid}
+      />
     </div>
   );
 };
