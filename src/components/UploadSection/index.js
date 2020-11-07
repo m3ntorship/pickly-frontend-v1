@@ -90,7 +90,7 @@ export const UploadSection = ({ userImage }) => {
   };
 
   return (
-    <div className="bg-white my-4 pt-4 rounded-lg shadow-lg relative">
+    <div className="bg-white my-4 pt-4 rounded-lg shadow-lg relative mb-32">
       {showResults ? (
         <div
           className="absolute z-20 h-full w-full  flex justify-center items-center"
