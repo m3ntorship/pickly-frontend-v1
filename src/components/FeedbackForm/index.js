@@ -34,7 +34,7 @@ export const FeedbackForm=()=>{
         <form className="relative mb-12 bg-c900" onSubmit={(e)=>{
           e.preventDefault()
           PICKLY.sendFeedback({
-            "category": value.dorpDownValue,
+            "category": "UI/UX",
             "body":value.val
           }).then((res)=>{
             console.log(res)
