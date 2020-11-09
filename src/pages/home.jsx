@@ -9,11 +9,13 @@ export const Home = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [pageNum, setPageNum] = useState(1);
   // This useEffect() for fetching data when the route load
   useEffect(() => {
     setLoading(true);
-    PICKLY.getAllPosts()
+    PICKLY.getAllPosts(pageNum)
       .then(({ data }) => {
+        // console.log(data);
         setData(data.data);
         setLoading(false);
       })
@@ -21,7 +23,32 @@ export const Home = () => {
         setLoading(false);
         setError(true);
       });
-  }, [token]);
+  }, [token, pageNum]);
+
+  const fetchNewPost = e => {
+    setLoading(true);
+    setPageNum(pageNum + 1);
+    PICKLY.getAllPosts(pageNum)
+      .then(({ data }) => {
+        setData(data.push(data.slice(data.data.length)));
+        setLoading(false);
+        console.log('updated Data', data);
+      })
+      .catch(err => {
+        setLoading(false);
+        setError(true);
+      });
+  };
+
+  document.addEventListener('scroll', () => {
+    // console.log('First', window.innerHeight + window.scrollY);
+    // console.log('Second', document.body.offsetHeight);
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+      fetchNewPost();
+    }
+  });
+
+  document.removeEventListener('scroll', fetchNewPost);
 
   // This useEffect for update the feed__when data value change
   useEffect(() => {}, [data]);

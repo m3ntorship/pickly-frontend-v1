@@ -7,9 +7,10 @@ const {
 
 const POSTS_CLIENT = createClient(posts.host);
 
-const getAllPosts = () => {
+const getAllPosts = pageNum => {
+  const numOfPosts = 5;
   return POSTS_CLIENT({
-    url: posts.resources.posts
+    url: `${posts.resources.posts}/?limit=${numOfPosts}&page=${pageNum}`
   });
 };
 
