@@ -3,7 +3,6 @@ import { auth } from 'firebase';
 
 export const createClient = (baseURL, injectToken = true) => {
   const CLIENT = create({ baseURL });
-
   if (injectToken) {
     CLIENT.interceptors.request.use(
       function (config) {

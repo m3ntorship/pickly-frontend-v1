@@ -1,10 +1,20 @@
-import React,{useState} from "react"
+import React,{useState,useEffect} from "react"
 import { Button, BUTTON_OPTIONS } from '../Button/index';
 import icon from "./down-chevron.svg"
+import { PICKLY } from '../../apis/clients';
 
 export const FeedbackForm=()=>{
- 
-    const [value,setVal]=useState({val:"",errorMsg:"",status:false,dropDownValue:""})
+  const [categories,setCategories]=useState(null)
+  const [value,setVal]=useState({val:"",errorMsg:"",status:false,dropDownValue:"",textLength:0})
+
+  useEffect(()=>{
+    PICKLY.getGategories().then(({data})=>{
+      setCategories(data)
+      console.log(categories)
+    }).catch(err => {
+      console.log(err)
+    });
+  },[])
     const handleDropDown =()=>{
       setVal({val:value.val,errorMsg:"",status:!value.status})
     }
@@ -21,7 +31,17 @@ export const FeedbackForm=()=>{
       setVal({...value,status:false,dropDownValue:e.target.innerHTML})
     }
     return(
-        <form className="relative mb-12 bg-c900" onSubmit={(e)=>e.preventDefault()}>
+        <form className="relative mb-12 bg-c900" onSubmit={(e)=>{
+          e.preventDefault()
+          PICKLY.sendFeedback({
+            "category": "ghghhggh",
+            "body":"ghghgh"
+          }).then((res)=>{
+            console.log(res)
+          }).catch((err)=>{
+            console.log(err)
+          })
+          }}>
              
               <div className="absolute w-full h-16 flex justify-end">
                   <input type="text" value={value.dropDownValue} placeholder="Category" className="z-40 absolute w-full h-16 shadow-background text-c500 rounded-lg pl-4"/>
@@ -42,18 +62,19 @@ export const FeedbackForm=()=>{
               </div>:null}
               <textarea
                 onChange={(e)=>{
-                  setVal({...value,val:e.target.value,errorMsg:"Problem field needed"})
+                  
+                  setVal({...value,val:e.target.value,errorMsg:"Problem field needed",textLength:e.target.value.length})
                 }}
-              
+                maxLength="10"
                 defaultValue={value.val}
-                className="absolute w-full h-16 shadow-background text-c500 rounded-lg pl-4 pt-4 resize-none block top-50 z-10"
+                className={`absolute ${value.textLength=9?"border-c200":null} w-full h-16 shadow-background text-c500 rounded-lg pl-4 pt-4 resize-none block top-50 z-10`}
                 type="text"
                 placeholder="Problem"
                 style={{top:"6rem"}}
                 
               ></textarea>
             {/* <p className="text-c200">{value.errorMsg}</p> */}
-              <p className={`text-c200 ${value.val?"invisible":"visible"}`} style={{padding:"12rem 0 0 0"}}>{value.errorMsg}</p>
+              <p className={`text-c200 ${value.val?"invisible":"visible"}`} style={{padding:"11rem 0 0 0"}}>{value.errorMsg}</p>
             <div className="flex w-full h-full justify-center lg:justify-start">
 
               <Button handleClick={validationHandling} shadow={true} disabled={value.val?false:true} isRounded={true} backgroundColor={value.val?BUTTON_OPTIONS.BACKGROUND_COLOR.Blue:BUTTON_OPTIONS.BACKGROUND_COLOR.SecondaryGrey} color={BUTTON_OPTIONS.COLOR.White} padding={BUTTON_OPTIONS.PADDING.BIG}>

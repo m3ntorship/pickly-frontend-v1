@@ -27,7 +27,7 @@ function App() {
             <ProtectedRoute path="/profile" component={Profile} />
             <ProtectedRoute path="/post" component={Post} />
             <ProtectedRoute path="/posts/:id" component={SinglePost} />
-            <ProtectedRoute path="/feedback" component={Feedback} />
+            <ProtectedRoute path="/feedbacks" component={Feedback} />
             <Route path="/login" component={LoginForm} />
           </Switch>
           <div className="block md:hidden fixed bg-white md:bg-none z-50 bottom-0 w-full py-3">

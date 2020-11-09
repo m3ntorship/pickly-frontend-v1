@@ -12,6 +12,7 @@ export const Feedback = () => {
       history.push('/login');
     }
   });
+
   return (
     <div className="lg:relative lg:w-full h-screen bg-c900 pt-4 lg:pt-16 pb-2 flex">
       <div className="absolute lg:ml-8 hidden lg:block z-50">

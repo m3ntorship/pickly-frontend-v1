@@ -1,6 +1,6 @@
 import config from '../../../configs';
 import { createClient } from '../../utils';
-
+ 
 const {
   services: { posts }
 } = config;
@@ -50,12 +50,29 @@ const deletePost = postId => {
     url: `${posts.resources.posts}/${postId}`
   });
 };
+ 
+ const sendFeedback = data => {
+  return POSTS_CLIENT({
+    method: 'post',
+    url: posts.resources.feedback,
+    data
+  });
+};
+const getGategories = () => {
+  return POSTS_CLIENT({
+    url:`${posts.resources.feedback}/categories`
+  });
+};
 
+
+ 
 export const PICKLY = {
   getAllPosts,
   createPost,
   getPostById,
   createVote,
   deletePost,
-  createVoteAndRefetchPost
+  createVoteAndRefetchPost,
+  sendFeedback,
+  getGategories
 };
