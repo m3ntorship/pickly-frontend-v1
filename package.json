@@ -9,6 +9,7 @@
     "autoprefixer": "^9.8.6",
     "axios": "^0.20.0",
     "classnames": "^2.2.6",
+    "dayjs": "^1.9.4",
     "embla-carousel": "^4.0.6",
     "firebase": "^7.22.1",
     "postcss-extend": "^1.0.5",
