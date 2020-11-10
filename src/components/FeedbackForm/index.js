@@ -6,7 +6,7 @@ import { PICKLY } from '../../apis/clients';
 export const FeedbackForm=()=>{
   const [categories,setCategories]=useState(null)
   const [value,setVal]=useState({val:"",errorMsg:"",status:false,dropDownValue:"",textLength:0})
-  const [length,setLength]=useState({min:50 , max:500,errMsg:""})
+  const [length,setLength]=useState({max:500,errMsg:""})
   useEffect(()=>{
 
     PICKLY.getGategories().then(({data})=>{
@@ -78,15 +78,15 @@ export const FeedbackForm=()=>{
               <textarea
                 onChange={(e)=>{
                   console.log(value.val.length)
-                  if(value.val.length<length.min){
+                  if(value.val.length+1===length.max){
                     setLength({...length,errMsg:"should msg between 50 to 500 character"})
-                  }else if(value.val.length>length.min){
+                  }else if(value.val.length+1<length.max){
                     setLength({...length,errMsg:""})
 
                   }
                   setVal({...value,val:e.target.value,errorMsg:"Problem field needed",textLength:e.target.value.length})
                 }}
-                minLength={length.min}
+                // minLength={length.min}
                 maxLength={length.max}
                 defaultValue={value.val}
                 className={`absolute ${value.textLength?"border-c200":null} w-full h-16 shadow-background text-c500 rounded-lg pl-4 pt-4 resize-none block top-50 z-10`}
@@ -101,7 +101,7 @@ export const FeedbackForm=()=>{
 
             <div className="flex w-full h-full justify-center lg:justify-start">
 
-              <Button handleClick={validationHandling} shadow={true} disabled={value.val&&value.val.length>length.min&&value.val.length<500?false:true} isRounded={true} backgroundColor={value.val&&value.val.length>length.min&&value.val.length?BUTTON_OPTIONS.BACKGROUND_COLOR.Blue:BUTTON_OPTIONS.BACKGROUND_COLOR.SecondaryGrey} color={BUTTON_OPTIONS.COLOR.White} padding={BUTTON_OPTIONS.PADDING.BIG}>
+              <Button handleClick={validationHandling} shadow={true} disabled={value.val&&value.val.length<length.max?false:true} isRounded={true} backgroundColor={value.val&&value.val.length<length.max?BUTTON_OPTIONS.BACKGROUND_COLOR.Blue:BUTTON_OPTIONS.BACKGROUND_COLOR.SecondaryGrey} color={BUTTON_OPTIONS.COLOR.White} padding={BUTTON_OPTIONS.PADDING.BIG}>
                 Send Your Feedback
               </Button>
               </div>
