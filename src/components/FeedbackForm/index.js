@@ -6,7 +6,7 @@ import { PICKLY } from '../../apis/clients';
 export const FeedbackForm=()=>{
   const [categories,setCategories]=useState(null)
   const [value,setVal]=useState({val:"",errorMsg:"",status:false,dropDownValue:"",textLength:0})
-
+  const [length,setLength]=useState({min:50 , max:500,errMsg:""})
   useEffect(()=>{
 
     PICKLY.getGategories().then(({data})=>{
@@ -21,6 +21,7 @@ export const FeedbackForm=()=>{
     const validationHandling=()=>{
       alert("done")
       console.log(value.val)
+      
       console.log(value.dropDownValue)
       if(value.val===""||value.dropDownValue===""){
           setVal({...value,errorMsg:"Problem field needed"})
@@ -28,6 +29,7 @@ export const FeedbackForm=()=>{
   }
     const handleValueFromDropDown=(e)=>{
       console.log(value.dropDownValue)
+      
       setVal({...value,status:false,dropDownValue:e.target.innerHTML})
     }
     return(
@@ -75,12 +77,19 @@ export const FeedbackForm=()=>{
                 </div>:null} 
               <textarea
                 onChange={(e)=>{
-                  
+                  console.log(value.val.length)
+                  if(value.val.length<length.min){
+                    setLength({...length,errMsg:"should msg between 50 to 500 character"})
+                  }else if(value.val.length>length.min){
+                    setLength({...length,errMsg:""})
+
+                  }
                   setVal({...value,val:e.target.value,errorMsg:"Problem field needed",textLength:e.target.value.length})
                 }}
-                maxLength="10"
+                minLength={length.min}
+                maxLength={length.max}
                 defaultValue={value.val}
-                className={`absolute ${value.textLength=9?"border-c200":null} w-full h-16 shadow-background text-c500 rounded-lg pl-4 pt-4 resize-none block top-50 z-10`}
+                className={`absolute ${value.textLength?"border-c200":null} w-full h-16 shadow-background text-c500 rounded-lg pl-4 pt-4 resize-none block top-50 z-10`}
                 type="text"
                 placeholder="Problem"
                 style={{top:"6rem"}}
@@ -88,9 +97,11 @@ export const FeedbackForm=()=>{
               ></textarea>
             {/* <p className="text-c200">{value.errorMsg}</p> */}
               <p className={`text-c200 ${value.val?"invisible":"visible"}`} style={{padding:"11rem 0 0 0"}}>{value.errorMsg}</p>
+              <p className={`text-c200 ${value.val.length<length.errMsg?"invisible":"visible"}`}>{length.errMsg}</p>
+
             <div className="flex w-full h-full justify-center lg:justify-start">
 
-              <Button handleClick={validationHandling} shadow={true} disabled={value.val?false:true} isRounded={true} backgroundColor={value.val?BUTTON_OPTIONS.BACKGROUND_COLOR.Blue:BUTTON_OPTIONS.BACKGROUND_COLOR.SecondaryGrey} color={BUTTON_OPTIONS.COLOR.White} padding={BUTTON_OPTIONS.PADDING.BIG}>
+              <Button handleClick={validationHandling} shadow={true} disabled={value.val&&value.val.length>length.min&&value.val.length<500?false:true} isRounded={true} backgroundColor={value.val&&value.val.length>length.min&&value.val.length?BUTTON_OPTIONS.BACKGROUND_COLOR.Blue:BUTTON_OPTIONS.BACKGROUND_COLOR.SecondaryGrey} color={BUTTON_OPTIONS.COLOR.White} padding={BUTTON_OPTIONS.PADDING.BIG}>
                 Send Your Feedback
               </Button>
               </div>

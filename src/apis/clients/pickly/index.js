@@ -55,16 +55,16 @@ const deletePost = postId => {
  const sendFeedback = data => {
   return POSTS_CLIENT({
     method: 'post',
-    // url: posts.resources.feedback,
-    url:`https://api.mocki.io/v1/c801b325`,
+    url: posts.resources.feedback,
+    // url:`https://api.mocki.io/v1/c801b325`,
     data
   });
 };
 const getGategories = () => {
   return POSTS_CLIENT({
-    method:"get",
-    // url:`${posts.resources.feedback}/categories`
-    url:`https://api.mocki.io/v1/c7efe600`
+    method:"get", 
+    url:`${posts.resources.feedback}/categories`
+    // url:`https://api.mocki.io/v1/c7efe600`
     
   });
 };
