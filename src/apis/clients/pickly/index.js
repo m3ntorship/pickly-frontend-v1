@@ -35,7 +35,7 @@ const getPostById = postId => {
 const createVote = imageId => {
   return POSTS_CLIENT({
     method: 'put',
-    url: `${posts.resources.images}/votes/${imageId}`
+    url: `${posts.resources.votes}/${imageId}`
   });
 };
 
