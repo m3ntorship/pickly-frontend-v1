@@ -43,9 +43,9 @@ export const FeedbackForm=()=>{
           })
           }}>
              
-              <div className="absolute w-full h-16 flex justify-end">
-                  <input type="text" value={value.dropDownValue} readOnly placeholder="Category" className="z-40 absolute w-full h-16 shadow-background text-c500 rounded-lg pl-4"/>
-                  <div onClick={handleDropDown} className="absolute w-16 h-16 text-c500 flex justify-center items-center z-40">
+              <div className="cursor-pointer absolute w-full h-16 flex justify-end" onClick={handleDropDown}>
+                  <input type="text" value={value.dropDownValue} readOnly placeholder="Category" className="cursor-pointer z-40 absolute w-full h-16 shadow-background text-c500 rounded-lg pl-4"/>
+                  <div  className="absolute w-16 h-16 text-c500 flex justify-center items-center z-40">
              
                 <img src={icon} alt=""/>
               </div>
@@ -57,7 +57,7 @@ export const FeedbackForm=()=>{
                  return(
                    <div key={id}>
                     <li onClick={handleValueFromDropDown} 
-                    className="pt-2 pb-2 pl-4 w-full hover:bg-c900 hover:pl-0 hover:text-black">
+                    className="cursor-pointer pt-2 pb-2 pl-4 w-full hover:bg-c900 hover:pl-0 hover:text-black">
                       {categorie.title}
                     </li>
                     </div>
