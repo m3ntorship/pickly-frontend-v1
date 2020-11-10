@@ -13,11 +13,11 @@ const getAllNotifications = () => {
   });
 };
 
-const createSingleNotification = data => {
+const createSingleNotification = id => {
   return NOTIFICATIONS_CLIENT({
     method: 'post',
     url: notifications.resources.notifications,
-    data
+    data: { id: id }
   });
 };
 
