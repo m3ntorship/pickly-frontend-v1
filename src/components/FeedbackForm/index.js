@@ -8,15 +8,15 @@ export const FeedbackForm=()=>{
   const [value,setVal]=useState({val:"",errorMsg:"",status:false,dropDownValue:"",textLength:0})
 
   useEffect(()=>{
+
     PICKLY.getGategories().then(({data})=>{
-      setCategories(data)
-      console.log(categories)
+        setCategories(data)
     }).catch(err => {
       console.log(err)
     });
-  },[])
+  },[value.status])
     const handleDropDown =()=>{
-      setVal({val:value.val,errorMsg:"",status:!value.status})
+      setVal({...value,errorMsg:"",status:!value.status})
     }
     const validationHandling=()=>{
       alert("done")
@@ -34,7 +34,7 @@ export const FeedbackForm=()=>{
         <form className="relative mb-12 bg-c900" onSubmit={(e)=>{
           e.preventDefault()
           PICKLY.sendFeedback({
-            "category": "UI/UX",
+            "category": value.dropDownValue,
             "body":value.val
           }).then((res)=>{
             console.log(res)
@@ -44,22 +44,35 @@ export const FeedbackForm=()=>{
           }}>
              
               <div className="absolute w-full h-16 flex justify-end">
-                  <input type="text" value={value.dropDownValue} placeholder="Category" className="z-40 absolute w-full h-16 shadow-background text-c500 rounded-lg pl-4"/>
+                  <input type="text" value={value.dropDownValue} readOnly placeholder="Category" className="z-40 absolute w-full h-16 shadow-background text-c500 rounded-lg pl-4"/>
                   <div onClick={handleDropDown} className="absolute w-16 h-16 text-c500 flex justify-center items-center z-40">
              
                 <img src={icon} alt=""/>
               </div>
               </div>
               <div>
-              {value.status?<div className={`absolute shadow-xl text-c500 w-full z-30 bg-white`}>
-                <ul className=" mt-20 w-full">
-                  <li 
-                  onClick={handleValueFromDropDown}
-                  className="pt-2 pb-2 pl-4 w-full hover:bg-c900 hover:pl-0 hover:text-black">Problem1</li>
-                  <li onClick={handleValueFromDropDown} className="pt-2 pb-2 pl-4 w-full hover:bg-c900 hover:pl-0 hover:text-black">Problem2</li>
-                  <li onClick={handleValueFromDropDown} className="pt-2 pb-2 pl-4 w-full hover:bg-c900 hover:pl-0 hover:text-black">Problem3</li>
-                </ul>
-              </div>:null}
+               {value.status?<div className={`absolute shadow-xl text-c500 w-full z-30 bg-white`}>
+              <ul className=" mt-20 w-full">
+               { categories?categories.data.map((categorie,id)=>{
+                 return(
+                   <div key={id}>
+                    <li onClick={handleValueFromDropDown} 
+                    className="pt-2 pb-2 pl-4 w-full hover:bg-c900 hover:pl-0 hover:text-black">
+                      {categorie.title}
+                    </li>
+                    </div>
+                 )
+               }):null}
+              </ul>
+              
+                {/* <ul className=" mt-20 w-full">
+                     <li 
+                     onClick={handleValueFromDropDown}
+                     className="pt-2 pb-2 pl-4 w-full hover:bg-c900 hover:pl-0 hover:text-black">Problem1</li>
+                     <li onClick={handleValueFromDropDown} className="pt-2 pb-2 pl-4 w-full hover:bg-c900 hover:pl-0 hover:text-black">Problem2</li>
+                     <li onClick={handleValueFromDropDown} className="pt-2 pb-2 pl-4 w-full hover:bg-c900 hover:pl-0 hover:text-black">Problem3</li>
+                </ul>  */}
+                </div>:null} 
               <textarea
                 onChange={(e)=>{
                   
