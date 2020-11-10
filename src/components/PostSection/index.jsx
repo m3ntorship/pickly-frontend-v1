@@ -97,6 +97,12 @@ const PostSection = ({
     }
   };
 
+  const handleNotification = id => {
+    PICKLY.createSingleNotification(id).then(res => {
+      console.log(res);
+    });
+  };
+
   const options = [
     {
       svg: deleteIcon,
@@ -145,6 +151,7 @@ const PostSection = ({
                   img={img}
                   voted={voted}
                   handleVote={handleVote}
+                  handleNotification={handleNotification}
                   _id={_id}
                   totalVotes={totalVotes}
                 />
@@ -165,6 +172,7 @@ const PostSection = ({
                       img={img}
                       voted={voted}
                       handleVote={handleVote}
+                      handleNotification={handleNotification}
                       _id={_id}
                       totalVotes={totalVotes}
                     />
@@ -191,7 +199,15 @@ const PostSection = ({
   );
 };
 
-const PostImage = ({ images, img, voted, handleVote, _id, totalVotes }) => {
+const PostImage = ({
+  images,
+  img,
+  voted,
+  handleVote,
+  _id,
+  totalVotes,
+  handleNotification
+}) => {
   return (
     <div className="relative" key={img._id}>
       <div
@@ -204,6 +220,7 @@ const PostImage = ({ images, img, voted, handleVote, _id, totalVotes }) => {
           className="group absolute w-full h-full"
           onDoubleClick={() => {
             handleVote(img._id, voted, _id);
+            handleNotification(_id);
           }}
         >
           <img
@@ -224,6 +241,7 @@ const PostImage = ({ images, img, voted, handleVote, _id, totalVotes }) => {
               )}
               onClick={() => {
                 handleVote(img._id, voted, _id);
+                handleNotification(_id);
               }}
             >
               <HeartIcon voted={voted} />
