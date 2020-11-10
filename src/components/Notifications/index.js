@@ -1,36 +1,22 @@
 import React from 'react';
 import { Heading, HEADING_OPTIONS } from '../Heading';
 import cn from 'classnames';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+dayjs.extend(relativeTime);
 export const Notification = ({
   imageSrc,
   userName,
   postCaption,
-  postTime,
+  postDate,
   postUrl,
   seen
 }) => {
   const postCaptionSliced = postCaption.slice(0, 12);
 
-  const months = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December'
-  ];
-  const date = new Date(postTime);
-  const monthName = months[date.getMonth()];
-  const dayIndex = date.getDate();
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
-  const formatedHours = ((hours + 11) % 12) + 1;
+  // for date formate
+  const targetPostDate = dayjs(postDate);
+
   const onHandleClick = () => {
     window.open(`${window.location.href}posts/${postUrl}`, '_self');
   };
@@ -58,9 +44,9 @@ export const Notification = ({
             <span className="font-bold">{`${userName} `}</span>
             voted on your post {`"${postCaptionSliced}"`}
           </p>
-          <time className="block text-xs text-c500">{`${dayIndex} ${monthName} at ${formatedHours}:${minutes} ${
-            hours > 12 ? 'PM' : 'AM'
-          }`}</time>
+          <time className="block text-xs text-c500">
+            {targetPostDate.fromNow(true)}
+          </time>
         </div>
       </div>
     </div>
@@ -89,7 +75,7 @@ export const NotificationSection = ({ data }) => {
               postCaption={entity && entity.caption ? entity.caption : 'Error'}
               postUrl={entity._id}
               seen={retrieved}
-              postTime={createdAt}
+              postDate={createdAt}
               userName={sender && sender.name}
               // this will handle with a simple code when after clearing the users from backend
               imageSrc={

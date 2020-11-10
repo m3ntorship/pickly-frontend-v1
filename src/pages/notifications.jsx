@@ -3,8 +3,9 @@ import { UserContext } from '../context/userContext';
 import { PICKLY } from '../apis/clients/pickly';
 import { useHistory } from 'react-router-dom';
 import { NotificationSection } from '../components/Notifications/index';
+
 export const Notifications = () => {
-  const { user } = useContext(UserContext);
+  const { user, token } = useContext(UserContext);
   const [data, setData] = useState(null);
   const [error, setError] = useState(false);
   const history = useHistory();
