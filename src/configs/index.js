@@ -6,6 +6,12 @@ export default {
         posts: '/posts',
         images: '/images'
       }
+    },
+    notifications: {
+      host: process.env.REACT_APP_NOTIFICATIONS_SERVICE_URL,
+      resources: {
+        notifications: '/notifications',
+      }
     }
   }
 };
