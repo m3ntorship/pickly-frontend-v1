@@ -6,33 +6,46 @@ import PostLoader from '../components/LoadingComponents/PostLoader';
 
 export const Home = () => {
   const { token } = useContext(UserContext);
-  const [data, setData] = useState(null);
+  const [posts, setPosts] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [pageNum, setPageNum] = useState(1);
+  const postsNum = 10;
+  let pageNum = 1;
+
   // This useEffect() for fetching data when the route load
   useEffect(() => {
     setLoading(true);
-    PICKLY.getAllPosts(pageNum)
+    PICKLY.getAllPosts(pageNum, postsNum)
       .then(({ data }) => {
-        // console.log(data);
-        setData(data.data);
+        setPosts(data.data);
         setLoading(false);
       })
       .catch(err => {
         setLoading(false);
         setError(true);
       });
-  }, [token, pageNum]);
 
-  const fetchNewPost = e => {
+    document.addEventListener('scroll', () => {
+      if (
+        window.innerHeight + window.scrollY >= document.body.offsetHeight &&
+        !loading
+      ) {
+        setLoading(true);
+        fetchNewPost();
+      }
+    });
+  }, [token]);
+
+  const fetchNewPost = () => {
     setLoading(true);
-    setPageNum(pageNum + 1);
-    PICKLY.getAllPosts(pageNum)
+    pageNum++;
+
+    PICKLY.getAllPosts(pageNum, postsNum)
       .then(({ data }) => {
-        setData(data.push(data.slice(data.data.length)));
+        setPosts(prevPosts => {
+          return prevPosts.concat(data.data);
+        });
         setLoading(false);
-        console.log('updated Data', data);
       })
       .catch(err => {
         setLoading(false);
@@ -40,34 +53,23 @@ export const Home = () => {
       });
   };
 
-  document.addEventListener('scroll', () => {
-    // console.log('First', window.innerHeight + window.scrollY);
-    // console.log('Second', document.body.offsetHeight);
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-      fetchNewPost();
-    }
-  });
-
-  document.removeEventListener('scroll', fetchNewPost);
-
   // This useEffect for update the feed__when data value change
-  useEffect(() => {}, [data]);
+  useEffect(() => {}, [posts]);
 
   // taje the post id and pass the updated data to it__ will use in postSection component
   const updatePostData = (postId, updatedData) => {
-    const foundPost = data.findIndex(x => x._id === postId);
-    let newData = [...data];
+    const foundPost = posts.findIndex(x => x._id === postId);
+    let newData = [...posts];
     newData[foundPost] = updatedData;
-    setData(newData);
+    setPosts(newData);
   };
 
   return (
     <div className="bg-c900 py-6 overflow-hidden">
       <div className="container">
-        {loading && <PostLoader />}
         {error && <ErrorComponent />}
-        {data &&
-          data.map(
+        {posts &&
+          posts.map(
             ({
               _id,
               author,
@@ -81,8 +83,8 @@ export const Home = () => {
               return (
                 <PostSection
                   ownedByCurrentUser={ownedByCurrentUser}
-                  data={data}
-                  setData={setData}
+                  data={posts}
+                  setPosts={setPosts}
                   voted={Voted}
                   key={_id}
                   _id={_id}
@@ -105,6 +107,7 @@ export const Home = () => {
               );
             }
           )}
+        {loading && <PostLoader />}
       </div>
     </div>
   );
