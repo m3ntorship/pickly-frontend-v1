@@ -35,7 +35,7 @@ const getPostById = postId => {
 const createVote = imageId => {
   return POSTS_CLIENT({
     method: 'put',
-    url: `${posts.resources.images}/${imageId}/votes`
+    url: `${posts.resources.votes}/${imageId}`
   });
 };
 
@@ -50,6 +50,15 @@ const deletePost = postId => {
     method: 'delete',
     url: `${posts.resources.posts}/${postId}`
   });
+};
+
+export const PICKLY = {
+  getAllPosts,
+  createPost,
+  getPostById,
+  createVote,
+  deletePost,
+  createVoteAndRefetchPost
 };
 
 export const POSTS = {
