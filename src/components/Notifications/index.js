@@ -1,24 +1,28 @@
 import React from 'react';
 import { Heading, HEADING_OPTIONS } from '../Heading';
+import { useHistory } from 'react-router-dom';
 import cn from 'classnames';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-dayjs.extend(relativeTime);
+import { PICKLY } from '../../apis/clients/pickly/';
 export const Notification = ({
   imageSrc,
   userName,
   postCaption,
-  postDate,
+  notificationDate,
   postUrl,
+  notifcationId,
   seen
 }) => {
+  const history = useHistory();
   const postCaptionSliced = postCaption.slice(0, 12);
-
   // for date formate
-  const targetPostDate = dayjs(postDate);
-
+  const targetPostDate = dayjs(notificationDate);
+  dayjs.extend(relativeTime);
+  // for open post when click on notification & make it flagged
   const onHandleClick = () => {
-    window.open(`${window.location.href}posts/${postUrl}`, '_self');
+    PICKLY.readNotification(notifcationId);
+    history.push(`/posts/${postUrl}`);
   };
   return (
     <div
@@ -66,7 +70,7 @@ export const NotificationSection = ({ data }) => {
         className="py-6"
       />
       {data &&
-        data.map(({ _id, sender, createdAt, retrieved, entity }) => {
+        data.map(({ _id, sender, createdAt, flagged, entity }) => {
           return (
             <Notification
               data={data}
@@ -74,9 +78,10 @@ export const NotificationSection = ({ data }) => {
               _id={_id}
               postCaption={entity && entity.caption ? entity.caption : 'Error'}
               postUrl={entity._id}
-              seen={retrieved}
-              postDate={createdAt}
+              seen={flagged}
+              notificationDate={createdAt}
               userName={sender && sender.name}
+              notifcationId={_id}
               // this will handle with a simple code when after clearing the users from backend
               imageSrc={
                 sender && sender.userImage
