@@ -52,15 +52,6 @@ const deletePost = postId => {
   });
 };
 
-export const PICKLY = {
-  getAllPosts,
-  createPost,
-  getPostById,
-  createVote,
-  deletePost,
-  createVoteAndRefetchPost
-};
-
 export const POSTS = {
   getAllPosts,
   createPost,
