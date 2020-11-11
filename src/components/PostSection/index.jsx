@@ -53,7 +53,6 @@ const PostSection = ({
 
   // for date formate
   const targetPostDate = dayjs(postDate);
-
   // return true if it's mobile view
   const isMobile = useMedia(['(max-width: 600px)'], [true], false);
 
@@ -72,6 +71,7 @@ const PostSection = ({
       console.log("It's voooooted before");
     } else {
       PICKLY.createVoteAndRefetchPost(imageId, postId).then(res => {
+        handleNotification(_id);
         if (updatePostData) {
           updatePostData(postId, res.data.post); // instead of res.data.dae
         }
@@ -82,10 +82,9 @@ const PostSection = ({
     }
   };
 
+  // handle sending notification to the backend
   const handleNotification = id => {
-    PICKLY.createSingleNotification(id).then(res => {
-      console.log(res);
-    });
+    PICKLY.createSingleNotification(id);
   };
 
   const options = [
@@ -182,15 +181,7 @@ const PostSection = ({
   );
 };
 
-const PostImage = ({
-  images,
-  img,
-  voted,
-  handleVote,
-  _id,
-  totalVotes,
-  handleNotification
-}) => {
+const PostImage = ({ images, img, voted, handleVote, _id, totalVotes }) => {
   return (
     <div className="relative" key={img._id}>
       <div
@@ -203,7 +194,6 @@ const PostImage = ({
           className="group absolute w-full h-full"
           onDoubleClick={() => {
             handleVote(img._id, voted, _id);
-            handleNotification(_id);
           }}
         >
           <img
@@ -224,7 +214,6 @@ const PostImage = ({
               )}
               onClick={() => {
                 handleVote(img._id, voted, _id);
-                handleNotification(_id);
               }}
             >
               <HeartIcon voted={voted} />
