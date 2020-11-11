@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { UserContext } from '../context/userContext';
+import React, {useEffect, useState } from 'react';
+
 import PostSection from '../components/PostSection';
 import { PICKLY } from '../apis/clients/pickly';
 import PostLoader from '../components/LoadingComponents/PostLoader';
