@@ -13,6 +13,12 @@ const getAllNotifications = () => {
   });
 };
 
+const retriveNotification = () => {
+  return NOTIFICATIONS_CLIENT({
+    url: `${notifications.resources.notifications}/retrieved`
+  });
+};
+
 const createSingleNotification = id => {
   return NOTIFICATIONS_CLIENT({
     method: 'post',
@@ -20,8 +26,16 @@ const createSingleNotification = id => {
     data: { id: id }
   });
 };
+const readNotification = _id => {
+  return NOTIFICATIONS_CLIENT({
+    method: 'patch',
+    url: `${notifications.resources.notifications}/${_id}`
+  });
+};
 
 export const NOTIFICATIONS = {
   getAllNotifications,
-  createSingleNotification
+  createSingleNotification,
+  readNotification,
+  retriveNotification
 };
