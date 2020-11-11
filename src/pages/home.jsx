@@ -5,7 +5,6 @@ import { PICKLY } from '../apis/clients/pickly';
 import PostLoader from '../components/LoadingComponents/PostLoader';
 
 export const Home = () => {
-  const { token } = useContext(UserContext);
   const [posts, setPosts] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -13,6 +12,7 @@ export const Home = () => {
   let pageNum = 1;
 
   // This useEffect() for fetching data when the route load
+
   useEffect(() => {
     setLoading(true);
     PICKLY.getAllPosts(pageNum, postsNum)
@@ -21,37 +21,32 @@ export const Home = () => {
         setLoading(false);
       })
       .catch(err => {
-        setLoading(false);
         setError(true);
+        setLoading(false);
       });
 
+    const fetchNewPost = () => {
+      setLoading(true);
+      pageNum++;
+
+      PICKLY.getAllPosts(pageNum, postsNum)
+        .then(({ data }) => {
+          setPosts(prevPosts => {
+            return prevPosts.concat(data.data);
+          });
+          setLoading(false);
+        })
+        .catch(err => {
+          setLoading(false);
+          setError(true);
+        });
+    };
     document.addEventListener('scroll', () => {
-      if (
-        window.innerHeight + window.scrollY >= document.body.offsetHeight &&
-        !loading
-      ) {
-        setLoading(true);
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
         fetchNewPost();
       }
     });
-  }, [token]);
-
-  const fetchNewPost = () => {
-    setLoading(true);
-    pageNum++;
-
-    PICKLY.getAllPosts(pageNum, postsNum)
-      .then(({ data }) => {
-        setPosts(prevPosts => {
-          return prevPosts.concat(data.data);
-        });
-        setLoading(false);
-      })
-      .catch(err => {
-        setLoading(false);
-        setError(true);
-      });
-  };
+  }, [pageNum]);
 
   // This useEffect for update the feed__when data value change
   useEffect(() => {}, [posts]);
