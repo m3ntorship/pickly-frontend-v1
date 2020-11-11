@@ -5,17 +5,15 @@ import { useHistory } from 'react-router-dom';
 import { NotificationSection } from '../components/Notifications/index';
 
 export const Notifications = () => {
-  const { user, token } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [data, setData] = useState(null);
   const [error, setError] = useState(false);
   const history = useHistory();
-
   useEffect(() => {
     if (!user) {
       history.push('/login');
     }
   });
-
   // This useEffect() for fetching data when the route load
   useEffect(() => {
     PICKLY.getAllNotifications()
@@ -26,8 +24,7 @@ export const Notifications = () => {
         console.log(err);
         setError(true);
       });
-  }, [token]);
-  useEffect(() => {}, [data]);
+  }, []);
 
   const ErrorComponent = () => {
     return (
