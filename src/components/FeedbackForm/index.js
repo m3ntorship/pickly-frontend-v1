@@ -6,7 +6,7 @@ import { PICKLY } from '../../apis/clients';
 export const FeedbackForm=()=>{
   const [categories,setCategories]=useState(null)
   const [value,setVal]=useState({val:"",errorMsg:"",status:false,dropDownValue:"",textLength:0})
-  const [length,setLength]=useState({max:500,errMsg:""})
+  const [length,setLength]=useState({min:5 , max:500,errMsg:""})
   useEffect(()=>{
 
     PICKLY.getGategories().then(({data})=>{
@@ -14,7 +14,7 @@ export const FeedbackForm=()=>{
     }).catch(err => {
       console.log(err)
     });
-  },[value.status])
+  },[value.status,value.val])
     const handleDropDown =()=>{
       setVal({...value,errorMsg:"",status:!value.status})
     }
@@ -26,6 +26,9 @@ export const FeedbackForm=()=>{
       if(value.val===""||value.dropDownValue===""){
           setVal({...value,errorMsg:"Problem field needed"})
       }
+      // else{
+      // setVal({...value,val:"",dropDownValue:"" ,errorMsg:""})
+      // }
   }
     const handleValueFromDropDown=(e)=>{
       console.log(value.dropDownValue)
@@ -39,7 +42,11 @@ export const FeedbackForm=()=>{
             "category": value.dropDownValue,
             "body":value.val
           }).then((res)=>{
+
             console.log(res)
+            if(res.status===201){
+              setVal({...value,val:null,dropDownValue:"",errorMsg:""})
+            }
           }).catch((err)=>{
             console.log(err)
           })
@@ -78,9 +85,9 @@ export const FeedbackForm=()=>{
               <textarea
                 onChange={(e)=>{
                   console.log(value.val.length)
-                  if(value.val.length+1===length.max){
-                    setLength({...length,errMsg:"should msg between 50 to 500 character"})
-                  }else if(value.val.length+1<length.max){
+                  if(value.val.length<length.min){
+                    setLength({...length,errMsg:"should msg between 5 to 500 character"})
+                  }else if(value.val.length>length.min){
                     setLength({...length,errMsg:""})
 
                   }
@@ -101,7 +108,7 @@ export const FeedbackForm=()=>{
 
             <div className="flex w-full h-full justify-center lg:justify-start">
 
-              <Button handleClick={validationHandling} shadow={true} disabled={value.val&&value.val.length<length.max?false:true} isRounded={true} backgroundColor={value.val&&value.val.length<length.max?BUTTON_OPTIONS.BACKGROUND_COLOR.Blue:BUTTON_OPTIONS.BACKGROUND_COLOR.SecondaryGrey} color={BUTTON_OPTIONS.COLOR.White} padding={BUTTON_OPTIONS.PADDING.BIG}>
+              <Button handleClick={validationHandling} shadow={true} disabled={value.val?false:true} isRounded={true} backgroundColor={value.val&&value.val.length>length.min&&value.val.length?BUTTON_OPTIONS.BACKGROUND_COLOR.Blue:BUTTON_OPTIONS.BACKGROUND_COLOR.SecondaryGrey} color={BUTTON_OPTIONS.COLOR.White} padding={BUTTON_OPTIONS.PADDING.BIG}>
                 Send Your Feedback
               </Button>
               </div>
