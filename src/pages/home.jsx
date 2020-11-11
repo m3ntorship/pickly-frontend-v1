@@ -1,4 +1,4 @@
-import React, {useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import PostSection from '../components/PostSection';
 import { PICKLY } from '../apis/clients/pickly';
@@ -25,6 +25,7 @@ export const Home = () => {
         setLoading(false);
       });
 
+    // Fetching data on Scroll
     const fetchNewPost = () => {
       setLoading(true);
       pageNum++;
@@ -41,11 +42,18 @@ export const Home = () => {
           setError(true);
         });
     };
-    document.addEventListener('scroll', () => {
-      if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-        fetchNewPost();
-      }
-    });
+    const checkWindowPos = () => {
+      document.addEventListener('scroll', () => {
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+          fetchNewPost();
+        }
+
+        return () => {
+          window.removeEventListener('scroll', fetchNewPost);
+        };
+      });
+    };
+    checkWindowPos();
   }, [pageNum]);
 
   // This useEffect for update the feed__when data value change
