@@ -1,10 +1,12 @@
 import React from 'react';
 import cn from 'classnames';
 
-export const HeartIcon = ({ voted, color = '#fff' }) => {
+export const HeartIcon = ({ voted, ownedByCurrentUser, color = '#fff' }) => {
   return (
     <button
-      className={cn('flex justify-center items-center', { ' self-end': voted })}
+      className={cn('flex justify-center items-center', {
+        ' self-end': voted || ownedByCurrentUser
+      })}
       style={{ width: 'fit-content' }}
     >
       <svg

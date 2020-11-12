@@ -73,10 +73,10 @@ const PostSection = ({
     } else {
       PICKLY.createVoteAndRefetchPost(imageId, postId).then(res => {
         if (updatePostData) {
-          updatePostData(postId, res.data.post); // instead of res.data.dae
+          updatePostData(postId, res.data.post);
         }
         if (updateSinglePostData) {
-          updateSinglePostData(res.data.data);
+          updateSinglePostData(res.data.post);
         }
       });
     }
@@ -123,6 +123,7 @@ const PostSection = ({
             images.map(img => {
               return (
                 <PostImage
+                  ownedByCurrentUser={ownedByCurrentUser}
                   key={img._id}
                   images={images}
                   img={img}
@@ -148,6 +149,7 @@ const PostSection = ({
                       img={img}
                       voted={voted}
                       handleVote={handleVote}
+                      ownedByCurrentUser={ownedByCurrentUser}
                       _id={_id}
                       totalVotes={totalVotes}
                     />
@@ -174,7 +176,15 @@ const PostSection = ({
   );
 };
 
-const PostImage = ({ images, img, voted, handleVote, _id, totalVotes }) => {
+const PostImage = ({
+  images,
+  img,
+  voted,
+  handleVote,
+  _id,
+  totalVotes,
+  ownedByCurrentUser
+}) => {
   return (
     <div className="relative" key={img._id}>
       <div
@@ -186,7 +196,9 @@ const PostImage = ({ images, img, voted, handleVote, _id, totalVotes }) => {
         <div
           className="group absolute w-full h-full"
           onDoubleClick={() => {
-            handleVote(img._id, voted, _id);
+            if (!ownedByCurrentUser) {
+              handleVote(img._id, voted, _id);
+            }
           }}
         >
           <img
@@ -197,7 +209,7 @@ const PostImage = ({ images, img, voted, handleVote, _id, totalVotes }) => {
           <div
             className={cn(
               'absolute grid grid-cols-1 justify-items-center items-center w-full h-full',
-              { 'hidden md:group-hover:grid': !voted }
+              { 'hidden md:group-hover:grid': !ownedByCurrentUser && !voted }
             )}
           >
             <div
@@ -206,11 +218,25 @@ const PostImage = ({ images, img, voted, handleVote, _id, totalVotes }) => {
                 { 'bg-c500': !img.votedByUser }
               )}
               onClick={() => {
-                handleVote(img._id, voted, _id);
+                if (!ownedByCurrentUser) {
+                  handleVote(img._id, voted, _id);
+                }
               }}
             >
-              <HeartIcon voted={voted} />
+              <HeartIcon
+                voted={voted}
+                ownedByCurrentUser={ownedByCurrentUser}
+              />
               {voted && (
+                <span className="text-white font-bold text-xxs sm:text-xs">
+                  {img.votes
+                    ? totalVotes &&
+                      Math.round((img.votes.count / totalVotes) * 100)
+                    : '0'}
+                  %
+                </span>
+              )}
+              {ownedByCurrentUser && (
                 <span className="text-white font-bold text-xxs sm:text-xs">
                   {img.votes
                     ? totalVotes &&
