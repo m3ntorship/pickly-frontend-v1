@@ -20,11 +20,6 @@ export const FeedbackForm = () => {
       .catch(err => {
         console.log(err);
       });
-    // if(inputVal.value.length<length.min){
-    //   setShowErrMsg(true)
-    // }else if(inputVal.value.length>=5){
-    //   setShowErrMsg(false)
-    // }
   }, [dropDownValue, inputVal.value, length]);
 
   const handleDropDown = () => {
@@ -61,7 +56,7 @@ export const FeedbackForm = () => {
           .catch(err => {
             console.log(err);
             setInputVal({ value: '', errorMsg: '' });
-              setDropDownValue({ ...dropDownValue, value: '' });
+            setDropDownValue({ ...dropDownValue, value: '' });
           });
       }}
     >

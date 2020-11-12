@@ -25,6 +25,22 @@ const createPost = (data, onUploadProgress) => {
   });
 };
 
+const sendFeedback = data => {
+  return POSTS_CLIENT({
+    method: 'post',
+    url: posts.resources.feedback,
+    // url:`https://api.mocki.io/v1/c801b325`,
+    data
+  });
+};
+const getGategories = () => {
+  return POSTS_CLIENT({
+    method: 'get',
+    url: `${posts.resources.feedback}/categories`
+    // url:`https://api.mocki.io/v1/c7efe600`
+  });
+};
+
 const getPostById = postId => {
   return POSTS_CLIENT({
     url: `${posts.resources.posts}/${postId}`
@@ -58,5 +74,7 @@ export const POSTS = {
   getPostById,
   createVote,
   deletePost,
+  sendFeedback,
+  getGategories,
   createVoteAndRefetchPost
 };
