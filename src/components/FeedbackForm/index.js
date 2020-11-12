@@ -60,6 +60,8 @@ export const FeedbackForm = () => {
           })
           .catch(err => {
             console.log(err);
+            setInputVal({ value: '', errorMsg: '' });
+              setDropDownValue({ ...dropDownValue, value: '' });
           });
       }}
     >
@@ -121,7 +123,6 @@ export const FeedbackForm = () => {
               value: e.target.value,
               errorMsg: 'Problem field needed'
             });
-            console.log('hh');
           }}
           // minLength={length.min}
           maxLength={length.max}
