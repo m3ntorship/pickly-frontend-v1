@@ -35,7 +35,7 @@ export const Home = () => {
   };
 
   return (
-    <div className="bg-c900 py-6 overflow-hidden mb-16 md:mb-auto">
+    <div className="bg-c900 py-6 overflow-hidden">
       <div className="container">
         {loading && <PostLoader />}
         {error && <ErrorComponent />}

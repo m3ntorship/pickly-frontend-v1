@@ -1,83 +1,9 @@
-import config from '../../../configs';
-import { createClient } from '../../utils';
- 
-const {
-  services: { posts }
-} = config;
+import { POSTS } from './postsClient';
+import { NOTIFICATIONS } from './notificationsClient';
 
-const POSTS_CLIENT = createClient(posts.host);
-
-const getAllPosts = () => {
-  return POSTS_CLIENT({
-    url: posts.resources.posts
-  });
-};
-
-const createPost = (data, onUploadProgress) => {
-  return POSTS_CLIENT({
-    method: 'post',
-    url: posts.resources.posts,
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    },
-    data,
-    onUploadProgress: onUploadProgress
-  });
-};
-
-const getPostById = postId => {
-  return POSTS_CLIENT({
-    url: `${posts.resources.posts}/${postId}`
-  });
-};
-
-// votes
-const createVote = imageId => {
-  return POSTS_CLIENT({
-    method: 'put',
-    url: `${posts.resources.votes}/${imageId}`
-  });
-};
-
-const createVoteAndRefetchPost = (imageId, postId) => {
-  return createVote(imageId)
-    .then(response => Promise.resolve(response)) //when notification feature is done
-    .then(() => getPostById(postId));
-};
-
-const deletePost = postId => {
-  return POSTS_CLIENT({
-    method: 'delete',
-    url: `${posts.resources.posts}/${postId}`
-  });
-};
- 
- const sendFeedback = data => {
-  return POSTS_CLIENT({
-    method: 'post',
-    url: posts.resources.feedback,
-    // url:`https://api.mocki.io/v1/c801b325`,
-    data
-  });
-};
-const getGategories = () => {
-  return POSTS_CLIENT({
-    method:"get", 
-    url:`${posts.resources.feedback}/categories`
-    // url:`https://api.mocki.io/v1/c7efe600`
-    
-  });
-};
-
-
- 
+// YOU SHOULD MAKE SURE THAT METHOD NAMES
+// ARE UNIQE ACROSS ALL CLIENTS!
 export const PICKLY = {
-  getAllPosts,
-  createPost,
-  getPostById,
-  createVote,
-  deletePost,
-  createVoteAndRefetchPost,
-  sendFeedback,
-  getGategories
+  ...POSTS,
+  ...NOTIFICATIONS
 };
