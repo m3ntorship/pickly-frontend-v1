@@ -108,10 +108,11 @@ const PostSection = ({
           <OptionsBtn options={options} position="left top" />
         )}
       </div>
-      <p className="px-4 mx-auto mt-5 text-sm font-regular">
-        {postCaption && postCaption}
-      </p>
-
+      <div className="h-full">
+        <p className="px-4 mx-auto mt-5 text-sm font-regular tracking-wide leading-4">
+          {postCaption && postCaption}
+        </p>
+      </div>
       {!isMobile && (
         <div
           className={cn('relative grid grid-cols-1 gap-1 my-4', {
