@@ -60,8 +60,6 @@ export const UploadSection = ({ userImage }) => {
 
   // Post Data to the database Function
   const postData = e => {
-    e.preventDefault();
-
     if (captionValid && isValid) {
       setShowResults(true);
       const form = new FormData();
@@ -77,8 +75,7 @@ export const UploadSection = ({ userImage }) => {
       };
 
       PICKLY.createPost(form, onUploadProgress)
-        .then(data => {
-          console.log(data);
+        .then(() => {
           history.push('/');
         })
         .catch(console.error);
@@ -89,84 +86,95 @@ export const UploadSection = ({ userImage }) => {
     setImagesToUpload([...imagesToUpload, image]);
   };
 
+  const handleSubmit = e => {
+    e.preventDefault();
+    if (isValid && captionValid) {
+      postData();
+    }
+  };
   return (
     <div className="bg-white my-4 pt-4 rounded-lg shadow-lg relative mb-32">
-      {showResults ? (
-        <div
-          className="absolute z-20 h-full w-full  flex justify-center items-center"
-          style={{
-            left: 0,
-            right: 0,
-            backgroundColor: 'rgba(255, 255, 255, 0.6)'
-          }}
-        >
-          <ProgressBar
-            progress={progress}
-            size={200}
-            strokeWidth={25}
-            circleOneStroke="#6741D9"
-            circleTwoStroke="#6741D9"
-          />
-        </div>
-      ) : null}
-      <div
-        style={{ width: 'calc(100% - 2rem)' }}
-        className="mx-auto mb-5 relative"
-      >
-        <InputField
-          caption={caption}
-          onChange={handleInputChange}
-          imageURL={userImage}
-        />
-
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-          <div style={{ width: 'fit-content' }}>
-            <Button
-              isRounded
-              backgroundColor="White"
-              color="SecondaryGrey"
-              className="border-2 border-c800 relative"
-            >
-              <OptionsPopup clickFun={setImagesArrFun} />
-            </Button>
-          </div>
-          <div>
-            <ToggleButton
-              selected={postAnonymously}
-              toggleSelected={toggleSelected}
-              title="Post anonymoslly"
+      <form autocomplete="off" onSubmit={handleSubmit}>
+        {showResults ? (
+          <div
+            className="absolute z-20 h-full w-full  flex justify-center items-center"
+            style={{
+              left: 0,
+              right: 0,
+              backgroundColor: 'rgba(255, 255, 255, 0.6)'
+            }}
+          >
+            <ProgressBar
+              progress={progress}
+              size={200}
+              strokeWidth={25}
+              circleOneStroke="#6741D9"
+              circleTwoStroke="#6741D9"
             />
           </div>
-        </div>
-      </div>
-      {imageValidationErr && (
-        <div className="text-c200 text-xs mb-2 ml-2">{imageValidationErr}</div>
-      )}
-      <div className="container">
+        ) : null}
         <div
-          className={cn('relative grid grid-cols-1 gap-1', {
-            'sm:grid-cols-2': imagesArr.length > 1
-          })}
+          style={{ width: 'calc(100% - 2rem)' }}
+          className="mx-auto mb-5 relative"
         >
-          {imagesArr.length > 1 && or}
-          {imagesArr.map((img, index) => (
-            <div key={index} className="relative">
-              <OneImage
-                setFun={setFun}
-                id={index}
-                imagesNum={imagesArr.length}
+          <InputField
+            caption={caption}
+            onChange={handleInputChange}
+            imageURL={userImage}
+          />
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <div style={{ width: 'fit-content' }}>
+              <Button
+                isRounded
+                backgroundColor="White"
+                color="SecondaryGrey"
+                className="border-2 border-c800 relative"
+              >
+                <OptionsPopup clickFun={setImagesArrFun} />
+              </Button>
+            </div>
+            <div>
+              <ToggleButton
+                selected={postAnonymously}
+                toggleSelected={toggleSelected}
+                title="Post anonymoslly"
               />
             </div>
-          ))}
+          </div>
         </div>
-      </div>
-      {warningParagrapg}
-      <hr className="w-full text-c800 h-1" />
-      <PostButton
-        postData={postData}
-        isValid={isValid}
-        captionValid={captionValid}
-      />
+        {imageValidationErr && (
+          <div className="text-c200 text-xs mb-2 ml-2">
+            {imageValidationErr}
+          </div>
+        )}
+        <div className="container">
+          <div
+            className={cn('relative grid grid-cols-1 gap-1', {
+              'sm:grid-cols-2': imagesArr.length > 1
+            })}
+          >
+            {imagesArr.length > 1 && or}
+            {imagesArr.map((img, index) => (
+              <div key={index} className="relative">
+                <OneImage
+                  setFun={setFun}
+                  id={index}
+                  imagesNum={imagesArr.length}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+        {warningParagrapg}
+        <hr className="w-full text-c800 h-1" />
+        <PostButton
+          type="submit"
+          postData={postData}
+          isValid={isValid}
+          captionValid={captionValid}
+        />
+      </form>
     </div>
   );
 };
@@ -305,22 +313,20 @@ const warningParagrapg = (
   </div>
 );
 
-const PostButton = ({ postData, isValid, captionValid }) => {
+const PostButton = ({ postData, isValid, captionValid, type }) => {
   return (
     <div className="inline-block" style={{ width: 'calc(100% - 2rem)' }}>
-      <form>
-        <Button
-          type="submit"
-          backgroundColor={isValid && captionValid ? 'blue' : 'PrimaryGrey'}
-          color="White"
-          isRounded
-          padding="big"
-          className="font-semibold text-xs py-1 float-right my-2"
-          handleClick={postData}
-        >
-          Post
-        </Button>
-      </form>
+      <Button
+        type={type}
+        backgroundColor={isValid && captionValid ? 'blue' : 'PrimaryGrey'}
+        color="White"
+        isRounded
+        padding="big"
+        className="font-semibold text-xs py-1 float-right my-2"
+        handleClick={postData}
+      >
+        Post
+      </Button>
     </div>
   );
 };

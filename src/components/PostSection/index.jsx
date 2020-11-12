@@ -73,10 +73,10 @@ const PostSection = ({
       PICKLY.createVoteAndRefetchPost(imageId, postId).then(res => {
         handleNotification(_id);
         if (updatePostData) {
-          updatePostData(postId, res.data.post); // instead of res.data.dae
+          updatePostData(postId, res.data.post);
         }
         if (updateSinglePostData) {
-          updateSinglePostData(res.data.data);
+          updateSinglePostData(res.data.post);
         }
       });
     }
@@ -113,10 +113,11 @@ const PostSection = ({
           <OptionsBtn options={options} position="left top" />
         )}
       </div>
-      <p className="px-4 mx-auto mt-5 text-sm font-regular">
-        {postCaption && postCaption}
-      </p>
-
+      <div className="h-full">
+        <p className="px-4 mx-auto mt-5 text-sm font-regular tracking-wide leading-4">
+          {postCaption && postCaption}
+        </p>
+      </div>
       {!isMobile && (
         <div
           className={cn('relative grid grid-cols-1 gap-1 my-4', {

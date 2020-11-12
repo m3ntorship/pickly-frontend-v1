@@ -78,7 +78,7 @@ export const Navbar = () => {
             <Navigation />
           </div>
           <div className="md:justify-self-center justify-self-end">
-            <NavLink exact to="/feedback">
+            <NavLink exact to="/feedbacks">
               <button className="text-white bg-c1100 w-32 h-10  rounded-lg font-bold">
                 Feedback?
               </button>
