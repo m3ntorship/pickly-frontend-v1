@@ -8,31 +8,31 @@ export const SinglePost = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    PICKLY.getPostById(id).then(res => setData(res.data.data));
+    PICKLY.getPostById(id).then(res => setData(res.data.post));
   }, [id]);
-
   const voteSinglePost = data => {
     setData(data);
   };
-
   return (
-    <div className="bg-c800 h-screen pt-10">
-      <div className="container">
-        {data && (
-          <PostSection
-            voted={data.Voted}
-            _id={data._id}
-            images={data.resources.images}
-            popupActionOptions={[0]}
-            postCaption={data.caption}
-            postDate={data.createdAt}
-            shareUrl={window.location.href}
-            userImage="https://images.unsplash.com/photo-1602494518630-f51bfa4e8853?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
-            userName={data.author && data.author.name}
-            isAnonymous={data.isAnonymous}
-            updateSinglePostData={voteSinglePost}
-          />
-        )}
+    <div className="bg-c800  h-screen py-12">
+      <div className="overflow-hidden  min-h-full">
+        <div className="container">
+          {data && (
+            <PostSection
+              voted={data.Voted}
+              _id={data._id}
+              images={data.resources.images}
+              popupActionOptions={[0]}
+              postCaption={data.caption}
+              postDate={data.createdAt}
+              shareUrl={window.location.href}
+              userImage="https://images.unsplash.com/photo-1602494518630-f51bfa4e8853?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
+              userName={data.author && data.author.name}
+              isAnonymous={data.isAnonymous}
+              updateSinglePostData={voteSinglePost}
+            />
+          )}
+        </div>
       </div>
     </div>
   );
