@@ -19,7 +19,8 @@ export const InputField = ({ imageURL, caption, onChange }) => {
         }}
       >
         <img src={imageURL} alt="" className="w-8 h-8 rounded-full " />
-        <textarea
+        <input
+          type="text"
           onBlur={() => {
             if (caption.length === 0) {
               setValidationMsg('Caption Can not Be Empty');
@@ -34,7 +35,7 @@ export const InputField = ({ imageURL, caption, onChange }) => {
           maxLength="100"
           value={caption}
           className="mx-4 z-0 h-16 md:h-10 md:mt-2 pl-l flex-auto min-w-0 text-base font-primary font-regular leading-6 tracking-tighter md:tracking-wider resize-none"
-        ></textarea>
+        ></input>
         <ProgressCircle className="right-0" progress={lettersCounter} />
       </div>
       <span className="text-xs text-c200">{validationMsg}</span>
