@@ -4,7 +4,8 @@ export default {
       host: process.env.REACT_APP_POSTS_SERVICE_URL,
       resources: {
         posts: '/posts',
-        votes: '/votes'
+        votes: '/votes',
+        feedback:'/feedbacks'
       }
     }
   }

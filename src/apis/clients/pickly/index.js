@@ -1,6 +1,6 @@
 import config from '../../../configs';
 import { createClient } from '../../utils';
-
+ 
 const {
   services: { posts }
 } = config;
@@ -51,12 +51,33 @@ const deletePost = postId => {
     url: `${posts.resources.posts}/${postId}`
   });
 };
+ 
+ const sendFeedback = data => {
+  return POSTS_CLIENT({
+    method: 'post',
+    url: posts.resources.feedback,
+    // url:`https://api.mocki.io/v1/c801b325`,
+    data
+  });
+};
+const getGategories = () => {
+  return POSTS_CLIENT({
+    method:"get", 
+    url:`${posts.resources.feedback}/categories`
+    // url:`https://api.mocki.io/v1/c7efe600`
+    
+  });
+};
 
+
+ 
 export const PICKLY = {
   getAllPosts,
   createPost,
   getPostById,
   createVote,
   deletePost,
-  createVoteAndRefetchPost
+  createVoteAndRefetchPost,
+  sendFeedback,
+  getGategories
 };

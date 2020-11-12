@@ -12,6 +12,7 @@ export const Feedback = () => {
       history.push('/login');
     }
   });
+
   return (
     <div className="lg:relative lg:w-full h-screen bg-c900 pt-4 lg:pt-16 pb-2 flex">
       <div className="absolute lg:ml-8 hidden lg:block z-50">
@@ -21,12 +22,12 @@ export const Feedback = () => {
         <div className="w-full  nav__container capitalize lg:grid lg:grid-cols-2 inline-block">
           <div>
             <h1 className="text-xxlg font-xbold">
-              Help us with
+            Make us better.. 
               <br />
-              your feedback
+              Give us a feedback
             </h1>
             <p className="text-c500 mt-4 mb-4">
-              At elit leo dignissim volutpat sit.et amet enim, porttitor felis
+            whether you will suggest an improvement or remark something you liked about pickly.io, we promise to read it carefully and reply back to you if needed.
             </p>
             <FeedbackForm />
           </div>
