@@ -32,11 +32,11 @@ export const BUTTON_OPTIONS = {
     OffWhite: 'off white',
     Green: 'Green',
     White: 'White'
-  },
-  
+  }
 };
 
 export const Button = ({
+  type,
   children,
   isRounded,
   backgroundColor,
@@ -46,10 +46,11 @@ export const Button = ({
   isOpacity,
   className,
   handleClick,
-  disabled=false
+  disabled = false
 }) => {
   return (
     <button
+      type={type}
       onClick={handleClick}
       disabled={disabled}
       className={cn(
@@ -112,7 +113,6 @@ export const Button = ({
         { 'text-white': color === BUTTON_OPTIONS.COLOR.White },
         className
       )}
-      
     >
       {children}
     </button>
