@@ -77,8 +77,7 @@ export const UploadSection = ({ userImage }) => {
       };
 
       PICKLY.createPost(form, onUploadProgress)
-        .then(data => {
-          console.log(data);
+        .then(() => {
           history.push('/');
         })
         .catch(console.error);
