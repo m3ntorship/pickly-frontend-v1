@@ -228,7 +228,7 @@ const PostImage = ({
                 voted={voted}
                 ownedByCurrentUser={ownedByCurrentUser}
               />
-              {voted && (
+              {voted && !ownedByCurrentUser && (
                 <span className="text-white font-bold text-xxs sm:text-xs">
                   {img.votes
                     ? totalVotes &&
