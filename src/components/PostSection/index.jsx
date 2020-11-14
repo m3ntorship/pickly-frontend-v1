@@ -53,7 +53,6 @@ const PostSection = ({
 
   // for date formate
   const targetPostDate = dayjs(postDate);
-
   // return true if it's mobile view
   const isMobile = useMedia(['(max-width: 600px)'], [true], false);
 
@@ -72,6 +71,7 @@ const PostSection = ({
       console.log("It's voooooted before");
     } else {
       PICKLY.createVoteAndRefetchPost(imageId, postId).then(res => {
+        handleNotification(_id);
         if (updatePostData) {
           updatePostData(postId, res.data.post);
         }
@@ -80,6 +80,11 @@ const PostSection = ({
         }
       });
     }
+  };
+
+  // handle sending notification to the backend
+  const handleNotification = id => {
+    PICKLY.createSingleNotification(id);
   };
 
   const options = [
@@ -130,6 +135,7 @@ const PostSection = ({
                   img={img}
                   voted={voted}
                   handleVote={handleVote}
+                  handleNotification={handleNotification}
                   _id={_id}
                   totalVotes={totalVotes}
                 />
@@ -151,6 +157,7 @@ const PostSection = ({
                       voted={voted}
                       handleVote={handleVote}
                       ownedByCurrentUser={ownedByCurrentUser}
+                      handleNotification={handleNotification}
                       _id={_id}
                       totalVotes={totalVotes}
                     />

@@ -7,6 +7,12 @@ export default {
         votes: '/votes',
         feedback:'/feedbacks'
       }
+    },
+    notifications: {
+      host: process.env.REACT_APP_NOTIFICATIONS_SERVICE_URL,
+      resources: {
+        notifications: '/notifications',
+      }
     }
   }
 };
