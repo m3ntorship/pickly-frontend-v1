@@ -26,13 +26,12 @@ function App() {
   //   });
   // }, [btnOnScroll]);
 
-//codition for display or hidden
+  //codition for display or hidden
   // ${
   //   btnOnScroll.status ? 'block' : 'hidden'
   // }
   const scrollTopHandling = () => {
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
   return (
     <Router>
@@ -40,13 +39,17 @@ function App() {
         <UserContextProvider>
           <Navbar />
           <div className="mb-24 md:mb-auto relative">
-            
             <button
               onClick={scrollTopHandling}
               className={`bg-c1100 w-16 h-16 float-right mr-4 mb-auto  fixed rounded-full shadow-2xl justify-center items-center md:flex hidden`}
               style={{ bottom: '10%', right: '5%' }}
             >
-              <svg className="animate-bounce" viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg" width="32" height="32">
+              <svg
+                viewBox="0 0 96 96"
+                xmlns="http://www.w3.org/2000/svg"
+                width="32"
+                height="32"
+              >
                 <title />
                 <path
                   fill="white"

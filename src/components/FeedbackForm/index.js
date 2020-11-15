@@ -54,7 +54,7 @@ export const FeedbackForm = () => {
             }
           })
           .catch(err => {
-            console.log(err);
+            console.log(err.status);
             setInputVal({ value: '', errorMsg: '' });
             setDropDownValue({ ...dropDownValue, value: '' });
           });
