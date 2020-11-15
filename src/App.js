@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Navbar } from './components/NavbarSection';
 import { Navigation } from '../src/components/NavbarSection';
@@ -12,14 +12,44 @@ import { ProtectedRoute } from './pages/protected-route';
 import { Post } from './pages/post';
 import { SinglePost } from './pages/singlePost';
 import { Feedback } from './pages/feedback';
-
 function App() {
+  const [btnOnScroll, setBtnOnScroll] = useState({ status: false });
+
+  useEffect(() => {
+    // console.log(btnOnScroll.status)
+    window.addEventListener('scroll', () => {
+      if (document.documentElement.scrollTop > 20) {
+        setBtnOnScroll({ status: true });
+      } else {
+        setBtnOnScroll({ status: false });
+      }
+    });
+  }, [btnOnScroll]);
+  const scrollTopHandling = () => {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  };
   return (
     <Router>
       <div className="App">
         <UserContextProvider>
           <Navbar />
-          <div className="mb-24 md:mb-auto">
+          <div className="mb-24 md:mb-auto relative">
+            <button
+              onClick={scrollTopHandling}
+              className={`bg-white w-16 h-16 float-right mr-4 mb-auto  fixed rounded-full shadow-2xl ${
+                btnOnScroll.status ? 'block' : 'hidden'
+              } grid grid-cols-1 justify-center items-center`}
+              style={{ bottom: '10%', right: '5%' }}
+            >
+              <svg viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg">
+                <title />
+                <path
+                  fill="#6741D9"
+                  d="M82.6074,62.1072,52.6057,26.1052a6.2028,6.2028,0,0,0-9.2114,0L13.3926,62.1072a5.999,5.999,0,1,0,9.2114,7.6879L48,39.3246,73.396,69.7951a5.999,5.999,0,1,0,9.2114-7.6879Z"
+                />
+              </svg>
+            </button>
             <Switch>
               <ProtectedRoute exact path="/" component={Home} />
               {/* we don't need it righ now 26-10-2020 */}
@@ -32,6 +62,7 @@ function App() {
               <Route path="/login" component={LoginForm} />
             </Switch>
           </div>
+
           <div className="block md:hidden fixed bg-white md:bg-none z-50 bottom-0 w-full py-3">
             <Navigation />
           </div>
