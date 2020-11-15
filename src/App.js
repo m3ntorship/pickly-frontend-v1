@@ -1,4 +1,4 @@
-import React from 'react';
+import React ,{useState}from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Navbar } from './components/NavbarSection';
 import { Navigation } from '../src/components/NavbarSection';
@@ -13,7 +13,7 @@ import { Post } from './pages/post';
 import { SinglePost } from './pages/singlePost';
 import { Feedback } from './pages/feedback';
 function App() {
-  // const [btnOnScroll, setBtnOnScroll] = useState({ status: false });
+  const [btnOnScroll, setBtnOnScroll] = useState();
 
   // useEffect(() => {
   //   // console.log(btnOnScroll.status)
@@ -27,9 +27,11 @@ function App() {
   // }, [btnOnScroll]);
 
   //codition for display or hidden
-  // ${
-  //   btnOnScroll.status ? 'block' : 'hidden'
-  // }
+  
+   window.addEventListener('scroll', () => {
+    let scrollY = window.scrollY >= 500;
+    setBtnOnScroll(scrollY)
+  });
   const scrollTopHandling = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -41,7 +43,9 @@ function App() {
           <div className="mb-24 md:mb-auto relative">
             <button
               onClick={scrollTopHandling}
-              className={`bg-c1100 w-16 h-16 float-right mr-4 mb-auto  fixed rounded-full shadow-2xl justify-center items-center md:flex hidden`}
+              className={`bg-c1100 w-16 h-16 float-right mr-4 mb-auto  fixed rounded-full shadow-2xl justify-center items-center  ${
+                btnOnScroll? 'md:flex hidden' : 'hidden'
+              }`}
               style={{ bottom: '10%', right: '5%' }}
             >
               <svg
