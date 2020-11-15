@@ -11,7 +11,7 @@ import { LoginForm } from './pages/login';
 import { ProtectedRoute } from './pages/protected-route';
 import { Post } from './pages/post';
 import { SinglePost } from './pages/singlePost';
-import {Feedback} from "./pages/feedback"
+import { Feedback } from './pages/feedback';
 
 function App() {
   return (
@@ -19,17 +19,19 @@ function App() {
       <div className="App">
         <UserContextProvider>
           <Navbar />
-          <Switch>
-            <ProtectedRoute exact path="/" component={Home} />
-            {/* we don't need it righ now 26-10-2020 */}
-            {/* <ProtectedRoute path="/friends" component={Friends} /> */}
-            <ProtectedRoute path="/notifications" component={Notifications} />
-            <ProtectedRoute path="/profile" component={Profile} />
-            <ProtectedRoute path="/post" component={Post} />
-            <ProtectedRoute path="/posts/:id" component={SinglePost} />
-            <ProtectedRoute path="/feedback" component={Feedback} />
-            <Route path="/login" component={LoginForm} />
-          </Switch>
+          <div className="mb-24 md:mb-auto">
+            <Switch>
+              <ProtectedRoute exact path="/" component={Home} />
+              {/* we don't need it righ now 26-10-2020 */}
+              {/* <ProtectedRoute path="/friends" component={Friends} /> */}
+              <ProtectedRoute path="/notifications" component={Notifications} />
+              <ProtectedRoute path="/profile" component={Profile} />
+              <ProtectedRoute path="/post" component={Post} />
+              <ProtectedRoute path="/posts/:id" component={SinglePost} />
+              <ProtectedRoute path="/feedbacks" component={Feedback} />
+              <Route path="/login" component={LoginForm} />
+            </Switch>
+          </div>
           <div className="block md:hidden fixed bg-white md:bg-none z-50 bottom-0 w-full py-3">
             <Navigation />
           </div>

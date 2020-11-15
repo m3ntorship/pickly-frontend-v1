@@ -1,10 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Heading, HEADING_OPTIONS } from '../Heading';
 import { Icon } from '../Navbar-icons';
-import postIcon from './post-icon.svg';
 import { NavLink } from 'react-router-dom';
+import { PICKLY } from '../../apis/clients/pickly/';
+import postIcon from './post-icon.svg';
+import notifications from './notification.svg';
+import notificationRed from './notification-red-circle.svg';
 
 export const Navigation = () => {
+  const [data, setData] = useState(true);
+  // This useEffect() for fetching notifications data when the route load
+  useEffect(() => {
+    const interval = setInterval(() => {
+      PICKLY.retriveNotification()
+        .then(({ data }) => {
+          setData(data.retrievedAll);
+        })
+        .catch(err => {});
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
   // Icons Links
   const navData = [
     {
@@ -22,8 +37,7 @@ export const Navigation = () => {
 
     {
       id: 3,
-      iconUrl:
-        'https://res.cloudinary.com/dhwuqox2w/image/upload/v1604339677/notifications_tw8i0k.svg',
+      iconUrl: data ? notifications : notificationRed,
       path: '/notifications'
     },
 
@@ -64,8 +78,10 @@ export const Navbar = () => {
             <Navigation />
           </div>
           <div className="md:justify-self-center justify-self-end">
-          <NavLink exact to="/feedback">
-              <button className="text-white bg-c1100 w-32 h-10  rounded-lg font-bold">Feedback?</button>
+            <NavLink exact to="/feedbacks">
+              <button className="text-white bg-c1100 w-32 h-10  rounded-lg font-bold">
+                Feedback?
+              </button>
             </NavLink>
           </div>
         </div>

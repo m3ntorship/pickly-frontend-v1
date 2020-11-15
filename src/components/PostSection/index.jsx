@@ -8,6 +8,9 @@ import cn from 'classnames';
 import OptionsBtn from '../OptionsBtn';
 import { useEmblaCarousel } from 'embla-carousel/react';
 import useMedia from '../../helpers/useMedia';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+dayjs.extend(relativeTime);
 
 const viewportCss = {
   overflow: 'visible'
@@ -48,6 +51,8 @@ const PostSection = ({
     slidesInView: true
   });
 
+  // for date formate
+  const targetPostDate = dayjs(postDate);
   // return true if it's mobile view
   const isMobile = useMedia(['(max-width: 600px)'], [true], false);
 
@@ -59,27 +64,6 @@ const PostSection = ({
     }
   }, [images]);
 
-  const months = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December'
-  ];
-  const date = new Date(postDate);
-  const monthName = months[date.getMonth()];
-  const dayIndex = date.getDate();
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
-  const formatedHours = ((hours + 11) % 12) + 1;
-
   // handle double Ckick event on the image
   const handleVote = (imageId, voted, postId) => {
     if (voted) {
@@ -87,14 +71,20 @@ const PostSection = ({
       console.log("It's voooooted before");
     } else {
       PICKLY.createVoteAndRefetchPost(imageId, postId).then(res => {
+        handleNotification(_id);
         if (updatePostData) {
-          updatePostData(postId, res.data.post); // instead of res.data.dae
+          updatePostData(postId, res.data.post);
         }
         if (updateSinglePostData) {
-          updateSinglePostData(res.data.data);
+          updateSinglePostData(res.data.post);
         }
       });
     }
+  };
+
+  // handle sending notification to the backend
+  const handleNotification = id => {
+    PICKLY.createSingleNotification(id);
   };
 
   const options = [
@@ -115,9 +105,7 @@ const PostSection = ({
       <div className="px-4 mx-auto flex justify-between items-center">
         <ImageWithSideTitle
           title={isAnonymous ? 'Anonymous' : userName}
-          subTitle={`${dayIndex} ${monthName} at ${formatedHours}:${minutes} ${
-            hours > 12 ? 'PM' : 'AM'
-          }`}
+          subTitle={targetPostDate.fromNow(true)}
           imgURL={userImage && !isAnonymous && userImage}
           iconURL={isAnonymous && anonymousIcon}
         />
@@ -125,10 +113,11 @@ const PostSection = ({
           <OptionsBtn options={options} position="left top" />
         )}
       </div>
-      <p className="px-4 mx-auto mt-5 text-sm font-regular">
-        {postCaption && postCaption}
-      </p>
-
+      <div className="h-full">
+        <p className="px-4 mx-auto mt-5 text-sm font-regular tracking-wide leading-4">
+          {postCaption && postCaption}
+        </p>
+      </div>
       {!isMobile && (
         <div
           className={cn('relative grid grid-cols-1 gap-1 my-4', {
@@ -145,6 +134,7 @@ const PostSection = ({
                   img={img}
                   voted={voted}
                   handleVote={handleVote}
+                  handleNotification={handleNotification}
                   _id={_id}
                   totalVotes={totalVotes}
                 />
@@ -165,6 +155,7 @@ const PostSection = ({
                       img={img}
                       voted={voted}
                       handleVote={handleVote}
+                      handleNotification={handleNotification}
                       _id={_id}
                       totalVotes={totalVotes}
                     />

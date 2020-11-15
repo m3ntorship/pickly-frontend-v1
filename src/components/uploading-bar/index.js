@@ -44,7 +44,8 @@ export const ProgressBar = ({
         <text
           fill="#6741D9"
           style={{
-            fontSize: '2.5rem'
+            fontSize: '2.5rem',
+            fontWeight: 'bold'
           }}
           textAnchor="middle"
           x="52%"
