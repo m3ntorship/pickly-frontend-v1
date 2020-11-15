@@ -11,6 +11,7 @@ export const FeedbackForm = () => {
     value: '',
     status: false
   });
+  const [feedbackNum,setFeedbackNum]=useState({val:0})
 
   useEffect(() => {
     PICKLY.getGategories()
@@ -29,9 +30,8 @@ export const FeedbackForm = () => {
     if (inputVal.value === '' || dropDownValue.value === '') {
       setInputVal({ ...inputVal, errorMsg: 'Problem field needed' });
     }
-    // else{
-    // setVal({...value,val:"",dropDownValue:"" ,errorMsg:""})
-    // }
+  setFeedbackNum({val:feedbackNum.val+1})
+   localStorage.setItem("num",feedbackNum.val)
   };
   const handleValueFromDropDown = e => {
     setDropDownValue({ value: e.target.innerHTML, status: false });
@@ -54,9 +54,8 @@ export const FeedbackForm = () => {
             }
           })
           .catch(err => {
-            console.log(err.status);
-            setInputVal({ value: '', errorMsg: '' });
-            setDropDownValue({ ...dropDownValue, value: '' });
+            console.log(err);
+            
           });
       }}
     >
@@ -146,11 +145,12 @@ export const FeedbackForm = () => {
           <Button
             handleClick={validationHandling}
             shadow={true}
-            disabled={inputVal.value && dropDownValue.value ? false : true}
+            disabled={inputVal.value && dropDownValue.value && localStorage.getItem("num")<=4 ? false : true}
             isRounded={true}
             backgroundColor={
               inputVal.value &&
               inputVal.value.length >= length.min &&
+              localStorage.getItem("num")<=4 &&
               inputVal.value.length &&
               dropDownValue.value
                 ? BUTTON_OPTIONS.BACKGROUND_COLOR.Blue
