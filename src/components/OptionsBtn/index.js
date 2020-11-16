@@ -44,7 +44,7 @@ export default ({ options, position = 'left bottom', appearOn = 'click' }) => {
       {options.map((option, index) => (
         <div
           key={index}
-          className="py-1 px-6 text-left md:px-10 text-md md:text-md hover:bg-c800 transition-all duration-100 cursor-pointer"
+          className="py-2 px-6 my-2 text-left md:px-10 text-md md:text-md hover:bg-c800 transition-all duration-100 cursor-pointer"
           onClick={() => {
             popupRef.current.close();
             option.fun();
