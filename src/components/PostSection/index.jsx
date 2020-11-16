@@ -86,15 +86,18 @@ const PostSection = ({
   const handleNotification = id => {
     PICKLY.createSingleNotification(id);
   };
-
+  const deletePost = () => {
+    PICKLY.deletePost(_id)
+      .then(res => setData(data.filter(post => post._id !== _id)))
+      .catch(err => console.log(err.message));
+  };
   const options = [
     {
       svg: deleteIcon,
       text: 'Delete Post',
-      fun: () => {
-        PICKLY.deletePost(_id)
-          .then(res => setData(data.filter(post => post._id !== _id)))
-          .catch(err => console.log(err.message));
+      fun: e => {
+        if (window.confirm('Are you sure you want to delete this post?'))
+          deletePost(e);
       },
       textColor: '#e03131'
     }
@@ -193,6 +196,7 @@ const PostImage = ({
   totalVotes,
   ownedByCurrentUser
 }) => {
+  console.log(img);
   return (
     <div className="relative" key={img._id}>
       <div
