@@ -2,7 +2,12 @@ import React, { useState } from 'react';
 import Popup from 'reactjs-popup';
 //
 
-const ConfirmationPopup = ({title}) => {
+const ConfirmationPopup = ({
+  confirmBoxTitle,
+  confirmBtnText,
+  confirmBtnBg,
+  confirmFunction
+}) => {
   const [open, setOpen] = useState(false);
   const closeModal = () => setOpen(false);
 
@@ -17,19 +22,28 @@ const ConfirmationPopup = ({title}) => {
         onClose={closeModal}
         contentStyle={{
           borderRadius: '10px',
-          width: '420px'
+          width: '420px',
+          marginLeft: '12px',
+          marginRight: '12px',
+          paddingBottom: '20px'
         }}
         modal
       >
         <div className="modal bg-white p-4 h-32 rounded-lg text-center">
           <div className="text-black text-md">
-            {title}
+            {confirmBoxTitle}
             <div>
-              <button className="py-2 px-5 mr-2 mt-5 bg-c700 text-black text-md rounded-lg">
-                Yes
+              <button
+                className={`py-2 px-5 mr-2 mt-5 text-white text-md rounded-lg bg-${confirmBtnBg}`}
+                onClick={() => {
+                  confirmFunction();
+                  setOpen(false);
+                }}
+              >
+                {confirmBtnText}
               </button>
               <button
-                className="py-2 px-5 mr-2 mt-5 bg-c1100 text-black text-md  rounded-lg"
+                className="py-2 px-5 mr-2 mt-5 bg-c500 text-white font-semibold  rounded-lg"
                 onClick={() => setOpen(false)}
               >
                 Cancel

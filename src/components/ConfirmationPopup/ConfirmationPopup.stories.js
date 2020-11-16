@@ -9,5 +9,10 @@ export default {
 const Template = args => <ConfirmationPopup {...args} />;
 export const ConfirmPopup = Template.bind({});
 ConfirmPopup.args = {
-  title: 'Are you sure you want to delete post ?'
+  confirmBoxTitle: 'Are you sure you want to delete post ?',
+  confirmBtnText: 'Delete',
+  confirmBtnBg: 'c200',
+  confirmFunction: () => {
+    console.log('Deleted');
+  }
 };
