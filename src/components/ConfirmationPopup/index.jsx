@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Popup from 'reactjs-popup';
 //
 
-const ConfirmationPopup = () => {
+const ConfirmationPopup = ({title}) => {
   const [open, setOpen] = useState(false);
   const closeModal = () => setOpen(false);
 
@@ -11,16 +11,25 @@ const ConfirmationPopup = () => {
       <button type="button" className="button" onClick={() => setOpen(o => !o)}>
         Controlled Popup
       </button>
-      <Popup open={open} closeOnDocumentClick onClose={closeModal}>
-        <div className="modal bg-c700 p-4">
-          <div>
-            Are you sure you want to delete post ?
+      <Popup
+        open={open}
+        closeOnDocumentClick
+        onClose={closeModal}
+        contentStyle={{
+          borderRadius: '10px',
+          width: '420px'
+        }}
+        modal
+      >
+        <div className="modal bg-white p-4 h-32 rounded-lg text-center">
+          <div className="text-black text-md">
+            {title}
             <div>
-              <button className="py-2 px-5 mr-2 mt-5 bg-c1100 text-white">
+              <button className="py-2 px-5 mr-2 mt-5 bg-c700 text-black text-md rounded-lg">
                 Yes
               </button>
               <button
-                className="py-2 px-5 mr-2 mt-5 bg-c1100 text-white"
+                className="py-2 px-5 mr-2 mt-5 bg-c1100 text-black text-md  rounded-lg"
                 onClick={() => setOpen(false)}
               >
                 Cancel
