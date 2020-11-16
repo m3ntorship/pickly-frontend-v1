@@ -86,18 +86,14 @@ const PostSection = ({
   const handleNotification = id => {
     PICKLY.createSingleNotification(id);
   };
-  const reportPost = () => {
-    console.log('reported');
-  };
-  const options = [
-    {
-      svg: reportIcon,
-      text: 'Report Post',
-      fun: () => {
-        reportPost();
-      },
-      textColor: '#000'
-    },
+
+  /*  
+    __ make two options lists 
+    - One shows in the posts owned by curent user
+    - other shows in the others posts
+  */
+
+  const optionsForCurrentUserPosts = [
     {
       svg: deleteIcon,
       text: 'Delete Post',
@@ -109,12 +105,12 @@ const PostSection = ({
       textColor: '#e03131'
     }
   ];
-  const optionReport = [
+  const optionsForOtherUsersPosts = [
     {
       svg: reportIcon,
       text: 'Report Post',
       fun: () => {
-        reportPost();
+        console.log('reposr clicked');
       },
       textColor: '#000'
     }
@@ -129,10 +125,13 @@ const PostSection = ({
           iconURL={isAnonymous && anonymousIcon}
         />
         {ownedByCurrentUser && (
-          <OptionsBtn options={options} position="left top" />
+          <OptionsBtn
+            options={optionsForCurrentUserPosts}
+            position="left top"
+          />
         )}
         {!ownedByCurrentUser && (
-          <OptionsBtn options={optionReport} position="left top" />
+          <OptionsBtn options={optionsForOtherUsersPosts} position="left top" />
         )}
       </div>
       <div className="h-full">
