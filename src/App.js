@@ -13,21 +13,7 @@ import { Post } from './pages/post';
 import { SinglePost } from './pages/singlePost';
 import { Feedback } from './pages/feedback';
 function App() {
-  const [btnOnScroll, setBtnOnScroll] = useState();
-
-  // useEffect(() => {
-  //   // console.log(btnOnScroll.status)
-  //   window.addEventListener('scroll', () => {
-  //     if (document.documentElement.scrollTop > 20) {
-  //       setBtnOnScroll({ status: true });
-  //     } else {
-  //       setBtnOnScroll({ status: false });
-  //     }
-  //   });
-  // }, [btnOnScroll]);
-
-  //codition for display or hidden
-  
+  const [btnOnScroll, setBtnOnScroll] = useState();  
    window.addEventListener('scroll', () => {
     let scrollY = window.scrollY >= 500;
     setBtnOnScroll(scrollY)
@@ -43,10 +29,10 @@ function App() {
           <div className="mb-24 md:mb-auto relative">
             <button
               onClick={scrollTopHandling}
-              className={`bg-c1100 w-16 h-16 float-right mr-4 mb-auto  fixed rounded-full shadow-2xl justify-center items-center  ${
+              className={`bg-c1100 lg:w-16 lg:h-16 w-8 h-8 float-right mr-4 mb-auto  fixed rounded-full shadow-2xl justify-center items-center  ${
                 btnOnScroll? 'md:flex hidden' : 'hidden'
               }`}
-              style={{ bottom: '10%', right: '5%' }}
+              style={{ bottom: '5%', right: '0' }}
             >
               <svg
                 viewBox="0 0 96 96"
