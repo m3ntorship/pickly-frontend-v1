@@ -109,7 +109,16 @@ const PostSection = ({
       textColor: '#e03131'
     }
   ];
-
+  const optionReport = [
+    {
+      svg: reportIcon,
+      text: 'Report Post',
+      fun: () => {
+        reportPost();
+      },
+      textColor: '#000'
+    }
+  ];
   return (
     <div className="bg-white py-4 rounded-lg my-6 p-1">
       <div className="px-4 mx-auto flex justify-between items-center">
@@ -121,6 +130,9 @@ const PostSection = ({
         />
         {ownedByCurrentUser && (
           <OptionsBtn options={options} position="left top" />
+        )}
+        {!ownedByCurrentUser && (
+          <OptionsBtn options={optionReport} position="left top" />
         )}
       </div>
       <div className="h-full">
