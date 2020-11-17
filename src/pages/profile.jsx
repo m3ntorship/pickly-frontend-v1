@@ -25,33 +25,33 @@ export const Profile = () => {
   return (
     <div className="h-screen bg-c800 ">
       <div
-        className="w-full  flex  items-end bg-center bg-cover"
+        className="w-full  flex  items-end bg-center bg-cover "
         style={{
           backgroundImage: `url(${background})`,
           height: '40vh'
         }}
       >
-        <div className="nav__container w-full h-full flex items-end">
-          <div className="mt-12 ml-4 ">
+        <div className="nav__container w-full h-full flex items-end ">
+          <div className=" mb-4">
             <img
               src={user.photoURL}
               alt="profile"
               className="w-24 h-24 rounded-full border-white border-2 border-solid mr-3 border-white-1000"
             />
           </div>
-          <div className="mt-4 pl-4">
+          <div className="mt-4 pl-4 w-full grid grid-cols-2 mb-4">
             <h1 className="text-lg font-bold text-white">
               {/* {user.displayName} */}
               Mu'taz Alaa
             </h1>
-            <button className=" font-bold ml-2 mt-2" onClick={logoutUser}>
+            <button className=" font-bold ml-2 mt-2 flex justify-end" onClick={logoutUser}>
               <svg
                 fill="white"
                 id="Capa_1"
                 enable-background="new 0 0 551.13 551.13"
-                height="20"
+                height="24"
                 viewBox="0 0 551.13 551.13"
-                width="20"
+                width="24"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path d="m499.462 0h-378.902c-9.52 0-17.223 7.703-17.223 17.223v51.668h34.446v-34.445h344.456v482.239h-344.456v-34.446h-34.446v51.668c0 9.52 7.703 17.223 17.223 17.223h378.902c9.52 0 17.223-7.703 17.223-17.223v-516.684c0-9.52-7.704-17.223-17.223-17.223z" />
@@ -80,10 +80,22 @@ export const Profile = () => {
           post?post.map(item=>{
             return(
               <>
+              {!item.isAnonymous? 
+              <div>
+               <div className=" mb-4 inline-block">
+               <img
+                 src={user.photoURL}
+                 alt="profile"
+                 className="w-16 h-16 rounded-full border-white border-2 border-solid mr-3 border-white-1000"
+               />
+             </div>
+               <p className="inline-block">{item.author.name}</p>
+              <p>{item.caption}</p>
+              </div>
+              :null}
 
-
-
-              </>
+            
+            </>
             )
           })
         :null}
