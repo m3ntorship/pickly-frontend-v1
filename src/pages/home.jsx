@@ -29,7 +29,6 @@ export const Home = () => {
     const fetchNewPost = () => {
       setLoading(true);
       pageNum++;
-
       PICKLY.getAllPosts(pageNum, postsNum)
         .then(({ data }) => {
           setPosts(prevPosts => {
@@ -42,18 +41,14 @@ export const Home = () => {
           setError(true);
         });
     };
-    const checkWindowPos = () => {
-      document.addEventListener('scroll', () => {
-        if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-          fetchNewPost();
-        }
-
-        return () => {
-          window.removeEventListener('scroll', fetchNewPost);
-        };
-      });
+    const scrollingEvent = () => {
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+        fetchNewPost();
+      }
     };
-    checkWindowPos();
+
+    window.addEventListener('scroll', scrollingEvent);
+    return () => window.removeEventListener('scroll', scrollingEvent);
   }, [pageNum]);
 
   // This useEffect for update the feed__when data value change
