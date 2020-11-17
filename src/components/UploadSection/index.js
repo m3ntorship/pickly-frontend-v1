@@ -170,7 +170,6 @@ export const UploadSection = ({ userImage }) => {
         <hr className="w-full text-c800 h-1" />
         <PostButton
           type="submit"
-          postData={postData}
           isValid={isValid}
           captionValid={captionValid}
         />
