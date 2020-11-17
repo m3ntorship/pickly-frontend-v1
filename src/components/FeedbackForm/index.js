@@ -11,6 +11,7 @@ export const FeedbackForm = () => {
     value: '',
     status: false
   });
+  const [doneMsg, setDoneMsg] = useState({ value: '', status: false });
 
   useEffect(() => {
     PICKLY.getGategories()
@@ -51,12 +52,21 @@ export const FeedbackForm = () => {
             if (res.status === 201) {
               setInputVal({ value: '', errorMsg: '' });
               setDropDownValue({ ...dropDownValue, value: '' });
+              setDoneMsg({ value: 'Msg is Sended', status: true });
+              setInterval(() => {
+                setDoneMsg({ value: '', status: false });
+              }, 3000);
             }
           })
           .catch(err => {
-            console.log(err.status);
-            setInputVal({ value: '', errorMsg: '' });
-            setDropDownValue({ ...dropDownValue, value: '' });
+            console.log(err);
+            setDoneMsg({
+              value: 'you can send only 5 feedback in day',
+              status: false
+            });
+            setInterval(() => {
+              setDoneMsg({ value: '', status: false });
+            }, 3000);
           });
       }}
     >
@@ -163,6 +173,13 @@ export const FeedbackForm = () => {
           </Button>
         </div>
       </div>
+      {doneMsg.value ? (
+        <div
+          className={`${doneMsg.status ? 'bg-c1000' : 'bg-c200'} rounded-lg`}
+        >
+          <p className="mt-8 text-white p-4 text-center">{doneMsg.value}</p>
+        </div>
+      ) : null}
     </form>
   );
 };
