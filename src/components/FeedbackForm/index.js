@@ -6,16 +6,16 @@ import { PICKLY } from '../../apis/clients';
 export const FeedbackForm = () => {
   const [categories, setCategories] = useState(null);
 
-  //inputval for textbox value 
-  const [inputVal, setInputVal] = useState("");
+  //inputval for textbox value
+  const [inputVal, setInputVal] = useState('');
   //inputValErrMsg for error msg Who display errMsg if inputVal is empty after change
-  const [inputValErrMsg,setInputValErrMsg]=useState("")
+  const [inputValErrMsg, setInputValErrMsg] = useState('');
 
-  const [length, setLength] = useState({ min: 5, max: 500});
-  const [lengthErrMsg,setLengthErrMsg]=useState("")
+  const [length, setLength] = useState({ min: 5, max: 500 });
+  const [lengthErrMsg, setLengthErrMsg] = useState('');
 
   const [dropDownValue, setDropDownValue] = useState('');
-  const [dropDownOpened,setDropDownOpened]=useState(false)
+  const [dropDownOpened, setDropDownOpened] = useState(false);
 
   useEffect(() => {
     PICKLY.getGategories()
@@ -25,10 +25,10 @@ export const FeedbackForm = () => {
       .catch(err => {
         console.log(err);
       });
-  }, [dropDownValue , dropDownOpened, inputVal, length,lengthErrMsg]);
+  }, [dropDownValue, dropDownOpened, inputVal, length, lengthErrMsg]);
 
   const handleDropDown = () => {
-    setDropDownOpened(!dropDownOpened)
+    setDropDownOpened(!dropDownOpened);
   };
   const validationHandling = () => {
     if (inputVal === '' || dropDownValue === '') {
@@ -36,12 +36,10 @@ export const FeedbackForm = () => {
     }
   };
   const handleValueFromDropDown = e => {
-    setDropDownValue( e.target.innerHTML);
-    setDropDownOpened(false)
-   
+    setDropDownValue(e.target.innerHTML);
+    setDropDownOpened(false);
   };
 
-  
   return (
     <form
       className="relative mb-12 bg-c900"
@@ -53,8 +51,8 @@ export const FeedbackForm = () => {
         })
           .then(res => {
             console.log(res);
-              setInputVal('');
-              setDropDownValue('');
+            setInputVal('');
+            setDropDownValue('');
           })
           .catch(err => {
             console.log(err.status);
@@ -102,14 +100,13 @@ export const FeedbackForm = () => {
         <textarea
           onChange={e => {
             if (e.target.value.length < length.min) {
-              setLengthErrMsg('should msg between 5 to 500 character')
+              setLengthErrMsg('should msg between 5 to 500 character');
             } else if (e.target.value.length >= length.min) {
-              setLengthErrMsg('')
+              setLengthErrMsg('');
             }
-            setInputVal(e.target.value)
-            setInputValErrMsg('Problem field needed')
+            setInputVal(e.target.value);
+            setInputValErrMsg('Problem field needed');
           }}
-     
           maxLength={length.max}
           value={inputVal}
           className={`absolute  w-full h-16 shadow-background text-c500 rounded-lg pl-4 pt-4 resize-none block top-50 z-10`}
