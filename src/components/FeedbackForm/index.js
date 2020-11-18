@@ -4,6 +4,8 @@ import icon from './down-chevron.svg';
 import { PICKLY } from '../../apis/clients';
 
 export const FeedbackForm = () => {
+  const min = 5,
+    max = 500;
   const [categories, setCategories] = useState(null);
 
   //inputval for textbox value
@@ -11,7 +13,6 @@ export const FeedbackForm = () => {
   //inputValErrMsg for error msg Who display errMsg if inputVal is empty after change
   const [inputValErrMsg, setInputValErrMsg] = useState('');
 
-  const [length, setLength] = useState({ min: 5, max: 500 });
   const [lengthErrMsg, setLengthErrMsg] = useState('');
 
   const [dropDownValue, setDropDownValue] = useState('');
@@ -25,7 +26,7 @@ export const FeedbackForm = () => {
       .catch(err => {
         console.log(err);
       });
-  }, [dropDownValue, dropDownOpened, inputVal, length, lengthErrMsg]);
+  }, [dropDownValue, dropDownOpened, inputVal, lengthErrMsg]);
 
   const handleDropDown = () => {
     setDropDownOpened(!dropDownOpened);
@@ -99,15 +100,15 @@ export const FeedbackForm = () => {
         ) : null}
         <textarea
           onChange={e => {
-            if (e.target.value.length < length.min) {
+            if (e.target.value.length < min) {
               setLengthErrMsg('should msg between 5 to 500 character');
-            } else if (e.target.value.length >= length.min) {
+            } else if (e.target.value.length >= min) {
               setLengthErrMsg('');
             }
             setInputVal(e.target.value);
             setInputValErrMsg('Problem field needed');
           }}
-          maxLength={length.max}
+          maxLength={max}
           value={inputVal}
           className={`absolute  w-full h-16 shadow-background text-c500 rounded-lg pl-4 pt-4 resize-none block top-50 z-10`}
           type="text"
@@ -137,7 +138,7 @@ export const FeedbackForm = () => {
             isRounded={true}
             backgroundColor={
               inputVal &&
-              inputVal.length >= length.min &&
+              inputVal.length >= min &&
               inputVal.length &&
               dropDownValue
                 ? BUTTON_OPTIONS.BACKGROUND_COLOR.Blue
