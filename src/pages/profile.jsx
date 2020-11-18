@@ -15,16 +15,15 @@ export const Profile = () => {
     if (!user) {
       history.push('/login');
     }
-      setLoading(true);
-      PICKLY.getAllPosts()
-        .then(({ data }) => {
-          setPost(data.data);
-          setLoading(false);
-        })
-        .catch(err => {
-          setLoading(false);
-        });
-  
+    setLoading(true);
+    PICKLY.getAllPosts()
+      .then(({ data }) => {
+        setPost(data.data);
+        setLoading(false);
+      })
+      .catch(err => {
+        setLoading(false);
+      });
   }, [user, history]);
 
   return (
@@ -45,10 +44,11 @@ export const Profile = () => {
             />
           </div>
           <div className="mt-4 pl-4 w-full grid grid-cols-2 mb-4">
-            <h1 className="text-lg font-bold text-white">
-              {user.displayName}
-            </h1>
-            <button className=" font-bold ml-2 mt-2 flex justify-end text-white" onClick={logoutUser}>
+            <h1 className="text-lg font-bold text-white">{user.displayName}</h1>
+            <button
+              className=" font-bold ml-2 mt-2 flex justify-end text-white"
+              onClick={logoutUser}
+            >
               <svg
                 fill="white"
                 id="Capa_1"
@@ -66,54 +66,53 @@ export const Profile = () => {
           </div>
         </div>
       </div>
-      
+
       <div className="mt-4 nav__container">
         <p className=" font-bold">Your Posts</p>
-       
       </div>
-      <div className=" py-6" style={{height:"100%"}}>
-      <div className="nav__container ">
-        {loading && <PostLoader />}
-        {post &&
-          post.map(
-            ({
-              _id,
-              author,
-              caption,
-              createdAt,
-              isAnonymous,
-              resources: { images },
-              Voted,
-              ownedByCurrentUser
-            }) => {
-              return (
-                <PostSection
-                  ownedByCurrentUser={ownedByCurrentUser}
-                  data={post}
-                  setData={setPost}
-                  voted={Voted}
-                  key={_id}
-                  _id={_id}
-                  images={images}
-                  popupActionOptions={[0]}
-                  postCaption={caption}
-                  postDate={createdAt}
-                  savesNumbers="0"
-                  shareUrl={`${window.location.href}posts/${_id}`}
-                  userName={author && author.name}
-                  // this will handle with a simple code when after clearing the users from backend
-                  userImage={
-                    author && author.userImage
-                      ? author.userImage
-                      : 'https://img.freepik.com/free-photo/portrait-white-man-isolated_53876-40306.jpg?size=626&ext=jpg'
-                  }
-                  isAnonymous={isAnonymous}
-           
-                />
-              );
-            }
-          )}
-      </div>
+      <div className=" py-6" style={{ height: '100%' }}>
+        <div className="nav__container ">
+          {loading && <PostLoader />}
+          {post &&
+            post.map(
+              ({
+                _id,
+                author,
+                caption,
+                createdAt,
+                isAnonymous,
+                resources: { images },
+                Voted,
+                ownedByCurrentUser
+              }) => {
+                return (
+                  <PostSection
+                    ownedByCurrentUser={ownedByCurrentUser}
+                    data={post}
+                    setData={setPost}
+                    voted={Voted}
+                    key={_id}
+                    _id={_id}
+                    images={images}
+                    popupActionOptions={[0]}
+                    postCaption={caption}
+                    postDate={createdAt}
+                    savesNumbers="0"
+                    shareUrl={`${window.location.href}posts/${_id}`}
+                    userName={author && author.name}
+                    // this will handle with a simple code when after clearing the users from backend
+                    userImage={
+                      author && author.userImage
+                        ? author.userImage
+                        : 'https://img.freepik.com/free-photo/portrait-white-man-isolated_53876-40306.jpg?size=626&ext=jpg'
+                    }
+                    isAnonymous={isAnonymous}
+                  />
+                );
+              }
+            )}
+        </div>
       </div>
     </div>
-  )}
+  );
+};
