@@ -3,27 +3,32 @@ import { UserContext } from '../context/userContext';
 import { useHistory } from 'react-router-dom';
 import background from './bg_profile.jpg';
 import { PICKLY } from '../apis/clients/pickly';
+import PostSection from '../components/PostSection';
+import PostLoader from '../components/LoadingComponents/PostLoader';
 
 export const Profile = () => {
   const { user, logoutUser } = useContext(UserContext);
   const history = useHistory();
-  const [post, setPosts] = useState(null);
+  const [post, setPost] = useState(null);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     if (!user) {
       history.push('/login');
     }
-    PICKLY.getAllPosts()
-      .then(({ data }) => {
-        setPosts(data.data);
-        console.log(data.data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+      setLoading(true);
+      PICKLY.getAllPosts()
+        .then(({ data }) => {
+          setPost(data.data);
+          setLoading(false);
+        })
+        .catch(err => {
+          setLoading(false);
+        });
+  
   }, [user, history]);
 
   return (
-    <div className="h-screen bg-c800 ">
+    <div className="bg-c800 ">
       <div
         className="w-full  flex  items-end bg-center bg-cover "
         style={{
@@ -41,10 +46,9 @@ export const Profile = () => {
           </div>
           <div className="mt-4 pl-4 w-full grid grid-cols-2 mb-4">
             <h1 className="text-lg font-bold text-white">
-              {/* {user.displayName} */}
-              Mu'taz Alaa
+              {user.displayName}
             </h1>
-            <button className=" font-bold ml-2 mt-2 flex justify-end" onClick={logoutUser}>
+            <button className=" font-bold ml-2 mt-2 flex justify-end text-white" onClick={logoutUser}>
               <svg
                 fill="white"
                 id="Capa_1"
@@ -56,51 +60,60 @@ export const Profile = () => {
               >
                 <path d="m499.462 0h-378.902c-9.52 0-17.223 7.703-17.223 17.223v51.668h34.446v-34.445h344.456v482.239h-344.456v-34.446h-34.446v51.668c0 9.52 7.703 17.223 17.223 17.223h378.902c9.52 0 17.223-7.703 17.223-17.223v-516.684c0-9.52-7.704-17.223-17.223-17.223z" />
                 <path d="m204.588 366.725 24.354 24.354 115.514-115.514-115.514-115.514-24.354 24.354 73.937 73.937h-244.079v34.446h244.08z" />
-              </svg>{' '}
+              </svg>
+              Log out
             </button>
           </div>
         </div>
       </div>
-      <div className="mt-16 nav__container font-bold grid grid-cols-2 justify-items-center">
-        <div className="grid grid-cols-1 justify-items-center">
-          <p className="text-c1100">{post?post.length:"0"}</p>
-          <h2>Posts</h2>
-        </div>
-        <div className="grid grid-cols-1 justify-items-center">
-          <p className="text-c1100">80</p>
-          <h2>comments</h2>
-        </div>
-      </div>
+      
       <div className="mt-4 nav__container">
-        <p className=" font-bold">Activity</p>
-        <hr />
+        <p className=" font-bold">Your Posts</p>
+       
       </div>
-      <div className="mt-4 nav__container">
-        {
-          post?post.map(item=>{
-            return(
-              <>
-              {!item.isAnonymous? 
-              <div>
-               <div className=" mb-4 inline-block">
-               <img
-                 src={user.photoURL}
-                 alt="profile"
-                 className="w-16 h-16 rounded-full border-white border-2 border-solid mr-3 border-white-1000"
-               />
-             </div>
-               <p className="inline-block">{item.author.name}</p>
-              <p>{item.caption}</p>
-              </div>
-              :null}
-
-            
-            </>
-            )
-          })
-        :null}
+      <div className=" py-6" style={{height:"100%"}}>
+      <div className="nav__container ">
+        {loading && <PostLoader />}
+        {post &&
+          post.map(
+            ({
+              _id,
+              author,
+              caption,
+              createdAt,
+              isAnonymous,
+              resources: { images },
+              Voted,
+              ownedByCurrentUser
+            }) => {
+              return (
+                <PostSection
+                  ownedByCurrentUser={ownedByCurrentUser}
+                  data={post}
+                  setData={setPost}
+                  voted={Voted}
+                  key={_id}
+                  _id={_id}
+                  images={images}
+                  popupActionOptions={[0]}
+                  postCaption={caption}
+                  postDate={createdAt}
+                  savesNumbers="0"
+                  shareUrl={`${window.location.href}posts/${_id}`}
+                  userName={author && author.name}
+                  // this will handle with a simple code when after clearing the users from backend
+                  userImage={
+                    author && author.userImage
+                      ? author.userImage
+                      : 'https://img.freepik.com/free-photo/portrait-white-man-isolated_53876-40306.jpg?size=626&ext=jpg'
+                  }
+                  isAnonymous={isAnonymous}
+           
+                />
+              );
+            }
+          )}
       </div>
-
+      </div>
     </div>
-  );
-};
+  )}
