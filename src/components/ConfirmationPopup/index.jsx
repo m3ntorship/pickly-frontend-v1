@@ -1,54 +1,50 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Popup from 'reactjs-popup';
-//
 
 const ConfirmationPopup = ({
   confirmBoxTitle,
   confirmBtnText,
   confirmBtnBg,
-  confirmFunction
+  confirmFunction,
+  popupModal,
+  setPopupModal,
+  trigger
 }) => {
-  const [open, setOpen] = useState(false);
-  const closeModal = () => setOpen(false);
+  const closeModal = () => setPopupModal(false);
 
   return (
-    <div className="flex flex-col">
-      <button type="button" className="button" onClick={() => setOpen(o => !o)}>
-        Controlled Popup
-      </button>
+    <div>
       <Popup
-        open={open}
+        trigger={trigger}
+        open={popupModal}
         closeOnDocumentClick
         onClose={closeModal}
         contentStyle={{
           borderRadius: '10px',
-          width: '420px',
-          marginLeft: '12px',
-          marginRight: '12px',
-          paddingBottom: '20px'
+          paddingBottom: '20px',
+          width: '93%',
+          maxWidth: '500px'
         }}
         modal
       >
         <div className="modal bg-white p-4 h-32 rounded-lg text-center">
-          <div className="text-black text-md">
-            {confirmBoxTitle}
-            <div>
-              <button
-                className={`py-2 px-5 mr-2 mt-5 text-white text-md rounded-lg bg-${confirmBtnBg}`}
-                onClick={() => {
-                  confirmFunction();
-                  setOpen(false);
-                }}
-              >
-                {confirmBtnText}
-              </button>
-              <button
-                className="py-2 px-5 mr-2 mt-5 bg-c500 text-white font-semibold  rounded-lg"
-                onClick={() => setOpen(false)}
-              >
-                Cancel
-              </button>
-            </div>
+          <div className="text-black text-md">{confirmBoxTitle}</div>
+          <div>
+            <button
+              className={`py-2 px-5 mr-2 mt-5 text-white text-md rounded-lg bg-${confirmBtnBg}`}
+              onClick={() => {
+                confirmFunction();
+                setPopupModal(false);
+              }}
+            >
+              {confirmBtnText}
+            </button>
+            <button
+              className="py-2 px-5 mr-2 mt-5 text-white text-md rounded-lg bg-c500"
+              onClick={() => setPopupModal(false)}
+            >
+              Cancel
+            </button>
           </div>
         </div>
       </Popup>

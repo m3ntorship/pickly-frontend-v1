@@ -1,6 +1,7 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
+import ConfirmationPopup from '../ConfirmationPopup';
 
 const dotsSvg = (
   <svg
@@ -25,6 +26,8 @@ const contectStyle = {
 
 export default ({ options, position = 'left bottom', appearOn = 'click' }) => {
   const popupRef = useRef();
+  const [popupModal, setPopupModal] = useState(false);
+
   return (
     <Popup
       ref={popupRef}
@@ -48,15 +51,25 @@ export default ({ options, position = 'left bottom', appearOn = 'click' }) => {
           onClick={() => {
             popupRef.current.close();
             option.fun();
+            setPopupModal(true);
           }}
         >
-          <div
-            className="flex justify-between items-center"
-            style={{ color: option.textColor }}
-          >
-            <div className="mr-3">{option.svg}</div>
-            {option.text}
-          </div>
+          <ConfirmationPopup
+            trigger={
+              <div
+                className="flex justify-between items-center"
+                style={{ color: option.textColor }}
+              >
+                <div className="mr-3">{option.svg}</div>
+                {option.text}
+              </div>
+            }
+            confirmBoxTitle="Are you sure?"
+            confirmBtnText="Report"
+            confirmBtnBg="c200"
+            popupModal={popupModal}
+            setPopupModal={setPopupModal}
+          />
         </div>
       ))}
     </Popup>
