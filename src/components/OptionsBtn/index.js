@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
+import ConfirmationPopup from '../ConfirmationPopup';
 
 const dotsSvg = (
   <svg
@@ -23,10 +24,19 @@ const contectStyle = {
   width: 'fit-content'
 };
 
-export default ({ options, position = 'left bottom', appearOn = 'click' }) => {
+export default ({
+  options,
+  descriptionMsg,
+  popupBtnBg,
+  position = 'left bottom',
+  appearOn = 'click'
+}) => {
   const popupRef = useRef();
+  const confirmationPopupRef = useRef();
+
   return (
     <Popup
+      closeOnDocumentClick={false}
       ref={popupRef}
       trigger={
         <button
@@ -46,17 +56,27 @@ export default ({ options, position = 'left bottom', appearOn = 'click' }) => {
           key={index}
           className="py-2 px-6 my-2 text-left md:px-10 text-sm md:text-md hover:bg-c800 transition-all duration-100 cursor-pointer"
           onClick={() => {
-            popupRef.current.close();
-            option.fun();
+            // setPopupModal(true);
+            confirmationPopupRef.current.open();
           }}
         >
-          <div
-            className="flex justify-between items-center"
-            style={{ color: option.textColor }}
-          >
-            <div className="mr-3">{option.svg}</div>
-            {option.text}
-          </div>
+          <ConfirmationPopup
+            trigger={
+              <div
+                className="flex justify-between items-center"
+                style={{ color: option.textColor }}
+              >
+                <div className="mr-3">{option.svg}</div>
+                {option.text}
+              </div>
+            }
+            confirmBoxTitle={option.descriptionMsg}
+            confirmBtnText={option.text}
+            confirmBtnBg={option.popupBtnBg}
+            confirmFunction={option.fun}
+            theRef={confirmationPopupRef}
+            parentRef={popupRef}
+          />
         </div>
       ))}
     </Popup>
