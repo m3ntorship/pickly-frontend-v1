@@ -4,13 +4,19 @@ import icon from './down-chevron.svg';
 import { PICKLY } from '../../apis/clients';
 
 export const FeedbackForm = () => {
+  const min = 5,
+    max = 500;
   const [categories, setCategories] = useState(null);
-  const [inputVal, setInputVal] = useState({ value: '', errorMsg: '' });
-  const [length, setLength] = useState({ min: 5, max: 500, errMsg: '' });
-  const [dropDownValue, setDropDownValue] = useState({
-    value: '',
-    status: false
-  });
+
+  //inputval for textbox value
+  const [inputVal, setInputVal] = useState('');
+  //inputValErrMsg for error msg Who display errMsg if inputVal is empty after change
+  const [inputValErrMsg, setInputValErrMsg] = useState('');
+
+  const [lengthErrMsg, setLengthErrMsg] = useState('');
+
+  const [dropDownValue, setDropDownValue] = useState('');
+  const [dropDownOpened, setDropDownOpened] = useState(false);
 
   useEffect(() => {
     PICKLY.getGategories()
@@ -20,43 +26,39 @@ export const FeedbackForm = () => {
       .catch(err => {
         console.log(err);
       });
-  }, [dropDownValue, inputVal.value, length]);
+  }, [dropDownValue, dropDownOpened, inputVal, lengthErrMsg]);
 
   const handleDropDown = () => {
-    setDropDownValue({ ...dropDownValue, status: !dropDownValue.status });
+    setDropDownOpened(!dropDownOpened);
   };
   const validationHandling = () => {
-    if (inputVal.value === '' || dropDownValue.value === '') {
+    if (inputVal === '' || dropDownValue === '') {
       setInputVal({ ...inputVal, errorMsg: 'Problem field needed' });
     }
-    // else{
-    // setVal({...value,val:"",dropDownValue:"" ,errorMsg:""})
-    // }
   };
   const handleValueFromDropDown = e => {
-    setDropDownValue({ value: e.target.innerHTML, status: false });
-    console.log(dropDownValue.value);
+    setDropDownValue(e.target.innerHTML);
+    setDropDownOpened(false);
   };
+
   return (
     <form
       className="relative mb-12 bg-c900"
       onSubmit={e => {
         e.preventDefault();
         PICKLY.sendFeedback({
-          category: dropDownValue.value,
-          body: inputVal.value
+          category: dropDownValue,
+          body: inputVal
         })
           .then(res => {
             console.log(res);
-            if (res.status === 201) {
-              setInputVal({ value: '', errorMsg: '' });
-              setDropDownValue({ ...dropDownValue, value: '' });
-            }
+            setInputVal('');
+            setDropDownValue('');
           })
           .catch(err => {
             console.log(err.status);
-            setInputVal({ value: '', errorMsg: '' });
-            setDropDownValue({ ...dropDownValue, value: '' });
+            setInputVal('');
+            setDropDownValue('');
           });
       }}
     >
@@ -66,7 +68,7 @@ export const FeedbackForm = () => {
       >
         <input
           type="text"
-          value={dropDownValue.value}
+          value={dropDownValue}
           readOnly
           placeholder="Category"
           className="cursor-pointer z-40 absolute w-full h-16 shadow-background text-c500 rounded-lg pl-4"
@@ -76,7 +78,7 @@ export const FeedbackForm = () => {
         </div>
       </div>
       <div>
-        {dropDownValue.status ? (
+        {dropDownOpened ? (
           <div className={`absolute shadow-xl text-c500 w-full z-30 bg-white`}>
             <ul className=" mt-20 w-full">
               {categories
@@ -94,34 +96,20 @@ export const FeedbackForm = () => {
                   })
                 : null}
             </ul>
-
-            {/* <ul className=" mt-20 w-full">
-                     <li 
-                     onClick={handleValueFromDropDown}
-                     className="pt-2 pb-2 pl-4 w-full hover:bg-c900 hover:pl-0 hover:text-black">Problem1</li>
-                     <li onClick={handleValueFromDropDown} className="pt-2 pb-2 pl-4 w-full hover:bg-c900 hover:pl-0 hover:text-black">Problem2</li>
-                     <li onClick={handleValueFromDropDown} className="pt-2 pb-2 pl-4 w-full hover:bg-c900 hover:pl-0 hover:text-black">Problem3</li>
-                </ul>  */}
           </div>
         ) : null}
         <textarea
           onChange={e => {
-            if (e.target.value.length < length.min) {
-              setLength({
-                ...length,
-                errMsg: 'should msg between 5 to 500 character'
-              });
-            } else if (e.target.value.length >= length.min) {
-              setLength({ ...length, errMsg: '' });
+            if (e.target.value.length < min) {
+              setLengthErrMsg('should msg between 5 to 500 character');
+            } else if (e.target.value.length >= min) {
+              setLengthErrMsg('');
             }
-            setInputVal({
-              value: e.target.value,
-              errorMsg: 'Problem field needed'
-            });
+            setInputVal(e.target.value);
+            setInputValErrMsg('Problem field needed');
           }}
-          // minLength={length.min}
-          maxLength={length.max}
-          value={inputVal.value}
+          maxLength={max}
+          value={inputVal}
           className={`absolute  w-full h-16 shadow-background text-c500 rounded-lg pl-4 pt-4 resize-none block top-50 z-10`}
           type="text"
           placeholder="Problem"
@@ -129,30 +117,30 @@ export const FeedbackForm = () => {
         ></textarea>
         {/* <p className="text-c200">{value.errorMsg}</p> */}
         <p
-          className={`text-c200 ${inputVal.value ? 'invisible' : 'visible'}`}
+          className={`text-c200 ${inputVal ? 'invisible' : 'visible'}`}
           style={{ padding: '11rem 0 0 0' }}
         >
-          {inputVal.errorMsg}
+          {inputValErrMsg}
         </p>
         <p
           className={`text-c200 ${
-            inputVal.value.length < length.errMsg ? 'invisible' : 'visible'
+            inputVal.length < lengthErrMsg ? 'invisible' : 'visible'
           }`}
         >
-          {length.errMsg}
+          {lengthErrMsg}
         </p>
 
         <div className="flex w-full h-full justify-center lg:justify-start">
           <Button
             handleClick={validationHandling}
             shadow={true}
-            disabled={inputVal.value && dropDownValue.value ? false : true}
+            disabled={inputVal && dropDownValue ? false : true}
             isRounded={true}
             backgroundColor={
-              inputVal.value &&
-              inputVal.value.length >= length.min &&
-              inputVal.value.length &&
-              dropDownValue.value
+              inputVal &&
+              inputVal.length >= min &&
+              inputVal.length &&
+              dropDownValue
                 ? BUTTON_OPTIONS.BACKGROUND_COLOR.Blue
                 : BUTTON_OPTIONS.BACKGROUND_COLOR.SecondaryGrey
             }
