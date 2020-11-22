@@ -24,9 +24,15 @@ const contectStyle = {
   width: 'fit-content'
 };
 
-export default ({ options, position = 'left bottom', appearOn = 'click' }) => {
+export default ({
+  options,
+  descriptionMsg,
+  popupBtnBg,
+  position = 'left bottom',
+  appearOn = 'click'
+}) => {
   const popupRef = useRef();
-  const popupRef2 = useRef();
+  const confirmationPopupRef = useRef();
 
   return (
     <Popup
@@ -51,7 +57,7 @@ export default ({ options, position = 'left bottom', appearOn = 'click' }) => {
           className="py-2 px-6 my-2 text-left md:px-10 text-sm md:text-md hover:bg-c800 transition-all duration-100 cursor-pointer"
           onClick={() => {
             // setPopupModal(true);
-            popupRef2.current.open();
+            confirmationPopupRef.current.open();
           }}
         >
           <ConfirmationPopup
@@ -64,13 +70,11 @@ export default ({ options, position = 'left bottom', appearOn = 'click' }) => {
                 {option.text}
               </div>
             }
-            confirmBoxTitle="Are you sure?"
-            confirmBtnText="Report"
-            confirmBtnBg="c200"
-            // popupModal={popupModal}
-            // setPopupModal={setPopupModal}
+            confirmBoxTitle={option.descriptionMsg}
+            confirmBtnText={option.text}
+            confirmBtnBg={option.popupBtnBg}
             confirmFunction={option.fun}
-            theRef={popupRef2}
+            theRef={confirmationPopupRef}
             parentRef={popupRef}
           />
         </div>

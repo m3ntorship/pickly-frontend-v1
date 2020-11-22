@@ -102,10 +102,13 @@ const PostSection = ({
           .then(res => setData(data.filter(post => post._id !== _id)))
           .catch(err => console.log(err.message));
       },
-      textColor: '#e03131'
+      textColor: '#e03131',
+      descriptionMsg: 'Are you sure you want to delete post?',
+      popupBtnBg: 'c200'
+       
     }
   ];
-  
+
   const optionsForOtherUsersPosts = [
     {
       svg: reportIcon,
@@ -113,7 +116,9 @@ const PostSection = ({
       fun: () => {
         console.log('reposr clicked');
       },
-      textColor: '#000'
+      textColor: '#000',
+      descriptionMsg: 'Are you sure you want to report post?',
+      popupBtnBg: 'c300'
     }
   ];
   return (

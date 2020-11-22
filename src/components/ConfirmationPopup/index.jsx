@@ -6,7 +6,6 @@ const ConfirmationPopup = ({
   confirmBtnText,
   confirmBtnBg,
   confirmFunction,
-  // popupModal,
   theRef,
   trigger,
   parentRef
@@ -15,7 +14,6 @@ const ConfirmationPopup = ({
     <div>
       <Popup
         trigger={trigger}
-        // open={popupModal}
         ref={theRef}
         contentStyle={{
           borderRadius: '10px',
