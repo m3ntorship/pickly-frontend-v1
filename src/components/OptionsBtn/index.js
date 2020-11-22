@@ -26,10 +26,11 @@ const contectStyle = {
 
 export default ({ options, position = 'left bottom', appearOn = 'click' }) => {
   const popupRef = useRef();
-  const [popupModal, setPopupModal] = useState(false);
+  const popupRef2 = useRef();
 
   return (
     <Popup
+      closeOnDocumentClick={false}
       ref={popupRef}
       trigger={
         <button
@@ -49,9 +50,8 @@ export default ({ options, position = 'left bottom', appearOn = 'click' }) => {
           key={index}
           className="py-2 px-6 my-2 text-left md:px-10 text-sm md:text-md hover:bg-c800 transition-all duration-100 cursor-pointer"
           onClick={() => {
-            popupRef.current.close();
-            option.fun();
-            setPopupModal(true);
+            // setPopupModal(true);
+            popupRef2.current.open();
           }}
         >
           <ConfirmationPopup
@@ -67,8 +67,11 @@ export default ({ options, position = 'left bottom', appearOn = 'click' }) => {
             confirmBoxTitle="Are you sure?"
             confirmBtnText="Report"
             confirmBtnBg="c200"
-            popupModal={popupModal}
-            setPopupModal={setPopupModal}
+            // popupModal={popupModal}
+            // setPopupModal={setPopupModal}
+            confirmFunction={option.fun}
+            theRef={popupRef2}
+            parentRef={popupRef}
           />
         </div>
       ))}

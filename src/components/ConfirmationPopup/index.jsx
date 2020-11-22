@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import Popup from 'reactjs-popup';
 
 const ConfirmationPopup = ({
@@ -6,19 +6,17 @@ const ConfirmationPopup = ({
   confirmBtnText,
   confirmBtnBg,
   confirmFunction,
-  popupModal,
-  setPopupModal,
-  trigger
+  // popupModal,
+  theRef,
+  trigger,
+  parentRef
 }) => {
-  const closeModal = () => setPopupModal(false);
-
   return (
     <div>
       <Popup
         trigger={trigger}
-        open={popupModal}
-        closeOnDocumentClick
-        onClose={closeModal}
+        // open={popupModal}
+        ref={theRef}
         contentStyle={{
           borderRadius: '10px',
           paddingBottom: '20px',
@@ -34,14 +32,18 @@ const ConfirmationPopup = ({
               className={`py-2 px-5 mr-2 mt-5 text-white text-md rounded-lg bg-${confirmBtnBg}`}
               onClick={() => {
                 confirmFunction();
-                setPopupModal(false);
+                theRef.current.close();
+                parentRef.current.close();
               }}
             >
               {confirmBtnText}
             </button>
             <button
               className="py-2 px-5 mr-2 mt-5 text-white text-md rounded-lg bg-c500"
-              onClick={() => setPopupModal(false)}
+              onClick={() => {
+                theRef.current.close();
+                parentRef.current.close();
+              }}
             >
               Cancel
             </button>
