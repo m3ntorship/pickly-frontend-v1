@@ -217,7 +217,6 @@ const PostImage = ({
   totalVotes,
   ownedByCurrentUser
 }) => {
-  console.log(img);
   return (
     <div className="relative" key={img._id}>
       <div
