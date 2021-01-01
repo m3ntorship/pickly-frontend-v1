@@ -86,7 +86,11 @@ const PostSection = ({
   const handleNotification = id => {
     PICKLY.createSingleNotification(id);
   };
-
+  const deletePost = () => {
+    PICKLY.deletePost(_id)
+      .then(res => setData(data.filter(post => post._id !== _id)))
+      .catch(err => console.log(err.message));
+  };
   /*  
     __ make two options lists 
     - One shows in the posts owned by curent user
@@ -97,10 +101,9 @@ const PostSection = ({
     {
       svg: deleteIcon,
       text: 'Delete Post',
-      fun: () => {
-        PICKLY.deletePost(_id)
-          .then(res => setData(data.filter(post => post._id !== _id)))
-          .catch(err => console.log(err.message));
+      fun: e => {
+        if (window.confirm('Are you sure you want to delete this post?'))
+          deletePost(e);
       },
       textColor: '#e03131',
       descriptionMsg: 'Are you sure you want to delete post?',
@@ -156,6 +159,7 @@ const PostSection = ({
             images.map(img => {
               return (
                 <PostImage
+                  ownedByCurrentUser={ownedByCurrentUser}
                   key={img._id}
                   images={images}
                   img={img}
@@ -182,6 +186,7 @@ const PostSection = ({
                       img={img}
                       voted={voted}
                       handleVote={handleVote}
+                      ownedByCurrentUser={ownedByCurrentUser}
                       handleNotification={handleNotification}
                       _id={_id}
                       totalVotes={totalVotes}
@@ -209,7 +214,15 @@ const PostSection = ({
   );
 };
 
-const PostImage = ({ images, img, voted, handleVote, _id, totalVotes }) => {
+const PostImage = ({
+  images,
+  img,
+  voted,
+  handleVote,
+  _id,
+  totalVotes,
+  ownedByCurrentUser
+}) => {
   return (
     <div className="relative" key={img._id}>
       <div
@@ -221,7 +234,9 @@ const PostImage = ({ images, img, voted, handleVote, _id, totalVotes }) => {
         <div
           className="group absolute w-full h-full"
           onDoubleClick={() => {
-            handleVote(img._id, voted, _id);
+            if (!ownedByCurrentUser) {
+              handleVote(img._id, voted, _id);
+            }
           }}
         >
           <img
@@ -232,7 +247,7 @@ const PostImage = ({ images, img, voted, handleVote, _id, totalVotes }) => {
           <div
             className={cn(
               'absolute grid grid-cols-1 justify-items-center items-center w-full h-full',
-              { 'hidden md:group-hover:grid': !voted }
+              { 'hidden md:group-hover:grid': !ownedByCurrentUser && !voted }
             )}
           >
             <div
@@ -241,11 +256,25 @@ const PostImage = ({ images, img, voted, handleVote, _id, totalVotes }) => {
                 { 'bg-c500': !img.votedByUser }
               )}
               onClick={() => {
-                handleVote(img._id, voted, _id);
+                if (!ownedByCurrentUser) {
+                  handleVote(img._id, voted, _id);
+                }
               }}
             >
-              <HeartIcon voted={voted} />
-              {voted && (
+              <HeartIcon
+                voted={voted}
+                ownedByCurrentUser={ownedByCurrentUser}
+              />
+              {voted && !ownedByCurrentUser && (
+                <span className="text-white font-bold text-xxs sm:text-xs">
+                  {img.votes
+                    ? totalVotes &&
+                      Math.round((img.votes.count / totalVotes) * 100)
+                    : '0'}
+                  %
+                </span>
+              )}
+              {ownedByCurrentUser && (
                 <span className="text-white font-bold text-xxs sm:text-xs">
                   {img.votes
                     ? totalVotes &&

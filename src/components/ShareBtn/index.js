@@ -4,14 +4,14 @@ import { Popup } from 'reactjs-popup';
 import { useState } from 'react';
 
 export const ShareBtn = ({ url }) => {
-  const [text, setText] = useState('Copy post url');
+  const [text, setText] = useState('Share');
 
   const clipboard = useClipboard({
     copiedTimeout: 600
   });
   const handleClick = React.useCallback(() => {
     clipboard.copy(url); // programmatically copying a value
-    setText('coped');
+    setText('Shared');
   }, [clipboard, url]);
 
   const alertContentStyle = {

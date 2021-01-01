@@ -30,6 +30,7 @@ export const SinglePost = () => {
               userName={data.author && data.author.name}
               isAnonymous={data.isAnonymous}
               updateSinglePostData={voteSinglePost}
+              ownedByCurrentUser={data.ownedByCurrentUser}
             />
           )}
         </div>
