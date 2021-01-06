@@ -1,4 +1,4 @@
-name: deploy frontstory PR to playground cluster
+name: deploy frontstory PR to m3ntorship-dev cluster
 
 # trigger
 on:
@@ -6,7 +6,6 @@ on:
     types: [opened, synchronize, reopened, closed]
     branches:
       - develop
-      - playground-deployment-frontend
 env:
   # COMMON deployment envs
   M3_ORGANIZATION: ${{github.event.organization.login}}
@@ -21,14 +20,14 @@ env:
   M3_REPLICAS: '1'
 
   # FRONTEND
-  M3_DOCKER_FILE_FRONTEND: Dockerfile.playground.frontend
+  M3_DOCKER_FILE_FRONTEND: Dockerfile.m3ntorship-dev.frontend
   M3_IMAGE_FRONTEND: m3ntorshipci/pickly-frontend
   M3_PORT_FRONTEND: '3000'
   M3_MEMORY_FRONTEND: '64Mi'
   M3_CPU_FRONTEND: '50m'
 
   # STORYBOOK
-  M3_DOCKER_FILE_STORYBOOK: Dockerfile.playground.storybook
+  M3_DOCKER_FILE_STORYBOOK: Dockerfile.m3ntorship-dev.storybook
   M3_IMAGE_STORYBOOK: m3ntorshipci/pickly-storybook
   M3_PORT_STORYBOOK: '3006'
   M3_MEMORY_STORYBOOK: '64Mi'
@@ -105,7 +104,7 @@ jobs:
       - name: Kubectl configuration
         run: |
           mkdir -p ~/.kube
-          echo ${{ secrets.KUBE_CONFIG }} | base64 -d -i > ~/.kube/config
+          echo ${{ secrets.KUBE_CONFIG_DEV }} | base64 -d -i > ~/.kube/config
       - name: install moustache
         run: |
           curl -sSL https://git.io/get-mo -o mo
