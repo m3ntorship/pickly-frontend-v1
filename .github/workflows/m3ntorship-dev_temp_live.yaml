@@ -1,0 +1,49 @@
+name: deploy temp live to m3ntorship-dev cluster
+
+# trigger
+on:
+  push:
+    branches:
+      - temp-live
+env:
+  # fixed deployment envs
+  M3_IMAGE: m3ntorshipci/picklyio-frontend
+
+jobs: 
+  deploy_dev:
+    runs-on: ubuntu-latest
+    env:
+      M3_VERSION: '0.0'
+    steps:
+      - uses: actions/checkout@v2
+      - uses: azure/setup-kubectl@v1
+      - name: Kubectl configuration
+        shell: bash
+        run: |
+          mkdir -p ~/.kube
+          echo "${{ secrets.KUBE_CONFIG_DEV }}" | base64 -d -i > ~/.kube/config
+      - name: install moustache
+        run: |
+          curl -sSL https://git.io/get-mo -o mo
+          chmod +x mo
+          sudo mv mo /usr/local/bin/
+          echo "works" | mo
+      # deploy dev
+      - name: deploy-dev
+        env:
+          M3_DEPLOYMENT_PATH: deploy/live/temp
+          TEMP_DIR: temp
+          M3_ORGANIZATION: ${{github.event.organization.login}}
+          M3_REPOSITORY: ${{github.event.repository.name}}
+          M3_NAMESPACE: pickly-live
+          M3_PROJECT: pickly
+          M3_COMPONENET: temp
+          M3_ENVIRONMENT: live
+          M3_REPLICAS: "1"
+          M3_PORT: "3000"
+          M3_MEMORY: '100Mi'
+          M3_CPU: '50m'
+        run: |
+          mkdir -p $TEMP_DIR
+          for f in $M3_DEPLOYMENT_PATH/apply/*; do mo -u "$f" > $TEMP_DIR/"$(basename $f)"; done
+          kubectl apply -f $TEMP_DIR
