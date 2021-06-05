@@ -19,7 +19,7 @@ function App() {
     setBtnOnScroll(scrollY)
   });
   const scrollTopHandling = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: 'smooth'});
   };
   return (
     <Router>
@@ -29,10 +29,10 @@ function App() {
           <div className="mb-24 md:mb-auto relative">
             <button
               onClick={scrollTopHandling}
-              className={`bg-c1100 lg:w-16 lg:h-16 w-8 h-8 float-right mr-4 mb-auto  fixed rounded-full shadow-2xl justify-center items-center  ${
+              className={`transition duration-5000 ease-in-out transition-all bg-c1100 lg:w-16 lg:h-16 w-8 h-8 float-right mr-4 mb-auto  fixed rounded-full shadow-2xl justify-center items-center  ${
                 btnOnScroll? 'md:flex hidden' : 'hidden'
               }`}
-              style={{ bottom: '5%', right: '0' }}
+              style={{ bottom: '5%', right: '0',transition:'all 5s ease-in-out' }}
             >
               <svg
                 viewBox="0 0 96 96"
