@@ -7,9 +7,13 @@ const {
 
 const POSTS_CLIENT = createClient(posts.host);
 
-const getAllPosts = () => {
+const getAllPosts = (pageNum, numOfPosts) => {
   return POSTS_CLIENT({
-    url: posts.resources.posts
+    url: posts.resources.posts,
+    params: {
+      page: pageNum,
+      limit: numOfPosts
+    }
   });
 };
 
